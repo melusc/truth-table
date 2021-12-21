@@ -26,7 +26,7 @@ jobs:
           yarn xo
 
       - name: CI tests
-        run: yarn run ava
+        run: yarn run test
 
       - name: Type checking
         run: yarn tsc --noEmit
