@@ -1,0 +1,12 @@
+{
+	"extends": "@lusc/tsconfig",
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "dist/lib",
+		"lib": ["esnext", "dom", "dom.iterable"],
+
+		// For Array.prototype.at, wait for es2022 types
+		"types": ["node"]
+	},
+	"include": ["src/*.ts"]
+}
