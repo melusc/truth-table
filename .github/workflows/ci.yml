@@ -21,7 +21,9 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Check code style
-        run: yarn run lint
+        run: |
+          yarn prettier -c . "!**/*.ts"
+          yarn xo
 
       - name: CI tests
         run: yarn run ava
