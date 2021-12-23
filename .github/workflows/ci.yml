@@ -25,7 +25,6 @@ jobs:
 
       - name: Assert was formatted
         run: git diff --exit-code --quiet
-        shell: bash
 
       - name: CI tests
         run: yarn run test
