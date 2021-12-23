@@ -11,7 +11,7 @@ export const evalOperation = (
 
 	let cached = variables[stringified];
 
-	if (cached) {
+	if (cached !== undefined) {
 		return cached;
 	}
 
