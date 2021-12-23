@@ -1,10 +1,10 @@
 import {isValidLogicalSymbol} from './logical-symbols.js';
-import {singleCharacterNotMappings} from './mappings.js';
+import {singleCharacterNotAliases} from './operator-alias.js';
 import {CharacterTypes, StringWithIndices} from './string-with-indices.js';
 
 const isNot = (input: string): boolean =>
-	singleCharacterNotMappings.includes(
-		input as typeof singleCharacterNotMappings[number],
+	singleCharacterNotAliases.includes(
+		input as typeof singleCharacterNotAliases[number],
 	);
 
 export const splitOperators = (

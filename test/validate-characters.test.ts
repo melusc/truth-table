@@ -1,13 +1,13 @@
 import test from 'ava';
 import {IndexedError} from '../src/indexed-error.js';
 import {LogicalSymbolFromName} from '../src/logical-symbols.js';
-import {replaceMappings} from '../src/mappings.js';
+import {normaliseOperators} from '../src/operator-alias.js';
 import {fromString} from '../src/string-with-indices.js';
 
 import {validateCharacters} from '../src/validate-characters.js';
 
 const doValidate = (input: string): void => {
-	validateCharacters(replaceMappings(fromString(input)));
+	validateCharacters(normaliseOperators(fromString(input)));
 };
 
 test('validateCharacters', t => {

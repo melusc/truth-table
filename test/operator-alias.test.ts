@@ -3,11 +3,11 @@
 import test from 'ava';
 import {IndexedError} from '../src/indexed-error.js';
 
-import {replaceMappings} from '../src/mappings.js';
+import {normaliseOperators} from '../src/operator-alias.js';
 import {fromString} from '../src/string-with-indices.js';
 
-const replaceMappingsIndices = (input: string): string =>
-	replaceMappings(fromString(input))
+const doNormaliseOperators = (input: string): string =>
+	normaliseOperators(fromString(input))
 		.map(({characters}) => characters)
 		.join('');
 
@@ -18,7 +18,7 @@ const makeTest = (
 ): void => {
 	test(`replace to ${operatorName}`, t => {
 		for (const item of items) {
-			t.is(replaceMappingsIndices(item), expected, item);
+			t.is(doNormaliseOperators(item), expected, item);
 		}
 	});
 };
@@ -65,14 +65,14 @@ makeTest('or', 'A or B', ['A || B', 'A | B', 'A OR B', 'A ∨ B']);
 
 const t1 = '(a && b) || (c !== ! d)';
 test(t1, t => {
-	t.is(replaceMappingsIndices(t1), '(A and B) or (C xor not D)', t1);
+	t.is(doNormaliseOperators(t1), '(A and B) or (C xor not D)', t1);
 });
 
 test('Forbidden characters', t => {
 	t.throws(
 		() => {
 			// Caret
-			replaceMappingsIndices('A ^ B');
+			doNormaliseOperators('A ^ B');
 		},
 		{
 			message: 'Unexpected ambiguous caret (^) at position 2.',

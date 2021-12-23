@@ -1,14 +1,14 @@
 import test from 'ava';
 import {IndexedError} from '../src/indexed-error.js';
 import {LogicalSymbolFromName} from '../src/logical-symbols.js';
-import {replaceMappings} from '../src/mappings.js';
+import {normaliseOperators} from '../src/operator-alias.js';
 import {splitOperators} from '../src/split-operators.js';
 import {fromString} from '../src/string-with-indices.js';
 
 import {validateOperators} from '../src/validate-operators.js';
 
 const doValidate = (input: string): void => {
-	validateOperators(replaceMappings(splitOperators(fromString(input))));
+	validateOperators(normaliseOperators(splitOperators(fromString(input))));
 };
 
 test('validateOperators', t => {

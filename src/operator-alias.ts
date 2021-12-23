@@ -3,14 +3,14 @@ import {IndexedError} from './indexed-error.js';
 import {LogicalSymbolFromName, LogicalSymbolsNames} from './logical-symbols.js';
 import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
 
-export const singleCharacterNotMappings = [
+export const singleCharacterNotAliases = [
 	'~',
 	'!',
 	LogicalSymbolFromName.not,
 ] as const;
 
 // https://en.wikipedia.org/wiki/List_of_logic_symbols
-const stringMappings = [
+const groupedAliases = [
 	[
 		LogicalSymbolsNames.iff,
 		['⇔', '≡', '<->', '<=>', '=', '==', '===', LogicalSymbolFromName.iff],
@@ -21,7 +21,7 @@ const stringMappings = [
 		['⇒', '⊃', '->', '=>', LogicalSymbolFromName.ifthen],
 	],
 
-	[LogicalSymbolsNames.not, singleCharacterNotMappings],
+	[LogicalSymbolsNames.not, singleCharacterNotAliases],
 
 	[LogicalSymbolsNames.and, ['&&', '&', LogicalSymbolFromName.and]],
 
@@ -44,18 +44,18 @@ const stringMappings = [
 	[LogicalSymbolsNames.or, ['||', '|', LogicalSymbolFromName.or]],
 ] as const;
 
-const mappings = new Map<string, string>();
+const aliasMap = new Map<string, string>();
 
-for (const [operator, operatorAliases] of stringMappings) {
-	for (const operatorAlias of operatorAliases) {
-		mappings.set(operatorAlias.toLowerCase(), operator);
+for (const [operator, aliases] of groupedAliases) {
+	for (const alias of aliases) {
+		aliasMap.set(alias.toLowerCase(), operator);
 	}
 
 	// Map things like "aNd", "AND", ... to "and"
-	mappings.set(operator.toLowerCase(), operator);
+	aliasMap.set(operator.toLowerCase(), operator);
 }
 
-export const replaceMappings = (
+export const normaliseOperators = (
 	input: ReadonlyDeep<StringWithIndices[]>,
 ): StringWithIndices[] => {
 	const result: StringWithIndices[] = [];
@@ -72,10 +72,10 @@ export const replaceMappings = (
 			);
 		}
 
-		const operator = mappings.get(item.characters.toLowerCase());
+		const operatorAlias = aliasMap.get(item.characters.toLowerCase());
 
 		if (
-			operator === undefined
+			operatorAlias === undefined
 			|| (item.type !== CharacterTypes.operator
 				&& item.type !== CharacterTypes.variable)
 		) {
@@ -83,8 +83,7 @@ export const replaceMappings = (
 		} else {
 			result.push({
 				...item,
-				originalCharacters: item.characters,
-				characters: operator,
+				characters: operatorAlias,
 				type: CharacterTypes.operator,
 			});
 		}

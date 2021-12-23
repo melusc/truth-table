@@ -1,5 +1,5 @@
 import {groupItems} from './group-items.js';
-import {replaceMappings} from './mappings.js';
+import {normaliseOperators} from './operator-alias.js';
 import {
 	type LogicalName,
 	LogicalSymbolFromName,
@@ -194,7 +194,7 @@ export const parseOperation = (raw: string): AST => {
 
 	const split = splitOperators(noWhitespace);
 
-	const translatedMappings = replaceMappings(split);
+	const translatedMappings = normaliseOperators(split);
 
 	validate(translatedMappings);
 
