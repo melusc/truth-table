@@ -24,7 +24,9 @@ jobs:
         run: yarn run fmt
 
       - name: Assert was formatted
-        run: ./scripts/assert-no-changed-files.sh
+        run: |
+          chmod +x ./scripts/assert-no-changed-files.sh
+          ./scripts/assert-no-changed-files.sh
         shell: bash
 
       - name: CI tests
