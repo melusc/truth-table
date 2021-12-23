@@ -24,9 +24,7 @@ jobs:
         run: yarn run fmt
 
       - name: Assert was formatted
-        run: |
-          chmod +x ./scripts/assert-no-changed-files.sh
-          ./scripts/assert-no-changed-files.sh
+        run: git diff --exit-code --quiet
         shell: bash
 
       - name: CI tests
