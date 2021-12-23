@@ -20,10 +20,12 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Check code style
-        run: |
-          yarn prettier -c . "!**/*.ts"
-          yarn xo
+      - name: Formatting
+        run: yarn run fmt
+
+      - name: Assert was formatted
+        run: ./scripts/assert-no-changed-files.sh
+        shell: bash
 
       - name: CI tests
         run: yarn run test
