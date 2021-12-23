@@ -20,11 +20,10 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Formatting
-        run: yarn run fmt
-
-      - name: Assert was formatted
-        run: git diff --exit-code --quiet
+      - name: Check code style
+        run: |
+          yarn run fmt
+          git diff --quiet
 
       - name: CI tests
         run: yarn run test
