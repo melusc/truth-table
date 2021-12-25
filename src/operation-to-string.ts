@@ -2,7 +2,7 @@ import {type AST} from './parse-operation.js';
 import {LogicalSymbolFromName} from './logical-symbols.js';
 
 export const operationToString = (operation: AST): string => {
-	let stringified = operation.stringified;
+	let {stringified} = operation;
 
 	if (stringified) {
 		return stringified;
