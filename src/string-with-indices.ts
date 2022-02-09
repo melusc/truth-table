@@ -6,9 +6,9 @@ export type StringWithIndices = {
 	to: number;
 };
 
-const VARIABLES_RE = /^[a-z_]$/i;
-const BRACKETS_RE = /^[()]$/;
-const SPACE_RE = /^\s$/;
+const VARIABLES_RE = /^[a-z_]+$/i;
+const BRACKETS_RE = /^[()]+$/;
+const SPACE_RE = /^\s+$/;
 
 export const enum CharacterTypes {
 	variable = 'variable',
@@ -19,51 +19,37 @@ export const enum CharacterTypes {
 
 export const fromString = (input: string): StringWithIndices[] => {
 	input = input.normalize('NFKC');
+
+	const split = input.split(/([a-z_]+|[()]+|\s+)/i);
+	let index = 0;
+
 	const result: StringWithIndices[] = [];
-
-	let previousType: CharacterTypes | undefined;
-	let previousFrom = 0;
-	let acc = '';
-
-	const push = (to: number): void => {
-		if (acc !== '') {
-			result.push({
-				characters: acc.toUpperCase(),
-				type: previousType!,
-				originalCharacters: acc,
-				from: previousFrom,
-				to,
-			});
+	for (const characters of split) {
+		if (characters === '') {
+			continue;
 		}
-	};
-
-	for (let i = 0; i < input.length; ++i) {
-		const character = input.charAt(i);
 
 		let type: CharacterTypes;
-		if (VARIABLES_RE.test(character)) {
+		if (VARIABLES_RE.test(characters)) {
 			type = CharacterTypes.variable;
-		} else if (SPACE_RE.test(character)) {
-			type = CharacterTypes.space;
-		} else if (BRACKETS_RE.test(character)) {
+		} else if (BRACKETS_RE.test(characters)) {
 			type = CharacterTypes.bracket;
+		} else if (SPACE_RE.test(characters)) {
+			type = CharacterTypes.space;
 		} else {
 			type = CharacterTypes.operator;
 		}
 
-		previousType ??= type;
-		if (type !== previousType) {
-			push(i);
+		result.push({
+			characters: characters.toUpperCase(),
+			type,
+			originalCharacters: characters,
+			from: index,
+			to: index + characters.length,
+		});
 
-			acc &&= '';
-			previousType = type;
-			previousFrom = i;
-		}
-
-		acc += character;
+		index += characters.length;
 	}
-
-	push(input.length);
 
 	return result;
 };
