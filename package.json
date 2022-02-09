@@ -1,6 +1,6 @@
 {
 	"name": "@lusc/truth-table",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"exports": "./dist/lib/index.js",
 	"repository": "https://github.com/melusc/truth-table",
 	"author": "lusc",
