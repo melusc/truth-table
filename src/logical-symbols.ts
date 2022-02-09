@@ -28,12 +28,12 @@ export enum LogicalSymbolsNames {
 export type LogicalName = keyof typeof LogicalSymbolsNames;
 
 const logicalNames = new Set<LogicalName>([
-	'iff',
-	'ifthen',
-	'not',
-	'and',
-	'xor',
-	'or',
+	LogicalSymbolsNames.iff,
+	LogicalSymbolsNames.ifthen,
+	LogicalSymbolsNames.not,
+	LogicalSymbolsNames.and,
+	LogicalSymbolsNames.xor,
+	LogicalSymbolsNames.or,
 ]);
 
 export const isValidOperatorName = (string_: string): string_ is LogicalName =>
@@ -41,15 +41,11 @@ export const isValidOperatorName = (string_: string): string_ is LogicalName =>
 
 type LogicalSymbol = keyof typeof NameFromLogicalSymbol;
 
-const logicalSymbols = new Set<LogicalSymbol>([
+export const logicalSymbols: readonly LogicalSymbol[] = [
 	LogicalSymbolFromName.iff,
 	LogicalSymbolFromName.ifthen,
 	LogicalSymbolFromName.not,
 	LogicalSymbolFromName.and,
 	LogicalSymbolFromName.xor,
 	LogicalSymbolFromName.or,
-]);
-
-export const isValidLogicalSymbol = (
-	string_: string,
-): string_ is LogicalSymbol => logicalSymbols.has(string_ as LogicalSymbol);
+];

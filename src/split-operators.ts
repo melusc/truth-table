@@ -1,11 +1,13 @@
-import {isValidLogicalSymbol} from './logical-symbols.js';
 import {singleCharacterNotAliases} from './operator-alias.js';
 import {CharacterTypes, StringWithIndices} from './string-with-indices.js';
+import {logicalSymbols} from './logical-symbols.js';
 
-const isNot = (input: string): boolean =>
-	singleCharacterNotAliases.includes(
-		input as typeof singleCharacterNotAliases[number],
-	);
+const joinedNots = `[${singleCharacterNotAliases.join('')}]`;
+const joinedSymbols = `[${logicalSymbols.join('')}]`;
+const splitter = new RegExp(
+	// not-symbol where next character is also not-symbol or end of string, to not match stuff like `!==`
+	`(${joinedNots}(?=${joinedNots}|$)|${joinedSymbols})`,
+);
 
 export const splitOperators = (
 	input: StringWithIndices[],
@@ -19,49 +21,24 @@ export const splitOperators = (
 			continue;
 		}
 
-		let previous = '';
-		let previousFrom = item.from;
+		const split = item.characters.split(splitter);
+		let index = item.from;
 
-		const push = (to: number): void => {
-			if (previous !== '') {
-				result.push({
-					characters: previous,
-					type: CharacterTypes.operator,
-					originalCharacters: previous,
-					from: previousFrom,
-					to,
-				});
+		for (const characters of split) {
+			if (characters === '') {
+				continue;
 			}
-		};
 
-		for (let i = 0; i < item.characters.length; ++i) {
-			const character = item.characters.charAt(i);
-			const nextCharacter = item.characters.charAt(i + 1);
+			result.push({
+				characters,
+				type: CharacterTypes.operator,
+				originalCharacters: characters,
+				from: index,
+				to: index + characters.length,
+			});
 
-			// Incase of !== don't parse it as "not =="
-			if (
-				(isNot(character) && (nextCharacter === '' || isNot(nextCharacter)))
-				|| isValidLogicalSymbol(character)
-			) {
-				push(item.from + i);
-
-				result.push({
-					characters: character,
-					type: CharacterTypes.operator,
-					originalCharacters: character,
-					from: item.from + i,
-					to: item.from + i + 1,
-				});
-
-				previous &&= '';
-
-				previousFrom = item.from + i + 1;
-			} else {
-				previous += character;
-			}
+			index += characters.length;
 		}
-
-		push(item.to);
 	}
 
 	return result;
