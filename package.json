@@ -25,9 +25,9 @@
 	],
 	"scripts": {
 		"fmt": "prettier -w . && xo --fix",
-		"build": "del-cli \"dist/lib/*\" && tsc",
-		"build-test": "del-cli \"dist/test/*\" && tsc --project test.tsconfig.json",
-		"test": "yarn run build-test && ava",
+		"build": "rimraf dist/lib && tsc",
+		"build:test": "rimraf dist/test && tsc --project test.tsconfig.json",
+		"test": "yarn run build:test && ava",
 		"prepublish": "yarn build"
 	},
 	"devDependencies": {
@@ -35,9 +35,9 @@
 		"@lusc/tsconfig": "^1.0.0",
 		"@types/node": "^17.0.30",
 		"ava": "^4.2.0",
-		"del-cli": "^4.0.1",
 		"esm": "^3.2.25",
 		"prettier": "^2.6.2",
+		"rimraf": "^3.0.2",
 		"typescript": "^4.6.4",
 		"xo": "^0.48.0"
 	}
