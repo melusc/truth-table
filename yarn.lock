@@ -1141,11 +1141,6 @@ esm-utils@^2.0.1:
   resolved "https://registry.yarnpkg.com/esm-utils/-/esm-utils-2.2.0.tgz#c950c0f3ea191f3830f0187f246b0cf2620c1e66"
   integrity sha512-kYj4yNRo4W3by0f1mj4AfRh1nsRTTpQG921Ik3AfyUq6upGlkI1fnMLypHn6XtFzZPdCYH1k9mtQA5MyZF9m+w==
 
-esm@^3.2.25:
-  version "3.2.25"
-  resolved "https://registry.yarnpkg.com/esm/-/esm-3.2.25.tgz#342c18c29d56157688ba5ce31f8431fbb795cc10"
-  integrity sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==
-
 espree@^9.0.0, espree@^9.2.0, espree@^9.3.0:
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/espree/-/espree-9.3.0.tgz#c1240d79183b72aaee6ccfa5a90bc9111df085a8"
