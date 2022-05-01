@@ -1,17 +1,19 @@
 // Use array because it's easier with recursion
 function * generateBoolPermutationsIterator(
 	variables: string[],
+	offset = 0,
 	acc: Record<string, boolean> = {},
 ): Iterable<Record<string, boolean>> {
-	const variable0 = variables[0];
+	const variable0 = variables[offset];
+	++offset;
 
 	if (variable0) {
-		yield * generateBoolPermutationsIterator(variables.slice(1), {
+		yield * generateBoolPermutationsIterator(variables, offset, {
 			...acc,
 			[variable0]: true,
 		});
 
-		yield * generateBoolPermutationsIterator(variables.slice(1), {
+		yield * generateBoolPermutationsIterator(variables, offset, {
 			...acc,
 			[variable0]: false,
 		});
