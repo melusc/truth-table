@@ -1,5 +1,4 @@
 import {ReadonlyDeep} from 'type-fest';
-import {IndexedError} from './indexed-error.js';
 import {LogicalSymbolFromName, LogicalSymbolsNames} from './logical-symbols.js';
 import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
 
@@ -37,6 +36,7 @@ const groupedAliases = [
 			'!==',
 			'~=',
 			'<>',
+			'^',
 			LogicalSymbolFromName.xor,
 		],
 	],
@@ -61,17 +61,6 @@ export const normaliseOperators = (
 	const result: StringWithIndices[] = [];
 
 	for (const item of input) {
-		const caretOffset = item.characters.indexOf('^');
-		if (caretOffset !== -1) {
-			// It could be confused with ∧ (logical and) or bitwise xor ^ (caret)
-			const caretIndex = item.from + caretOffset;
-			throw new IndexedError(
-				`Unexpected ambiguous caret (^) at position ${caretIndex}.`,
-				caretIndex,
-				caretIndex + 1,
-			);
-		}
-
 		const operatorAlias = aliasMap.get(item.characters.toLowerCase());
 
 		if (

@@ -1,7 +1,6 @@
 /* eslint-disable ava/assertion-arguments */
 
 import test from 'ava';
-import {IndexedError} from '../src/indexed-error.js';
 
 import {normaliseOperators} from '../src/operator-alias.js';
 import {fromString} from '../src/string-with-indices.js';
@@ -59,6 +58,7 @@ makeTest('xor', 'A xor B', [
 	'A <> B',
 	'A XOR B',
 	'A ↮ B',
+	'A ^ B',
 ]);
 
 makeTest('or', 'A or B', ['A || B', 'A | B', 'A OR B', 'A ∨ B']);
@@ -66,17 +66,4 @@ makeTest('or', 'A or B', ['A || B', 'A | B', 'A OR B', 'A ∨ B']);
 const t1 = '(a && b) || (c !== ! d)';
 test(t1, t => {
 	t.is(doNormaliseOperators(t1), '(A and B) or (C xor not D)', t1);
-});
-
-test('Forbidden characters', t => {
-	t.throws(
-		() => {
-			// Caret
-			doNormaliseOperators('A ^ B');
-		},
-		{
-			message: 'Unexpected ambiguous caret (^) at position 2.',
-			instanceOf: IndexedError,
-		},
-	);
 });
