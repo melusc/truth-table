@@ -45,4 +45,24 @@ test('findUnmatchedBrackets', t => {
 		},
 		'((())))',
 	);
+
+	t.throws(
+		() => {
+			doValidate(')');
+		},
+		{
+			message: 'Unmatched closing bracket at position 0.',
+			instanceOf: IndexedError,
+		},
+	);
+
+	t.throws(
+		() => {
+			doValidate('(a & b');
+		},
+		{
+			message: 'Unmatched opening bracket at position 0.',
+			instanceOf: IndexedError,
+		},
+	);
 });

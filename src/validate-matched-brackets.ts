@@ -30,7 +30,7 @@ export const validateMatchedBrackets = (input: StringWithIndices[]): void => {
 	}
 
 	const last = openingBrackets.pop();
-	if (last) {
+	if (last !== undefined) {
 		throw new IndexedError(
 			`Unmatched opening bracket at position ${last}.`,
 			last,
