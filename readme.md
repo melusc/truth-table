@@ -74,10 +74,13 @@ This extends `Error` and has `from` and `to` indicating were in the string there
 
 ```ts
 parseOperation('(a & b');
-// Throws IndexedError
-// IndexedError.message === "Unmatched opening bracket at position 0."
-// IndexedError.from === 0
-// IndexedError.to === 1
+/*
+IndexedError {
+	message: "Unmatched opening bracket at position 0.",
+	from: 0,
+	to: 1
+}
+*/
 ```
 
 ## parseOperation
@@ -118,7 +121,7 @@ Example:
 generateTable('a != b');
 // returns
 {
-	columns: ['a', 'b', 'a ↮ b'],
+	columns: ['A', 'B', 'A ↮ B'],
 	rows: [
 		[ true,  true,  false ],
 		[ true,  false, true  ],
