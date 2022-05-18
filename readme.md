@@ -103,7 +103,7 @@ operationToString(ast); // === "(A ∧ B)"
 
 ## generateTable
 
-`generateTable` accepts a single string and returns `ParsedTable`.  
+`generateTable` accepts a single string and returns `ParsedTable`.
 
 ```ts
 type ParsedTable = {
