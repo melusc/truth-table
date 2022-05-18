@@ -21,7 +21,8 @@
 		}
 	},
 	"files": [
-		"dist/lib"
+		"dist/lib",
+		"*.md"
 	],
 	"scripts": {
 		"fmt": "prettier -w . && xo --fix",
