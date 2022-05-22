@@ -1,7 +1,7 @@
 {
 	"name": "@lusc/truth-table",
 	"version": "1.1.0",
-	"main": "./dist/lib/index.js",
+	"main": "./dist/src/index.js",
 	"repository": "https://github.com/melusc/truth-table",
 	"author": "lusc",
 	"license": "MIT",
@@ -16,19 +16,18 @@
 		"typescript": {
 			"compile": false,
 			"rewritePaths": {
-				"test/": "dist/test/test/"
+				"test/": "dist/test/"
 			}
 		}
 	},
 	"files": [
-		"dist/lib",
+		"dist/src",
 		"*.md"
 	],
 	"scripts": {
 		"fmt": "prettier -w . && xo --fix",
-		"build": "rimraf dist/lib && tsc",
-		"build:test": "rimraf dist/test && tsc --project test.tsconfig.json",
-		"test": "yarn run build:test && ava",
+		"build": "rimraf dist && tsc",
+		"test": "yarn run build && ava",
 		"prepublish": "yarn build"
 	},
 	"devDependencies": {
