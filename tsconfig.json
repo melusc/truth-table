@@ -1,8 +1,7 @@
 {
 	"extends": "@lusc/tsconfig",
 	"compilerOptions": {
-		"outDir": "dist",
-		"lib": ["esnext", "dom", "dom.iterable"]
+		"outDir": "dist"
 	},
 	"include": ["src/*.ts", "test/*.ts"]
 }
