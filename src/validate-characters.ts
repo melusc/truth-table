@@ -8,7 +8,7 @@ const throwUnexpectedChar = (char: string, from: number, to?: number): void => {
 			? `Unexpected character "${char}" at position ${from}.`
 			: `Unexpected "${char}" at (${from} - ${to}).`;
 
-	throw new IndexedError(message, from, to ?? from + 1);
+	throw new IndexedError(message, from, to ?? from + char.length);
 };
 
 const findUnexpectedChar = (input: string, regex: RegExp): void => {
@@ -25,7 +25,7 @@ export const validateCharacters = (input: StringWithIndices[]): void => {
 
 		// Idk how this could happen, it shouldn't
 		if (c.length === 0) {
-			throw new Error('Unexpected empty item in validateCharacters.');
+			throw new IndexedError('Unexpected empty item', item.from, item.to);
 		}
 
 		switch (item.type) {
@@ -59,7 +59,7 @@ export const validateCharacters = (input: StringWithIndices[]): void => {
 			}
 
 			default: {
-				// Nothing
+				throw new Error(`Unexpected item-type "${item.type as string}".`);
 			}
 		}
 	}

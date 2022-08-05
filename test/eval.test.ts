@@ -10,7 +10,7 @@ const t1 = `
 	(
 		(d -> c) <-> e
 	)
-) && (e || c) -> f`;
+) && (!e || c) -> f`;
 test(t1, t => {
 	const parsed = parseOperation(t1);
 	t.is(
@@ -36,4 +36,29 @@ test(t1, t => {
 		}),
 		true,
 	);
+});
+
+test('Unexpected type', t => {
+	t.throws(() => {
+		evalOperation(
+			{
+				type: 'abc' as 'operator',
+				operator: 'and',
+				values: [
+					{
+						type: 'variable',
+						variable: 'A',
+					},
+					{
+						type: 'variable',
+						variable: 'B',
+					},
+				],
+			},
+			{
+				A: true,
+				B: true,
+			},
+		);
+	});
 });

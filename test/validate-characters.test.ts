@@ -2,7 +2,7 @@ import test from 'ava';
 import {IndexedError} from '../src/indexed-error.js';
 import {LogicalSymbolFromName} from '../src/logical-symbols.js';
 import {normaliseOperators} from '../src/operator-alias.js';
-import {fromString} from '../src/string-with-indices.js';
+import {CharacterTypes, fromString} from '../src/string-with-indices.js';
 
 import {validateCharacters} from '../src/validate-characters.js';
 
@@ -59,4 +59,45 @@ test('validateCharacters', t => {
 		},
 		`${LogicalSymbolFromName.and}&`,
 	);
+
+	t.throws(() => {
+		validateCharacters([
+			{
+				characters: '',
+				from: 0,
+				to: 1,
+				originalCharacters: '',
+				type: CharacterTypes.space,
+			},
+		]);
+	});
+
+	t.throws(
+		() => {
+			validateCharacters([
+				{
+					characters: 'ABC',
+					from: 0,
+					to: 3,
+					originalCharacters: 'ABC',
+					type: 'abc' as CharacterTypes.bracket,
+				},
+			]);
+		},
+		{
+			message: /unexpected.+"abc"/i,
+		},
+	);
+
+	t.throws(() => {
+		validateCharacters([
+			{
+				characters: 'ABC',
+				from: 0,
+				to: 3,
+				originalCharacters: 'ABC',
+				type: CharacterTypes.bracket,
+			},
+		]);
+	});
 });

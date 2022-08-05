@@ -319,3 +319,15 @@ test(t11, t => {
 		},
 	);
 });
+
+test('Empty input', t => {
+	t.throws(() => {
+		parseOperation('');
+	});
+});
+
+test('Plain operator', t => {
+	t.throws(() => {
+		parseOperation('&');
+	});
+});
