@@ -3,7 +3,7 @@ import {normaliseOperators} from './operator-alias.js';
 import {
 	type LogicalName,
 	LogicalSymbolFromName,
-	// isValidOperatorName,
+	isValidOperatorName,
 	LogicalSymbolsNames,
 } from './logical-symbols.js';
 import {
@@ -164,16 +164,16 @@ const _parseOperations = (input: StringWithIndices[][]): AST => {
 	}
 
 	// !isValidOperator is unnecessary, it's just a typeguard
-	// if (
-		// operator.type !== CharacterTypes.operator
-		// || !isValidOperatorName(operator.characters)
-	// ) {
-		// throw new IndexedError(
-			// `Expected operator, got type "${operator.type}" with value "${operator.originalCharacters}"`,
-			// operator.from,
-			// operator.to,
-		// );
-	// }
+	if (
+		operator.type !== CharacterTypes.operator
+		|| !isValidOperatorName(operator.characters)
+	) {
+		throw new IndexedError(
+			`Expected operator, got type "${operator.type}" with value "${operator.originalCharacters}"`,
+			operator.from,
+			operator.to,
+		);
+	}
 
 	return {
 		type: 'operator',
