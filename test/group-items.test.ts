@@ -4,7 +4,7 @@ import {groupItems} from '../src/group-items.js';
 import {
 	CharacterTypes,
 	fromString,
-	StringWithIndices,
+	type StringWithIndices,
 } from '../src/string-with-indices.js';
 
 // No validation, input just has to be correct

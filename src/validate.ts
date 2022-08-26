@@ -1,4 +1,4 @@
-import {StringWithIndices} from './string-with-indices.js';
+import type {StringWithIndices} from './string-with-indices.js';
 
 import {validateMatchedBrackets} from './validate-matched-brackets.js';
 import {validateCharacters} from './validate-characters.js';

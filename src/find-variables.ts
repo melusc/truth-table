@@ -1,4 +1,4 @@
-import {AST} from './parse-operation.js';
+import type {AST} from './parse-operation.js';
 
 function * findVariablesRecursive(operation: AST): Iterable<string> {
 	if (operation.type === 'variable') {

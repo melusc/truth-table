@@ -1,5 +1,5 @@
 import {singleCharacterNotAliases} from './operator-alias.js';
-import {CharacterTypes, StringWithIndices} from './string-with-indices.js';
+import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
 import {logicalSymbols} from './logical-symbols.js';
 
 const joinedNots = `[${singleCharacterNotAliases.join('')}]`;

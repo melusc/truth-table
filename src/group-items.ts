@@ -1,4 +1,4 @@
-import {CharacterTypes, StringWithIndices} from './string-with-indices.js';
+import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
 
 export const groupItems = (
 	input: StringWithIndices[],

@@ -10,7 +10,7 @@ import {
 	CharacterTypes,
 	fromString,
 	removeWhitespace,
-	StringWithIndices,
+	type StringWithIndices,
 } from './string-with-indices.js';
 import {validate} from './validate.js';
 import {splitOperators} from './split-operators.js';

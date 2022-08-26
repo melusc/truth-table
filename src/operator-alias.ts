@@ -1,4 +1,4 @@
-import {ReadonlyDeep} from 'type-fest';
+import type {ReadonlyDeep} from 'type-fest';
 import {LogicalSymbolFromName, LogicalSymbolsNames} from './logical-symbols.js';
 import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
 

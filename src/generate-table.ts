@@ -1,9 +1,9 @@
-import {Except, ReadonlyDeep} from 'type-fest';
+import type {Except, ReadonlyDeep} from 'type-fest';
 
 import {generateBoolPermutations} from './generate-bool-permutations.js';
 import {operationToString} from './operation-to-string.js';
 import {findVariables} from './find-variables.js';
-import {AST, parseOperation} from './parse-operation.js';
+import {type AST, parseOperation} from './parse-operation.js';
 import {evalOperation} from './eval.js';
 
 type Column = [AST, string];
