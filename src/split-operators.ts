@@ -10,7 +10,7 @@ const splitter = new RegExp(
 );
 
 export const splitOperators = (
-	input: StringWithIndices[],
+	input: readonly StringWithIndices[],
 ): StringWithIndices[] => {
 	const result: StringWithIndices[] = [];
 

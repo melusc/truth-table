@@ -10,5 +10,5 @@ function * findVariablesRecursive(operation: AST): Iterable<string> {
 	}
 }
 
-export const findVariables = (operation: AST): Set<string> =>
+export const findVariables = (operation: AST): ReadonlySet<string> =>
 	new Set<string>(findVariablesRecursive(operation));

@@ -1,3 +1,5 @@
+import type {ReadonlyDeep} from 'type-fest';
+
 import {groupItems} from './group-items.js';
 import {normaliseOperators} from './operator-alias.js';
 import {
@@ -16,7 +18,7 @@ import {splitOperators} from './split-operators.js';
 import {hasOperator} from './has-operator.js';
 import {IndexedError} from './indexed-error.js';
 
-export type AST = (
+export type AST = ReadonlyDeep<
 	| {
 			type: 'operator';
 			operator: Exclude<LogicalName, 'not'>;
@@ -31,11 +33,11 @@ export type AST = (
 			type: 'variable';
 			variable: string;
 	  }
-) & {
+> & {
 	stringified?: string;
 };
 
-const parseNot = (input: StringWithIndices[][]): AST => {
+const parseNot = (input: readonly StringWithIndices[][]): AST => {
 	const first = input[0]?.[0];
 
 	if (first === undefined) {

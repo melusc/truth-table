@@ -1,9 +1,11 @@
+type BoolPermutations = Readonly<Record<string, boolean>>;
+
 // Use array because it's easier with recursion
 function * generateBoolPermutationsIterator(
-	variables: string[],
+	variables: readonly string[],
 	offset = 0,
-	acc: Record<string, boolean> = {},
-): Iterable<Record<string, boolean>> {
+	acc: BoolPermutations = {},
+): Iterable<BoolPermutations> {
 	const variable0 = variables[offset];
 	++offset;
 
@@ -24,6 +26,6 @@ function * generateBoolPermutationsIterator(
 
 // Use Set to not have duplicates
 export const generateBoolPermutations = (
-	variables: Set<string>,
-): Iterable<Record<string, boolean>> =>
+	variables: ReadonlySet<string>,
+): Iterable<BoolPermutations> =>
 	generateBoolPermutationsIterator([...variables]);

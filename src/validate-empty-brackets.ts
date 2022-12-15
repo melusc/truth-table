@@ -1,7 +1,9 @@
 import {IndexedError} from './indexed-error.js';
 import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
 
-export const validateEmptyBrackets = (input: StringWithIndices[]): void => {
+export const validateEmptyBrackets = (
+	input: readonly StringWithIndices[],
+): void => {
 	let last: StringWithIndices | undefined;
 
 	for (const item of input) {
