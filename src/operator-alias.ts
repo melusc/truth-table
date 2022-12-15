@@ -1,4 +1,3 @@
-import type {ReadonlyDeep} from 'type-fest';
 import {LogicalSymbolFromName, LogicalSymbolsNames} from './logical-symbols.js';
 import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
 
@@ -56,7 +55,7 @@ for (const [operator, aliases] of groupedAliases) {
 }
 
 export const normaliseOperators = (
-	input: ReadonlyDeep<StringWithIndices[]>,
+	input: readonly StringWithIndices[],
 ): StringWithIndices[] => {
 	const result: StringWithIndices[] = [];
 
