@@ -12,21 +12,15 @@ export const validateMatchedBrackets = (
 
 	for (const item of input) {
 		if (item.type === CharacterTypes.bracket) {
-			const c = item.characters;
-
-			for (let i = 0; i < c.length; ++i) {
-				const position = i + item.from;
-
-				if (c.charAt(i) === '(') {
-					openingBrackets.push(position);
-				} else if (openingBrackets.pop() === undefined) {
-					// If there is no matched bracket
-					throw new IndexedError(
-						`Unmatched closing bracket at position ${position}.`,
-						position,
-						position + 1,
-					);
-				}
+			if (item.characters === '(') {
+				openingBrackets.push(item.from);
+			} else if (openingBrackets.pop() === undefined) {
+				// If there is no matched bracket
+				throw new IndexedError(
+					`Unmatched closing bracket at position ${item.from}.`,
+					item.from,
+					item.from + 1,
+				);
 			}
 		}
 	}
