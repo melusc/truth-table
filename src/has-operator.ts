@@ -1,6 +1,6 @@
 import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
 
-export const hasOperator = (input: StringWithIndices[]): boolean => {
+export const hasOperator = (input: readonly StringWithIndices[]): boolean => {
 	if (input.length === 1) {
 		return true;
 	}

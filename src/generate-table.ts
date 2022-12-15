@@ -45,7 +45,7 @@ type MutableTable = {
 
 type TableReadonlyKeys = 'columns' | 'rows';
 export type ParsedTable = ReadonlyDeep<Pick<MutableTable, TableReadonlyKeys>> &
-	Except<MutableTable, TableReadonlyKeys>;
+	Readonly<Except<MutableTable, TableReadonlyKeys>>;
 
 export const generateTable = (input: string): ParsedTable => {
 	const parsed = parseOperation(input);

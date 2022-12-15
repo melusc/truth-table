@@ -1,9 +1,9 @@
 export type StringWithIndices = {
 	characters: string;
-	type: CharacterTypes;
-	originalCharacters: string;
-	from: number;
-	to: number;
+	readonly type: CharacterTypes;
+	readonly originalCharacters: string;
+	readonly from: number;
+	readonly to: number;
 };
 
 const VARIABLES_RE = /^[a-z_]+$/i;

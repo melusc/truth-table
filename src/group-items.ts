@@ -1,7 +1,7 @@
 import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
 
 export const groupItems = (
-	input: StringWithIndices[],
+	input: readonly StringWithIndices[],
 ): StringWithIndices[][] => {
 	let previous: StringWithIndices[] = [];
 	const result: StringWithIndices[][] = [];

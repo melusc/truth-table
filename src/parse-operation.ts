@@ -1,3 +1,5 @@
+import type {ReadonlyDeep} from 'type-fest';
+
 import {groupItems} from './group-items.js';
 import {normaliseOperators} from './operator-alias.js';
 import {
@@ -16,7 +18,7 @@ import {splitOperators} from './split-operators.js';
 import {hasOperator} from './has-operator.js';
 import {IndexedError} from './indexed-error.js';
 
-export type AST = (
+export type AST = ReadonlyDeep<
 	| {
 			type: 'operator';
 			operator: Exclude<LogicalName, 'not'>;
@@ -31,11 +33,11 @@ export type AST = (
 			type: 'variable';
 			variable: string;
 	  }
-) & {
+> & {
 	stringified?: string;
 };
 
-const parseNot = (input: StringWithIndices[][]): AST => {
+const parseNot = (input: readonly StringWithIndices[][]): AST => {
 	const first = input[0]?.[0];
 
 	if (first === undefined) {
@@ -43,8 +45,8 @@ const parseNot = (input: StringWithIndices[][]): AST => {
 	}
 
 	if (
-		first.type !== CharacterTypes.operator
-		|| first.characters !== LogicalSymbolsNames.not
+		first.type !== CharacterTypes.operator ||
+		first.characters !== LogicalSymbolsNames.not
 	) {
 		throw new IndexedError(
 			`Expected "${LogicalSymbolFromName.not}".`,
@@ -101,8 +103,8 @@ const _parseOperation = (input: StringWithIndices[]): AST => {
 		const last = input.at(-1)!;
 
 		if (
-			first.type === CharacterTypes.bracket
-			&& last.type === CharacterTypes.bracket
+			first.type === CharacterTypes.bracket &&
+			last.type === CharacterTypes.bracket
 		) {
 			return _parseOperation(input.slice(1, -1));
 		}
@@ -124,10 +126,10 @@ const _parseOperations = (input: StringWithIndices[][]): AST => {
 
 	let secondToLast: StringWithIndices[] | undefined;
 	while (
-		(secondToLast = input.at(-1))
-		&& secondToLast.length === 1
-		&& secondToLast[0]!.type === CharacterTypes.operator
-		&& secondToLast[0]!.characters === LogicalSymbolsNames.not
+		(secondToLast = input.at(-1)) &&
+		secondToLast.length === 1 &&
+		secondToLast[0]!.type === CharacterTypes.operator &&
+		secondToLast[0]!.characters === LogicalSymbolsNames.not
 	) {
 		lastItems.unshift(input.pop()!);
 	}
@@ -151,8 +153,8 @@ const _parseOperations = (input: StringWithIndices[][]): AST => {
 
 	// !isValidOperator is unnecessary, it's just a typeguard
 	if (
-		operator.type !== CharacterTypes.operator
-		|| !isValidOperatorName(operator.characters)
+		operator.type !== CharacterTypes.operator ||
+		!isValidOperatorName(operator.characters)
 	) {
 		throw new IndexedError(
 			`Expected operator, got type "${operator.type}" with value "${operator.originalCharacters}"`,
