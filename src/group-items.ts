@@ -6,12 +6,10 @@ export const groupItems = (
 	let previous: StringWithIndices[] = [];
 	const result: StringWithIndices[][] = [];
 
-	let openBrackets = 0;
+	let depth = 0;
 
-	// Expect it to be validated with validate-matched-brackets.ts
-
-	const pushToResult = (): void => {
-		if (previous.length > 0 && openBrackets === 0) {
+	const pushResult = () => {
+		if (previous.length > 0 && depth === 0) {
 			result.push(previous);
 			previous = [];
 		}
@@ -19,31 +17,25 @@ export const groupItems = (
 
 	for (const item of input) {
 		if (item.type === CharacterTypes.bracket) {
-			pushToResult();
-		}
+			pushResult();
 
-		previous.push(item);
+			previous.push(item);
 
-		if (item.type === CharacterTypes.bracket) {
-			const l = item.characters.length;
-
-			if (item.characters.startsWith('(')) {
-				openBrackets += l;
+			if (item.characters === '(') {
+				++depth;
 			} else {
-				openBrackets -= l;
+				--depth;
 			}
-		} else if (item.type === CharacterTypes.operator && openBrackets === 0) {
-			previous.pop();
-			pushToResult();
-			result.push([item]);
-		}
 
-		if (item.type === CharacterTypes.bracket) {
-			pushToResult();
+			pushResult();
+		} else if (depth === 0) {
+			result.push([item]);
+		} else {
+			previous.push(item);
 		}
 	}
 
-	pushToResult();
+	pushResult();
 
 	return result;
 };

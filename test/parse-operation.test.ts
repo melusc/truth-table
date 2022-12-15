@@ -314,7 +314,7 @@ test(t11, t => {
 			parseOperation(t11);
 		},
 		{
-			message: 'Expected "c d" to have an operator.',
+			message: 'Expected operator, got type "variable" with value "c"',
 			instanceOf: IndexedError,
 		},
 	);

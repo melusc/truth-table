@@ -104,20 +104,7 @@ const _parseOperation = (input: StringWithIndices[]): AST => {
 			first.type === CharacterTypes.bracket
 			&& last.type === CharacterTypes.bracket
 		) {
-			first.characters = first.characters.slice(1);
-			++first.from;
-			last.characters = last.characters.slice(0, -1);
-			--last.to;
-
-			if (first.characters === '') {
-				input.shift();
-			}
-
-			if (last.characters === '') {
-				input.pop();
-			}
-
-			return _parseOperation(input);
+			return _parseOperation(input.slice(1, -1));
 		}
 	}
 

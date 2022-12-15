@@ -19,7 +19,7 @@ export const fromString = (input: string): StringWithIndices[] => {
 	input = input.normalize('NFKC');
 
 	const result: StringWithIndices[] = [];
-	for (const match of input.matchAll(/[a-z_]+|[()]+|[^a-z_()\s]+/gi)) {
+	for (const match of input.matchAll(/[a-z_]+|[()]|[^a-z_()\s]+/gi)) {
 		const characters = match[0];
 		const from = match.index;
 		if (typeof from !== 'number') {
