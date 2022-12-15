@@ -8,25 +8,22 @@ export type StringWithIndices = {
 
 const VARIABLES_RE = /^[a-z_]+$/i;
 const BRACKETS_RE = /^[()]+$/;
-const SPACE_RE = /^\s+$/;
 
 export const enum CharacterTypes {
 	variable = 'variable',
 	operator = 'operator',
-	space = 'space',
 	bracket = 'bracket',
 }
 
 export const fromString = (input: string): StringWithIndices[] => {
 	input = input.normalize('NFKC');
 
-	const split = input.split(/([a-z_]+|[()]+|\s+)/i);
-	let index = 0;
-
 	const result: StringWithIndices[] = [];
-	for (const characters of split) {
-		if (characters === '') {
-			continue;
+	for (const match of input.matchAll(/[a-z_]+|[()]+|[^a-z_()\s]+/gi)) {
+		const characters = match[0];
+		const from = match.index;
+		if (typeof from !== 'number') {
+			throw new TypeError('Expected a number on match.index');
 		}
 
 		let type: CharacterTypes;
@@ -34,35 +31,17 @@ export const fromString = (input: string): StringWithIndices[] => {
 			type = CharacterTypes.variable;
 		} else if (BRACKETS_RE.test(characters)) {
 			type = CharacterTypes.bracket;
-		} else if (SPACE_RE.test(characters)) {
-			type = CharacterTypes.space;
 		} else {
 			type = CharacterTypes.operator;
 		}
 
 		result.push({
 			characters: characters.toUpperCase(),
-			type,
+			from,
+			to: from + characters.length,
 			originalCharacters: characters,
-			from: index,
-			to: index + characters.length,
+			type,
 		});
-
-		index += characters.length;
-	}
-
-	return result;
-};
-
-export const removeWhitespace = (
-	input: readonly StringWithIndices[],
-): StringWithIndices[] => {
-	const result: StringWithIndices[] = [];
-
-	for (const item of input) {
-		if (item.type !== CharacterTypes.space) {
-			result.push(item);
-		}
 	}
 
 	return result;

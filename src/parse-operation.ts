@@ -9,7 +9,6 @@ import {
 import {
 	CharacterTypes,
 	fromString,
-	removeWhitespace,
 	type StringWithIndices,
 } from './string-with-indices.js';
 import {validate} from './validate.js';
@@ -186,13 +185,12 @@ const _parseOperations = (input: StringWithIndices[][]): AST => {
 // so it doesn't waste resources validating multiple times
 export const parseOperation = (raw: string): AST => {
 	const withIndices = fromString(raw);
-	const noWhitespace = removeWhitespace(withIndices);
 
-	if (noWhitespace.length === 0) {
+	if (withIndices.length === 0) {
 		throw new Error('Unexpected empty string');
 	}
 
-	const split = splitOperators(noWhitespace);
+	const split = splitOperators(withIndices);
 
 	const translatedMappings = normaliseOperators(split);
 

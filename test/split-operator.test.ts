@@ -21,25 +21,11 @@ test(t1, t => {
 			to: 1,
 		},
 		{
-			characters: ' ',
-			type: CharacterTypes.space,
-			originalCharacters: ' ',
-			from: 1,
-			to: 2,
-		},
-		{
 			characters: '&&',
 			type: CharacterTypes.operator,
 			originalCharacters: '&&',
 			from: 2,
 			to: 4,
-		},
-		{
-			characters: ' ',
-			type: CharacterTypes.space,
-			originalCharacters: ' ',
-			from: 4,
-			to: 5,
 		},
 		{
 			characters: '!',
@@ -83,25 +69,11 @@ test(t2, t => {
 			to: 1,
 		},
 		{
-			characters: ' ',
-			type: CharacterTypes.space,
-			originalCharacters: ' ',
-			from: 1,
-			to: 2,
-		},
-		{
 			characters: '&&',
 			type: CharacterTypes.operator,
 			originalCharacters: '&&',
 			from: 2,
 			to: 4,
-		},
-		{
-			characters: ' ',
-			type: CharacterTypes.space,
-			originalCharacters: ' ',
-			from: 4,
-			to: 5,
 		},
 		{
 			characters: '!',
@@ -138,25 +110,11 @@ test(t3, t => {
 			to: 1,
 		},
 		{
-			characters: ' ',
-			type: CharacterTypes.space,
-			originalCharacters: ' ',
-			from: 1,
-			to: 2,
-		},
-		{
 			characters: '&&',
 			type: CharacterTypes.operator,
 			originalCharacters: '&&',
 			from: 2,
 			to: 4,
-		},
-		{
-			characters: ' ',
-			type: CharacterTypes.space,
-			originalCharacters: ' ',
-			from: 4,
-			to: 5,
 		},
 		{
 			characters: '!',

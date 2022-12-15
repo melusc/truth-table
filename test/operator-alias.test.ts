@@ -8,7 +8,7 @@ import {fromString} from '../src/string-with-indices.js';
 const doNormaliseOperators = (input: string): string =>
 	normaliseOperators(fromString(input))
 		.map(({characters}) => characters)
-		.join('');
+		.join(' ');
 
 const makeTest = (
 	operatorName: string,
@@ -65,5 +65,5 @@ makeTest('or', 'A or B', ['A || B', 'A | B', 'A OR B', 'A ∨ B']);
 
 const t1 = '(a && b) || (c !== ! d)';
 test(t1, t => {
-	t.is(doNormaliseOperators(t1), '(A and B) or (C xor not D)', t1);
+	t.is(doNormaliseOperators(t1), '( A and B ) or ( C xor not D )', t1);
 });

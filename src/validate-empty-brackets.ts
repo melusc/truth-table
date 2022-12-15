@@ -6,10 +6,6 @@ export const validateEmptyBrackets = (input: StringWithIndices[]): void => {
 	let startBracketIndex = 0;
 
 	for (const item of input) {
-		if (item.type === CharacterTypes.space) {
-			continue;
-		}
-
 		if (item.type !== CharacterTypes.bracket) {
 			++between;
 			continue;
