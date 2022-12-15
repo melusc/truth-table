@@ -21,13 +21,6 @@ test('a ((b)) c (d) e', t => {
 				from: 0,
 				to: 1,
 			},
-			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 1,
-				to: 2,
-			},
 		],
 		[
 			{
@@ -54,25 +47,11 @@ test('a ((b)) c (d) e', t => {
 		],
 		[
 			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 7,
-				to: 8,
-			},
-			{
 				characters: 'C',
 				type: CharacterTypes.variable,
 				originalCharacters: 'c',
 				from: 8,
 				to: 9,
-			},
-			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 9,
-				to: 10,
 			},
 		],
 		[
@@ -100,13 +79,6 @@ test('a ((b)) c (d) e', t => {
 		],
 		[
 			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 13,
-				to: 14,
-			},
-			{
 				characters: 'E',
 				type: CharacterTypes.variable,
 				originalCharacters: 'e',
@@ -126,13 +98,6 @@ test('a b', t => {
 				originalCharacters: 'a',
 				from: 0,
 				to: 1,
-			},
-			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 1,
-				to: 2,
 			},
 			{
 				characters: 'B',
@@ -172,29 +137,11 @@ test('(a) & ( b )', t => {
 		],
 		[
 			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 3,
-				to: 4,
-			},
-		],
-		[
-			{
 				characters: '&',
 				type: CharacterTypes.operator,
 				originalCharacters: '&',
 				from: 4,
 				to: 5,
-			},
-		],
-		[
-			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 5,
-				to: 6,
 			},
 		],
 		[
@@ -206,25 +153,11 @@ test('(a) & ( b )', t => {
 				to: 7,
 			},
 			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 7,
-				to: 8,
-			},
-			{
 				characters: 'B',
 				type: CharacterTypes.variable,
 				originalCharacters: 'b',
 				from: 8,
 				to: 9,
-			},
-			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 9,
-				to: 10,
 			},
 			{
 				characters: ')',
@@ -262,25 +195,11 @@ test('((a) & b)', t => {
 				to: 4,
 			},
 			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 4,
-				to: 5,
-			},
-			{
 				characters: '&',
 				type: CharacterTypes.operator,
 				originalCharacters: '&',
 				from: 5,
 				to: 6,
-			},
-			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 6,
-				to: 7,
 			},
 			{
 				characters: 'B',

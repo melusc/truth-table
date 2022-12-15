@@ -52,12 +52,6 @@ export const validateCharacters = (input: StringWithIndices[]): void => {
 				break;
 			}
 
-			case CharacterTypes.space: {
-				findUnexpectedChar(c, /\S/);
-
-				break;
-			}
-
 			default: {
 				throw new Error(`Unexpected item-type "${item.type as string}".`);
 			}

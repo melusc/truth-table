@@ -60,18 +60,6 @@ test('validateCharacters', t => {
 		`${LogicalSymbolFromName.and}&`,
 	);
 
-	t.throws(() => {
-		validateCharacters([
-			{
-				characters: '',
-				from: 0,
-				to: 1,
-				originalCharacters: '',
-				type: CharacterTypes.space,
-			},
-		]);
-	});
-
 	t.throws(
 		() => {
 			validateCharacters([

@@ -1,10 +1,6 @@
 import test from 'ava';
 import {LogicalSymbolFromName} from '../src/logical-symbols.js';
-import {
-	CharacterTypes,
-	fromString,
-	removeWhitespace,
-} from '../src/string-with-indices.js';
+import {CharacterTypes, fromString} from '../src/string-with-indices.js';
 
 test('fromString', t => {
 	t.deepEqual(
@@ -117,25 +113,11 @@ test('fromString', t => {
 				to: 1,
 			},
 			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 1,
-				to: 2,
-			},
-			{
 				characters: 'AND',
 				type: CharacterTypes.variable,
 				originalCharacters: 'AND',
 				from: 2,
 				to: 5,
-			},
-			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 5,
-				to: 6,
 			},
 			{
 				characters: 'B',
@@ -157,25 +139,11 @@ test('fromString', t => {
 			to: 1,
 		},
 		{
-			characters: ' ',
-			type: CharacterTypes.space,
-			originalCharacters: ' ',
-			from: 1,
-			to: 2,
-		},
-		{
 			characters: `${LogicalSymbolFromName.and}?&?`,
 			type: CharacterTypes.operator,
 			originalCharacters: `${LogicalSymbolFromName.and}?&?`,
 			from: 2,
 			to: 6,
-		},
-		{
-			characters: ' ',
-			type: CharacterTypes.space,
-			originalCharacters: ' ',
-			from: 6,
-			to: 7,
 		},
 		{
 			characters: 'B',
@@ -199,13 +167,6 @@ test('fromString', t => {
 				to: 1,
 			},
 			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 1,
-				to: 2,
-			},
-			{
 				characters: LogicalSymbolFromName.and,
 				type: CharacterTypes.operator,
 				originalCharacters: LogicalSymbolFromName.and,
@@ -213,25 +174,11 @@ test('fromString', t => {
 				to: 3,
 			},
 			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 3,
-				to: 4,
-			},
-			{
 				characters: LogicalSymbolFromName.not.repeat(4),
 				type: CharacterTypes.operator,
 				originalCharacters: LogicalSymbolFromName.not.repeat(4),
 				from: 4,
 				to: 8,
-			},
-			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 8,
-				to: 9,
 			},
 			{
 				characters: 'B',
@@ -268,25 +215,11 @@ test('fromString', t => {
 				to: 6,
 			},
 			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 6,
-				to: 7,
-			},
-			{
 				characters: '&',
 				type: CharacterTypes.operator,
 				originalCharacters: '&',
 				from: 7,
 				to: 8,
-			},
-			{
-				characters: ' ',
-				type: CharacterTypes.space,
-				originalCharacters: ' ',
-				from: 8,
-				to: 9,
 			},
 			{
 				characters: '(',
@@ -311,91 +244,5 @@ test('fromString', t => {
 			},
 		],
 		'((((a) & (b))))',
-	);
-});
-
-test('removeWhitespace', t => {
-	t.deepEqual(
-		removeWhitespace(fromString('a b c d')),
-		[
-			{
-				characters: 'A',
-				type: CharacterTypes.variable,
-				originalCharacters: 'a',
-				from: 0,
-				to: 1,
-			},
-			// Space
-			{
-				characters: 'B',
-				type: CharacterTypes.variable,
-				originalCharacters: 'b',
-				from: 2,
-				to: 3,
-			},
-			// Space
-			{
-				characters: 'C',
-				type: CharacterTypes.variable,
-				originalCharacters: 'c',
-				from: 4,
-				to: 5,
-			},
-			// Space
-			{
-				characters: 'D',
-				type: CharacterTypes.variable,
-				originalCharacters: 'd',
-				from: 6,
-				to: 7,
-			},
-		],
-		'a b c d',
-	);
-
-	t.deepEqual(
-		removeWhitespace(fromString('a\nb\tc\rd\uFEFFe')),
-		[
-			{
-				characters: 'A',
-				type: CharacterTypes.variable,
-				originalCharacters: 'a',
-				from: 0,
-				to: 1,
-			},
-			// Newline
-			{
-				characters: 'B',
-				type: CharacterTypes.variable,
-				originalCharacters: 'b',
-				from: 2,
-				to: 3,
-			},
-			// Tab
-			{
-				characters: 'C',
-				type: CharacterTypes.variable,
-				originalCharacters: 'c',
-				from: 4,
-				to: 5,
-			},
-			// Carriage return
-			{
-				characters: 'D',
-				type: CharacterTypes.variable,
-				originalCharacters: 'd',
-				from: 6,
-				to: 7,
-			},
-			// Zero width space
-			{
-				characters: 'E',
-				type: CharacterTypes.variable,
-				originalCharacters: 'e',
-				from: 8,
-				to: 9,
-			},
-		],
-		'a\\nb\\tc\\rd\\uFEFFe',
 	);
 });
