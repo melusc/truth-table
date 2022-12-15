@@ -146,6 +146,7 @@ __metadata:
     c8: ^7.12.0
     prettier: ^2.8.1
     rimraf: ^3.0.2
+    type-fest: ^3.4.0
     typescript: ^4.9.4
     xo: ^0.53.1
   languageName: unknown
@@ -4877,6 +4878,13 @@ __metadata:
   version: 3.2.0
   resolution: "type-fest@npm:3.2.0"
   checksum: 2668b62e8df6ae39074c93cb1e2c267c5f8a16d0d1bb693e71f2ea0b80da14eca5442edbcc5609d1099c49a4aaecda960d7fede3d3253b4126d2c6dfeb41b8c3
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "type-fest@npm:3.4.0"
+  checksum: 37e8559f07778b6a24a1d01f285d9b6904537cfde49f6231f080f146c6ff753ea12a9163bcbe8e9bcd24f72529cf4d3baf69874b9a6e1d2da47046c41e4567f6
   languageName: node
   linkType: hard
 
