@@ -22,7 +22,7 @@ test('validateEmptyBrackets', t => {
 			doValidate('()');
 		},
 		{
-			message: 'Unexpected empty brackets at (0 - 1).',
+			message: 'Unexpected empty brackets at (0 - 2).',
 			instanceOf: IndexedError,
 		},
 		'()',
@@ -33,7 +33,7 @@ test('validateEmptyBrackets', t => {
 			doValidate('( )');
 		},
 		{
-			message: 'Unexpected empty brackets at (0 - 2).',
+			message: 'Unexpected empty brackets at (0 - 3).',
 			instanceOf: IndexedError,
 		},
 		'( )',
@@ -44,7 +44,7 @@ test('validateEmptyBrackets', t => {
 			doValidate('((((((()))))))');
 		},
 		{
-			message: 'Unexpected empty brackets at (6 - 7).',
+			message: 'Unexpected empty brackets at (6 - 8).',
 			instanceOf: IndexedError,
 		},
 		'((((((()))))))',
@@ -55,7 +55,7 @@ test('validateEmptyBrackets', t => {
 			doValidate('(((((((    )))))))');
 		},
 		{
-			message: 'Unexpected empty brackets at (6 - 11).',
+			message: 'Unexpected empty brackets at (6 - 12).',
 			instanceOf: IndexedError,
 		},
 		'(((((((    )))))))',
@@ -66,21 +66,10 @@ test('validateEmptyBrackets', t => {
 			doValidate('()()()()()');
 		},
 		{
-			message: 'Unexpected empty brackets at (0 - 1).',
+			message: 'Unexpected empty brackets at (0 - 2).',
 			instanceOf: IndexedError,
 		},
 		'()()()()()',
-	);
-
-	t.throws(
-		() => {
-			doValidate('( )()()()()');
-		},
-		{
-			message: 'Unexpected opening bracket at position 3.',
-			instanceOf: IndexedError,
-		},
-		'( )()()()()',
 	);
 
 	t.throws(

@@ -31,19 +31,18 @@ test('fromString', t => {
 		'abcd',
 	);
 
+	const brackets1 = ')((()())))';
 	// Doesn't validate brackets
 	t.deepEqual(
-		fromString(')((()())))'),
-		[
-			{
-				characters: ')((()())))',
-				type: CharacterTypes.bracket,
-				originalCharacters: ')((()())))',
-				from: 0,
-				to: 10,
-			},
-		],
-		')((()())))',
+		fromString(brackets1),
+		brackets1.split('').map((c, i) => ({
+			characters: c,
+			type: CharacterTypes.bracket,
+			originalCharacters: c,
+			from: i,
+			to: i + 1,
+		})),
+		brackets1,
 	);
 
 	t.deepEqual(
@@ -194,10 +193,31 @@ test('fromString', t => {
 		fromString('((((a) & (b))))'),
 		[
 			{
-				characters: '((((',
+				characters: '(',
 				type: CharacterTypes.bracket,
-				originalCharacters: '((((',
+				originalCharacters: '(',
 				from: 0,
+				to: 1,
+			},
+			{
+				characters: '(',
+				type: CharacterTypes.bracket,
+				originalCharacters: '(',
+				from: 1,
+				to: 2,
+			},
+			{
+				characters: '(',
+				type: CharacterTypes.bracket,
+				originalCharacters: '(',
+				from: 2,
+				to: 3,
+			},
+			{
+				characters: '(',
+				type: CharacterTypes.bracket,
+				originalCharacters: '(',
+				from: 3,
 				to: 4,
 			},
 			{
@@ -236,10 +256,31 @@ test('fromString', t => {
 				to: 11,
 			},
 			{
-				characters: '))))',
+				characters: ')',
 				type: CharacterTypes.bracket,
-				originalCharacters: '))))',
+				originalCharacters: ')',
 				from: 11,
+				to: 12,
+			},
+			{
+				characters: ')',
+				type: CharacterTypes.bracket,
+				originalCharacters: ')',
+				from: 12,
+				to: 13,
+			},
+			{
+				characters: ')',
+				type: CharacterTypes.bracket,
+				originalCharacters: ')',
+				from: 13,
+				to: 14,
+			},
+			{
+				characters: ')',
+				type: CharacterTypes.bracket,
+				originalCharacters: ')',
+				from: 14,
 				to: 15,
 			},
 		],

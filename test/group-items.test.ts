@@ -24,10 +24,17 @@ test('a ((b)) c (d) e', t => {
 		],
 		[
 			{
-				characters: '((',
+				characters: '(',
 				type: CharacterTypes.bracket,
-				originalCharacters: '((',
+				originalCharacters: '(',
 				from: 2,
+				to: 3,
+			},
+			{
+				characters: '(',
+				type: CharacterTypes.bracket,
+				originalCharacters: '(',
+				from: 3,
 				to: 4,
 			},
 			{
@@ -38,10 +45,17 @@ test('a ((b)) c (d) e', t => {
 				to: 5,
 			},
 			{
-				characters: '))',
+				characters: ')',
 				type: CharacterTypes.bracket,
-				originalCharacters: '))',
+				originalCharacters: ')',
 				from: 5,
+				to: 6,
+			},
+			{
+				characters: ')',
+				type: CharacterTypes.bracket,
+				originalCharacters: ')',
+				from: 6,
 				to: 7,
 			},
 		],
@@ -99,6 +113,8 @@ test('a b', t => {
 				from: 0,
 				to: 1,
 			},
+		],
+		[
 			{
 				characters: 'B',
 				type: CharacterTypes.variable,
@@ -174,10 +190,17 @@ test('((a) & b)', t => {
 	t.deepEqual(groupBracketsString('((a) & b)'), [
 		[
 			{
-				characters: '((',
+				characters: '(',
 				type: CharacterTypes.bracket,
-				originalCharacters: '((',
+				originalCharacters: '(',
 				from: 0,
+				to: 1,
+			},
+			{
+				characters: '(',
+				type: CharacterTypes.bracket,
+				originalCharacters: '(',
+				from: 1,
 				to: 2,
 			},
 			{
