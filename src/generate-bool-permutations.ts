@@ -1,7 +1,7 @@
 type BoolPermutations = Readonly<Record<string, boolean>>;
 
 // Use array because it's easier with recursion
-function* generateBoolPermutationsIterator(
+function * generateBoolPermutationsIterator(
 	variables: readonly string[],
 	offset = 0,
 	acc: BoolPermutations = {},
@@ -10,12 +10,12 @@ function* generateBoolPermutationsIterator(
 	++offset;
 
 	if (variable0) {
-		yield* generateBoolPermutationsIterator(variables, offset, {
+		yield * generateBoolPermutationsIterator(variables, offset, {
 			...acc,
 			[variable0]: true,
 		});
 
-		yield* generateBoolPermutationsIterator(variables, offset, {
+		yield * generateBoolPermutationsIterator(variables, offset, {
 			...acc,
 			[variable0]: false,
 		});

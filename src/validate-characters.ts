@@ -19,7 +19,9 @@ const findUnexpectedChar = (input: string, regex: RegExp): void => {
 	}
 };
 
-export const validateCharacters = (input: readonly StringWithIndices[]): void => {
+export const validateCharacters = (
+	input: readonly StringWithIndices[],
+): void => {
 	for (const item of input) {
 		const c = item.characters;
 
