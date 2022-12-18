@@ -1,6 +1,6 @@
 {
 	"name": "@lusc/truth-table",
-	"version": "1.1.0",
+	"version": "2.0.0",
 	"main": "./dist/src/index.js",
 	"repository": "https://github.com/melusc/truth-table",
 	"author": "lusc",
@@ -41,5 +41,8 @@
 		"typescript": "^4.9.4",
 		"xo": "^0.53.1"
 	},
-	"packageManager": "yarn@3.3.0"
+	"packageManager": "yarn@3.3.0",
+	"exports": {
+		".": "./dist/src/index.js"
+	}
 }
