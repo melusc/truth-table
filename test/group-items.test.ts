@@ -11,233 +11,249 @@ import {
 const groupBracketsString = (input: string): StringWithIndices[][] =>
 	groupItems(fromString(input));
 
-test('a ((b)) c (d) e', t => {
-	t.deepEqual(groupBracketsString('a ((b)) c (d) e'), [
+const t1 = 'a ((b)) c (d) e';
+test(t1, t => {
+	t.deepEqual<StringWithIndices[][], StringWithIndices[][]>(
+		groupBracketsString(t1),
 		[
-			{
-				characters: 'A',
-				type: CharacterTypes.variable,
-				originalCharacters: 'a',
-				from: 0,
-				to: 1,
-			},
+			[
+				{
+					characters: 'A',
+					type: CharacterTypes.variable,
+					from: 0,
+					to: 1,
+					source: t1,
+				},
+			],
+			[
+				{
+					characters: '(',
+					type: CharacterTypes.bracket,
+					from: 2,
+					to: 3,
+					source: t1,
+				},
+				{
+					characters: '(',
+					type: CharacterTypes.bracket,
+					from: 3,
+					to: 4,
+					source: t1,
+				},
+				{
+					characters: 'B',
+					type: CharacterTypes.variable,
+					from: 4,
+					to: 5,
+					source: t1,
+				},
+				{
+					characters: ')',
+					type: CharacterTypes.bracket,
+					from: 5,
+					to: 6,
+					source: t1,
+				},
+				{
+					characters: ')',
+					type: CharacterTypes.bracket,
+					from: 6,
+					to: 7,
+					source: t1,
+				},
+			],
+			[
+				{
+					characters: 'C',
+					type: CharacterTypes.variable,
+					from: 8,
+					to: 9,
+					source: t1,
+				},
+			],
+			[
+				{
+					characters: '(',
+					type: CharacterTypes.bracket,
+					from: 10,
+					to: 11,
+					source: t1,
+				},
+				{
+					characters: 'D',
+					type: CharacterTypes.variable,
+					from: 11,
+					to: 12,
+					source: t1,
+				},
+				{
+					characters: ')',
+					type: CharacterTypes.bracket,
+					from: 12,
+					to: 13,
+					source: t1,
+				},
+			],
+			[
+				{
+					characters: 'E',
+					type: CharacterTypes.variable,
+					from: 14,
+					to: 15,
+					source: t1,
+				},
+			],
 		],
-		[
-			{
-				characters: '(',
-				type: CharacterTypes.bracket,
-				originalCharacters: '(',
-				from: 2,
-				to: 3,
-			},
-			{
-				characters: '(',
-				type: CharacterTypes.bracket,
-				originalCharacters: '(',
-				from: 3,
-				to: 4,
-			},
-			{
-				characters: 'B',
-				type: CharacterTypes.variable,
-				originalCharacters: 'b',
-				from: 4,
-				to: 5,
-			},
-			{
-				characters: ')',
-				type: CharacterTypes.bracket,
-				originalCharacters: ')',
-				from: 5,
-				to: 6,
-			},
-			{
-				characters: ')',
-				type: CharacterTypes.bracket,
-				originalCharacters: ')',
-				from: 6,
-				to: 7,
-			},
-		],
-		[
-			{
-				characters: 'C',
-				type: CharacterTypes.variable,
-				originalCharacters: 'c',
-				from: 8,
-				to: 9,
-			},
-		],
-		[
-			{
-				characters: '(',
-				type: CharacterTypes.bracket,
-				originalCharacters: '(',
-				from: 10,
-				to: 11,
-			},
-			{
-				characters: 'D',
-				type: CharacterTypes.variable,
-				originalCharacters: 'd',
-				from: 11,
-				to: 12,
-			},
-			{
-				characters: ')',
-				type: CharacterTypes.bracket,
-				originalCharacters: ')',
-				from: 12,
-				to: 13,
-			},
-		],
-		[
-			{
-				characters: 'E',
-				type: CharacterTypes.variable,
-				originalCharacters: 'e',
-				from: 14,
-				to: 15,
-			},
-		],
-	]);
+	);
 });
 
-test('a b', t => {
-	t.deepEqual(groupBracketsString('a b'), [
+const t2 = 'a b';
+test(t2, t => {
+	t.deepEqual<StringWithIndices[][], StringWithIndices[][]>(
+		groupBracketsString(t2),
 		[
-			{
-				characters: 'A',
-				type: CharacterTypes.variable,
-				originalCharacters: 'a',
-				from: 0,
-				to: 1,
-			},
+			[
+				{
+					characters: 'A',
+					type: CharacterTypes.variable,
+					from: 0,
+					to: 1,
+					source: t2,
+				},
+			],
+			[
+				{
+					characters: 'B',
+					type: CharacterTypes.variable,
+					from: 2,
+					to: 3,
+					source: t2,
+				},
+			],
 		],
-		[
-			{
-				characters: 'B',
-				type: CharacterTypes.variable,
-				originalCharacters: 'b',
-				from: 2,
-				to: 3,
-			},
-		],
-	]);
+	);
 });
 
-test('(a) & ( b )', t => {
-	t.deepEqual(groupBracketsString('(a) & ( b )'), [
+const t3 = '(a) & ( b )';
+test(t3, t => {
+	t.deepEqual<StringWithIndices[][], StringWithIndices[][]>(
+		groupBracketsString(t3),
 		[
-			{
-				characters: '(',
-				type: CharacterTypes.bracket,
-				originalCharacters: '(',
-				from: 0,
-				to: 1,
-			},
-			{
-				characters: 'A',
-				type: CharacterTypes.variable,
-				originalCharacters: 'a',
-				from: 1,
-				to: 2,
-			},
-			{
-				characters: ')',
-				type: CharacterTypes.bracket,
-				originalCharacters: ')',
-				from: 2,
-				to: 3,
-			},
+			[
+				{
+					characters: '(',
+					type: CharacterTypes.bracket,
+					from: 0,
+					to: 1,
+					source: t3,
+				},
+				{
+					characters: 'A',
+					type: CharacterTypes.variable,
+					from: 1,
+					to: 2,
+					source: t3,
+				},
+				{
+					characters: ')',
+					type: CharacterTypes.bracket,
+					from: 2,
+					to: 3,
+					source: t3,
+				},
+			],
+			[
+				{
+					characters: '&',
+					type: CharacterTypes.operator,
+					from: 4,
+					to: 5,
+					source: t3,
+				},
+			],
+			[
+				{
+					characters: '(',
+					type: CharacterTypes.bracket,
+					from: 6,
+					to: 7,
+					source: t3,
+				},
+				{
+					characters: 'B',
+					type: CharacterTypes.variable,
+					from: 8,
+					to: 9,
+					source: t3,
+				},
+				{
+					characters: ')',
+					type: CharacterTypes.bracket,
+					from: 10,
+					to: 11,
+					source: t3,
+				},
+			],
 		],
-		[
-			{
-				characters: '&',
-				type: CharacterTypes.operator,
-				originalCharacters: '&',
-				from: 4,
-				to: 5,
-			},
-		],
-		[
-			{
-				characters: '(',
-				type: CharacterTypes.bracket,
-				originalCharacters: '(',
-				from: 6,
-				to: 7,
-			},
-			{
-				characters: 'B',
-				type: CharacterTypes.variable,
-				originalCharacters: 'b',
-				from: 8,
-				to: 9,
-			},
-			{
-				characters: ')',
-				type: CharacterTypes.bracket,
-				originalCharacters: ')',
-				from: 10,
-				to: 11,
-			},
-		],
-	]);
+	);
 });
 
-test('((a) & b)', t => {
-	t.deepEqual(groupBracketsString('((a) & b)'), [
+const t4 = '((a) & b)';
+test(t4, t => {
+	t.deepEqual<StringWithIndices[][], StringWithIndices[][]>(
+		groupBracketsString(t4),
 		[
-			{
-				characters: '(',
-				type: CharacterTypes.bracket,
-				originalCharacters: '(',
-				from: 0,
-				to: 1,
-			},
-			{
-				characters: '(',
-				type: CharacterTypes.bracket,
-				originalCharacters: '(',
-				from: 1,
-				to: 2,
-			},
-			{
-				characters: 'A',
-				type: CharacterTypes.variable,
-				originalCharacters: 'a',
-				from: 2,
-				to: 3,
-			},
-			{
-				characters: ')',
-				type: CharacterTypes.bracket,
-				originalCharacters: ')',
-				from: 3,
-				to: 4,
-			},
-			{
-				characters: '&',
-				type: CharacterTypes.operator,
-				originalCharacters: '&',
-				from: 5,
-				to: 6,
-			},
-			{
-				characters: 'B',
-				type: CharacterTypes.variable,
-				originalCharacters: 'b',
-				from: 7,
-				to: 8,
-			},
-			{
-				characters: ')',
-				type: CharacterTypes.bracket,
-				originalCharacters: ')',
-				from: 8,
-				to: 9,
-			},
+			[
+				{
+					characters: '(',
+					type: CharacterTypes.bracket,
+					from: 0,
+					to: 1,
+					source: t4,
+				},
+				{
+					characters: '(',
+					type: CharacterTypes.bracket,
+					from: 1,
+					to: 2,
+					source: t4,
+				},
+				{
+					characters: 'A',
+					type: CharacterTypes.variable,
+					from: 2,
+					to: 3,
+					source: t4,
+				},
+				{
+					characters: ')',
+					type: CharacterTypes.bracket,
+					from: 3,
+					to: 4,
+					source: t4,
+				},
+				{
+					characters: '&',
+					type: CharacterTypes.operator,
+					from: 5,
+					to: 6,
+					source: t4,
+				},
+				{
+					characters: 'B',
+					type: CharacterTypes.variable,
+					from: 7,
+					to: 8,
+					source: t4,
+				},
+				{
+					characters: ')',
+					type: CharacterTypes.bracket,
+					from: 8,
+					to: 9,
+					source: t4,
+				},
+			],
 		],
-	]);
+	);
 });
