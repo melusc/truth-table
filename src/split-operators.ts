@@ -32,9 +32,9 @@ export const splitOperators = (
 			result.push({
 				characters,
 				type: CharacterTypes.operator,
-				originalCharacters: characters,
 				from: index,
 				to: index + characters.length,
+				source: item.source,
 			});
 
 			index += characters.length;

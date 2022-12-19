@@ -1,31 +1,35 @@
 import test from 'ava';
 import {LogicalSymbolFromName} from '../src/logical-symbols.js';
-import {CharacterTypes, fromString} from '../src/string-with-indices.js';
+import {
+	CharacterTypes,
+	fromString,
+	type StringWithIndices,
+} from '../src/string-with-indices.js';
 
 test('fromString', t => {
-	t.deepEqual(
+	t.deepEqual<StringWithIndices[], StringWithIndices[]>(
 		fromString('äöü'),
 		[
 			{
 				characters: 'ÄÖÜ',
 				type: CharacterTypes.operator,
-				originalCharacters: 'äöü',
 				from: 0,
 				to: 3,
+				source: 'äöü',
 			},
 		],
 		'äöü',
 	);
 
-	t.deepEqual(
+	t.deepEqual<StringWithIndices[], StringWithIndices[]>(
 		fromString('abcd'),
 		[
 			{
 				characters: 'ABCD',
 				type: CharacterTypes.variable,
-				originalCharacters: 'abcd',
 				from: 0,
 				to: 4,
+				source: 'abcd',
 			},
 		],
 		'abcd',
@@ -33,257 +37,267 @@ test('fromString', t => {
 
 	const brackets1 = ')((()())))';
 	// Doesn't validate brackets
-	t.deepEqual(
+	t.deepEqual<StringWithIndices[], StringWithIndices[]>(
 		fromString(brackets1),
 		brackets1.split('').map((c, i) => ({
 			characters: c,
 			type: CharacterTypes.bracket,
-			originalCharacters: c,
 			from: i,
 			to: i + 1,
+			source: brackets1,
 		})),
 		brackets1,
 	);
 
-	t.deepEqual(
-		fromString('(A)&(B)'),
+	const input1 = '(A)&(B)';
+	t.deepEqual<StringWithIndices[], StringWithIndices[]>(
+		fromString(input1),
 		[
 			{
 				characters: '(',
 				type: CharacterTypes.bracket,
-				originalCharacters: '(',
 				from: 0,
 				to: 1,
+				source: input1,
 			},
 			{
 				characters: 'A',
 				type: CharacterTypes.variable,
-				originalCharacters: 'A',
 				from: 1,
 				to: 2,
+				source: input1,
 			},
 			{
 				characters: ')',
 				type: CharacterTypes.bracket,
-				originalCharacters: ')',
 				from: 2,
 				to: 3,
+				source: input1,
 			},
 			{
 				characters: '&',
 				type: CharacterTypes.operator,
-				originalCharacters: '&',
 				from: 3,
 				to: 4,
+				source: input1,
 			},
 			{
 				characters: '(',
 				type: CharacterTypes.bracket,
-				originalCharacters: '(',
 				from: 4,
 				to: 5,
+				source: input1,
 			},
 			{
 				characters: 'B',
 				type: CharacterTypes.variable,
-				originalCharacters: 'B',
 				from: 5,
 				to: 6,
+				source: input1,
 			},
 			{
 				characters: ')',
 				type: CharacterTypes.bracket,
-				originalCharacters: ')',
 				from: 6,
 				to: 7,
+				source: input1,
 			},
 		],
-		'(A)&(B)',
+		input1,
 	);
 
-	t.deepEqual(
-		fromString('a AND b'),
+	const input2 = 'a AND b';
+	t.deepEqual<StringWithIndices[], StringWithIndices[]>(
+		fromString(input2),
 		[
 			{
 				characters: 'A',
 				type: CharacterTypes.variable,
-				originalCharacters: 'a',
 				from: 0,
 				to: 1,
+				source: input2,
 			},
 			{
 				characters: 'AND',
 				type: CharacterTypes.variable,
-				originalCharacters: 'AND',
 				from: 2,
 				to: 5,
+				source: input2,
 			},
 			{
 				characters: 'B',
 				type: CharacterTypes.variable,
-				originalCharacters: 'b',
 				from: 6,
 				to: 7,
+				source: input2,
 			},
 		],
-		'a AND b',
+		input2,
 	);
 
-	t.deepEqual(fromString(`a ${LogicalSymbolFromName.and}?&? b`), [
-		{
-			characters: 'A',
-			type: CharacterTypes.variable,
-			originalCharacters: 'a',
-			from: 0,
-			to: 1,
-		},
-		{
-			characters: `${LogicalSymbolFromName.and}?&?`,
-			type: CharacterTypes.operator,
-			originalCharacters: `${LogicalSymbolFromName.and}?&?`,
-			from: 2,
-			to: 6,
-		},
-		{
-			characters: 'B',
-			type: CharacterTypes.variable,
-			originalCharacters: 'b',
-			from: 7,
-			to: 8,
-		},
-	]);
-
-	t.deepEqual(
-		fromString(
-			`a ${LogicalSymbolFromName.and} ${LogicalSymbolFromName.not.repeat(4)} b`,
-		),
+	const input3 = `a ${LogicalSymbolFromName.and}?&? b`;
+	t.deepEqual<StringWithIndices[], StringWithIndices[]>(
+		fromString(input3),
 		[
 			{
 				characters: 'A',
 				type: CharacterTypes.variable,
-				originalCharacters: 'a',
 				from: 0,
 				to: 1,
+				source: input3,
+			},
+			{
+				characters: `${LogicalSymbolFromName.and}?&?`,
+				type: CharacterTypes.operator,
+				from: 2,
+				to: 6,
+				source: input3,
+			},
+			{
+				characters: 'B',
+				type: CharacterTypes.variable,
+				from: 7,
+				to: 8,
+				source: input3,
+			},
+		],
+		input3,
+	);
+
+	const input4 = `a ${
+		LogicalSymbolFromName.and
+	} ${LogicalSymbolFromName.not.repeat(4)} b`;
+	t.deepEqual<StringWithIndices[], StringWithIndices[]>(
+		fromString(input4),
+		[
+			{
+				characters: 'A',
+				type: CharacterTypes.variable,
+				from: 0,
+				to: 1,
+				source: input4,
 			},
 			{
 				characters: LogicalSymbolFromName.and,
 				type: CharacterTypes.operator,
-				originalCharacters: LogicalSymbolFromName.and,
 				from: 2,
 				to: 3,
+				source: input4,
 			},
 			{
 				characters: LogicalSymbolFromName.not.repeat(4),
 				type: CharacterTypes.operator,
-				originalCharacters: LogicalSymbolFromName.not.repeat(4),
 				from: 4,
 				to: 8,
+				source: input4,
 			},
 			{
 				characters: 'B',
 				type: CharacterTypes.variable,
-				originalCharacters: 'b',
 				from: 9,
 				to: 10,
+				source: input4,
 			},
 		],
+		input4,
 	);
 
-	t.deepEqual(
-		fromString('((((a) & (b))))'),
+	const input5 = '((((a) & (b))))';
+	t.deepEqual<StringWithIndices[], StringWithIndices[]>(
+		fromString(input5),
 		[
 			{
 				characters: '(',
 				type: CharacterTypes.bracket,
-				originalCharacters: '(',
 				from: 0,
 				to: 1,
+				source: input5,
 			},
 			{
 				characters: '(',
 				type: CharacterTypes.bracket,
-				originalCharacters: '(',
 				from: 1,
 				to: 2,
+				source: input5,
 			},
 			{
 				characters: '(',
 				type: CharacterTypes.bracket,
-				originalCharacters: '(',
 				from: 2,
 				to: 3,
+				source: input5,
 			},
 			{
 				characters: '(',
 				type: CharacterTypes.bracket,
-				originalCharacters: '(',
 				from: 3,
 				to: 4,
+				source: input5,
 			},
 			{
 				characters: 'A',
 				type: CharacterTypes.variable,
-				originalCharacters: 'a',
 				from: 4,
 				to: 5,
+				source: input5,
 			},
 			{
 				characters: ')',
 				type: CharacterTypes.bracket,
-				originalCharacters: ')',
 				from: 5,
 				to: 6,
+				source: input5,
 			},
 			{
 				characters: '&',
 				type: CharacterTypes.operator,
-				originalCharacters: '&',
 				from: 7,
 				to: 8,
+				source: input5,
 			},
 			{
 				characters: '(',
 				type: CharacterTypes.bracket,
-				originalCharacters: '(',
 				from: 9,
 				to: 10,
+				source: input5,
 			},
 			{
 				characters: 'B',
 				type: CharacterTypes.variable,
-				originalCharacters: 'b',
 				from: 10,
 				to: 11,
+				source: input5,
 			},
 			{
 				characters: ')',
 				type: CharacterTypes.bracket,
-				originalCharacters: ')',
 				from: 11,
 				to: 12,
+				source: input5,
 			},
 			{
 				characters: ')',
 				type: CharacterTypes.bracket,
-				originalCharacters: ')',
 				from: 12,
 				to: 13,
+				source: input5,
 			},
 			{
 				characters: ')',
 				type: CharacterTypes.bracket,
-				originalCharacters: ')',
 				from: 13,
 				to: 14,
+				source: input5,
 			},
 			{
 				characters: ')',
 				type: CharacterTypes.bracket,
-				originalCharacters: ')',
 				from: 14,
 				to: 15,
+				source: input5,
 			},
 		],
-		'((((a) & (b))))',
+		input5,
 	);
 });

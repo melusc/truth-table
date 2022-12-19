@@ -1,9 +1,9 @@
 export type StringWithIndices = {
 	characters: string;
 	readonly type: CharacterTypes;
-	readonly originalCharacters: string;
 	readonly from: number;
 	readonly to: number;
+	readonly source: string;
 };
 
 const VARIABLES_RE = /^[a-z_]+$/i;
@@ -39,8 +39,8 @@ export const fromString = (input: string): StringWithIndices[] => {
 			characters: characters.toUpperCase(),
 			from,
 			to: from + characters.length,
-			originalCharacters: characters,
 			type,
+			source: input,
 		});
 	}
 

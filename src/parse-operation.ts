@@ -37,6 +37,22 @@ export type AST = ReadonlyDeep<
 	stringified?: string;
 };
 
+const toOriginalString = (
+	input: StringWithIndices | StringWithIndices[],
+): string => {
+	if (!Array.isArray(input)) {
+		return input.source.slice(input.from, input.to);
+	}
+
+	const [first] = input;
+	const last = input.at(-1);
+	if (!first || !last) {
+		throw new Error('Unexpected empty input.');
+	}
+
+	return first.source.slice(first.from, last.to);
+};
+
 const parseNot = (input: readonly StringWithIndices[][]): AST => {
 	const first = input[0]?.[0];
 
@@ -69,9 +85,7 @@ const _parseOperation = (input: StringWithIndices[]): AST => {
 
 	if (!hasOperator(input)) {
 		throw new IndexedError(
-			`Expected "${input
-				.map(item => item.originalCharacters)
-				.join(' ')}" to have an operator.`,
+			`Expected "${toOriginalString(input)}" to have an operator.`,
 			input[0]!.from,
 			input.at(-1)!.to,
 		);
@@ -143,9 +157,7 @@ const _parseOperations = (input: StringWithIndices[][]): AST => {
 
 	if (operatorArray.length !== 1) {
 		throw new IndexedError(
-			`Expected operator, got "${operatorArray
-				.map(item => item.originalCharacters)
-				.join(' ')}".`,
+			`Expected operator, got "${toOriginalString(operatorArray)}".`,
 			operatorArray[0]!.from,
 			operatorArray.at(-1)!.to,
 		);
@@ -157,7 +169,9 @@ const _parseOperations = (input: StringWithIndices[][]): AST => {
 		|| !isValidOperatorName(operator.characters)
 	) {
 		throw new IndexedError(
-			`Expected operator, got type "${operator.type}" with value "${operator.originalCharacters}"`,
+			`Expected operator, got type "${
+				operator.type
+			}" with value "${toOriginalString(operator)}"`,
 			operator.from,
 			operator.to,
 		);

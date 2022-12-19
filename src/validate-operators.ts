@@ -14,7 +14,9 @@ export const validateOperators = (
 			&& item.characters !== LogicalSymbolsNames.not
 		) {
 			throw new IndexedError(
-				`Unexpected operator "${item.originalCharacters}" at (${item.from} - ${item.to}).`,
+				`Unexpected operator "${item.source.slice(item.from, item.to)}" at (${
+					item.from
+				} - ${item.to}).`,
 				item.from,
 				item.to,
 			);

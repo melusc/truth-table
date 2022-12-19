@@ -67,8 +67,8 @@ test('validateCharacters', t => {
 					characters: 'ABC',
 					from: 0,
 					to: 3,
-					originalCharacters: 'ABC',
 					type: 'abc' as CharacterTypes.bracket,
+					source: 'ABC',
 				},
 			]);
 		},
@@ -83,8 +83,8 @@ test('validateCharacters', t => {
 				characters: 'ABC',
 				from: 0,
 				to: 3,
-				originalCharacters: 'ABC',
 				type: CharacterTypes.bracket,
+				source: 'ABC',
 			},
 		]);
 	});
