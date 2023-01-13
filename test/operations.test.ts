@@ -4,7 +4,7 @@ import {operations} from '../src/operations.js';
 
 const createTest = <T extends keyof typeof operations>(
 	title: T,
-	valueResults: Array<[Parameters<typeof operations[T]>, boolean]>,
+	valueResults: Array<[Parameters<(typeof operations)[T]>, boolean]>,
 ): void => {
 	test(title, t => {
 		for (const row of valueResults) {
