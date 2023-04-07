@@ -1,9 +1,9 @@
 import test from 'ava';
+
 import {IndexedError} from '../src/indexed-error.js';
 import {LogicalSymbolFromName} from '../src/logical-symbols.js';
 import {normaliseOperators} from '../src/operator-alias.js';
 import {CharacterTypes, fromString} from '../src/string-with-indices.js';
-
 import {validateCharacters} from '../src/validate-characters.js';
 
 const doValidate = (input: string): void => {

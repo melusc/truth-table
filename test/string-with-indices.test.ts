@@ -1,4 +1,5 @@
 import test from 'ava';
+
 import {LogicalSymbolFromName} from '../src/logical-symbols.js';
 import {
 	CharacterTypes,
