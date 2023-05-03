@@ -40,7 +40,7 @@ test('fromString', t => {
 	// Doesn't validate brackets
 	t.deepEqual<StringWithIndices[], StringWithIndices[]>(
 		fromString(brackets1),
-		brackets1.split('').map((c, i) => ({
+		[...brackets1].map((c, i) => ({
 			characters: c,
 			type: CharacterTypes.bracket,
 			from: i,
