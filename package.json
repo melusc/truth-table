@@ -40,13 +40,13 @@
 		"prettier": "^2.8.8",
 		"rimraf": "^5.0.0",
 		"typescript": "^5.0.4",
-		"xo": "^0.54.1"
+		"xo": "^0.54.2"
 	},
-	"packageManager": "yarn@3.5.0",
+	"packageManager": "yarn@3.5.1",
 	"exports": {
 		".": "./dist/src/index.js"
 	},
 	"dependencies": {
-		"type-fest": "^3.9.0"
+		"type-fest": "^3.10.0"
 	}
 }
