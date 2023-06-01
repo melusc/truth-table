@@ -2,8 +2,8 @@
 
 @lusc/truth-table can parse truth statements and generate truth tables. [Try it out](https://melusc.github.io/truth-table/).
 
-Given a statement like  
-`A AND B`  
+Given a statement like
+`A AND B`
 It'll generate a table like
 
 | A     | B     | A ∧ B |
@@ -26,9 +26,9 @@ See [operator-aliases.md](./operator-aliases.md) for all the aliases.
 
 ## Variables
 
-A variable is made up of at least one character.  
-It must contain only latin letters (a-z).  
-Variables are case-insensitive.  
+A variable is made up of at least one character.
+It must contain only latin letters (a-z).
+Variables are case-insensitive.
 `and`, `or`, and so on are reserved and will be treated as operators.
 
 ## AST
@@ -38,7 +38,9 @@ The shape of the AST is as follows.
 
 ### Variable
 
-A variable is made up of any latin letter. Variables are case-insensitive.
+A variable is made of any latin letter. Variables are case insensitive. Additionally, `_` is permitted.
+
+A variable matches the regex `/^[a-z_]+$/i`.
 
 ```ts
 type AST = {
@@ -85,9 +87,11 @@ IndexedError {
 
 ## parseOperation
 
-`parseOperation` takes a string as input and returns an [`AST`](#ast);
+```ts
+function parseOperation(input: string): AST;
+```
 
-If there are invalid characters, unmatched brackets, two operators following each other or similar it throws [`IndexedError`](#indexederror).  
+If there are invalid characters, unmatched brackets, two operators following each other or similar it throws [`IndexedError`](#indexederror).
 For all other errors `Error` is thrown.
 
 ## operationToString
@@ -103,15 +107,21 @@ operationToString(ast); // === "(A ∧ B)"
 
 ## generateTable
 
-`generateTable` accepts a single string and returns `ParsedTable`.
-
 ```ts
+function generateTable(input: string, includeSteps = true): ParsedTable;
+
 type ParsedTable = {
 	columns: readonly string[];
 	rows: readonly boolean[][];
 	ast: AST;
 };
 ```
+
+`input` is the operation that will be parsed.
+
+If `includeSteps` is `false`, an operation like `(a & b) | c` will return the columns
+`A`, `B`, `C`, and `(A ∧ B) ∨ C`.
+Otherwise it additionally returns `A ∧ B`.
 
 The input is passed to [`parseOperation`](#parseoperation) and throws the same errors.
 

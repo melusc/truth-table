@@ -1,10 +1,10 @@
-export type StringWithIndices = {
+export type StringWithIndices = Readonly<{
 	characters: string;
-	readonly type: CharacterTypes;
-	readonly from: number;
-	readonly to: number;
-	readonly source: string;
-};
+	type: CharacterTypes;
+	from: number;
+	to: number;
+	source: string;
+}>;
 
 const VARIABLES_RE = /^[a-z_]+$/i;
 const BRACKETS_RE = /^[()]+$/;

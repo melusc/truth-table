@@ -8,11 +8,14 @@ import {evalOperation} from './eval.js';
 
 type Column = [AST, string];
 
-function * getColumns(operations: AST): Iterable<Column> {
+function * getColumns(operations: AST, includeSteps: boolean): Iterable<Column> {
 	// Not variables, they are handled differently below
 	if (operations.type !== 'variable') {
-		for (const value of operations.values) {
-			yield * getColumns(value);
+		// If includeSteps === false, only yield the outermost operation
+		if (includeSteps) {
+			for (const value of operations.values) {
+				yield * getColumns(value, includeSteps);
+			}
 		}
 
 		// Yield after above, so it goes from inside out
@@ -47,11 +50,14 @@ type TableReadonlyKeys = 'columns' | 'rows';
 export type ParsedTable = ReadonlyDeep<Pick<MutableTable, TableReadonlyKeys>> &
 	Readonly<Except<MutableTable, TableReadonlyKeys>>;
 
-export const generateTable = (input: string): ParsedTable => {
+export const generateTable = (
+	input: string,
+	includeSteps = true,
+): ParsedTable => {
 	const parsed = parseOperation(input);
 	const variables = findVariables(parsed);
 	const rows = generateBoolPermutations(variables);
-	const columns = deduplicateColumns(getColumns(parsed));
+	const columns = deduplicateColumns(getColumns(parsed, includeSteps));
 
 	const table: MutableTable = {
 		columns: [...variables],
