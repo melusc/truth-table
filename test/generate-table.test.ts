@@ -56,3 +56,26 @@ test(t3, t => {
 		],
 	});
 });
+
+test('generateTable with includeSteps=false', t => {
+	t.like(generateTable('(a & b) | (a & b)', false), {
+		columns: [
+			'A',
+			'B',
+			`(A ${LogicalSymbolFromName.and} B) ${LogicalSymbolFromName.or} (A ${LogicalSymbolFromName.and} B)`,
+		],
+		rows: [
+			[true, true, true],
+			[true, false, false],
+			[false, true, false],
+			[false, false, false],
+		],
+	});
+});
+
+test('generateTable with includeSteps=false and no operations', t => {
+	t.like(generateTable('A', false), {
+		columns: ['A'],
+		rows: [[true], [false]],
+	});
+});
