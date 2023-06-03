@@ -1,6 +1,6 @@
 # @lusc/truth-table
 
-@lusc/truth-table can parse truth statements and generate truth tables. [Try it out](https://melusc.github.io/truth-table/).
+@lusc/truth-table can parse truth statements and generate truth tables. [Try it out](https://melusc.github.io/truth-table).
 
 Given a statement like
 `A AND B`
