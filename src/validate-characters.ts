@@ -1,6 +1,6 @@
 import {IndexedError} from './indexed-error.js';
 import {isValidOperatorName} from './logical-symbols.js';
-import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
+import {TokenType, type Tokens} from './tokenize.js';
 
 const throwUnexpectedChar = (char: string, from: number, to?: number): void => {
 	const message
@@ -19,9 +19,7 @@ const findUnexpectedChar = (input: string, regex: RegExp): void => {
 	}
 };
 
-export const validateCharacters = (
-	input: readonly StringWithIndices[],
-): void => {
+export const validateCharacters = (input: readonly Tokens[]): void => {
 	for (const item of input) {
 		const c = item.characters;
 
@@ -31,7 +29,7 @@ export const validateCharacters = (
 		}
 
 		switch (item.type) {
-			case CharacterTypes.operator: {
+			case TokenType.operator: {
 				const validOperator = isValidOperatorName(c);
 
 				if (!validOperator) {
@@ -42,13 +40,13 @@ export const validateCharacters = (
 				break;
 			}
 
-			case CharacterTypes.bracket: {
+			case TokenType.bracket: {
 				findUnexpectedChar(c, /[^()]/);
 
 				break;
 			}
 
-			case CharacterTypes.variable: {
+			case TokenType.variable: {
 				findUnexpectedChar(c, /[^a-z_]/i);
 
 				break;

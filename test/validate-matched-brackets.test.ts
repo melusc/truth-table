@@ -1,11 +1,11 @@
 import test from 'ava';
 
 import {validateMatchedBrackets} from '../src/validate-matched-brackets.js';
-import {fromString} from '../src/string-with-indices.js';
+import {tokenize} from '../src/tokenize.js';
 import {IndexedError} from '../src/indexed-error.js';
 
 const doValidate = (input: string): void => {
-	validateMatchedBrackets(fromString(input));
+	validateMatchedBrackets(tokenize(input));
 };
 
 test('findUnmatchedBrackets', t => {

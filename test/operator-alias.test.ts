@@ -3,10 +3,10 @@
 import test from 'ava';
 
 import {normaliseOperators} from '../src/operator-alias.js';
-import {fromString} from '../src/string-with-indices.js';
+import {tokenize} from '../src/tokenize.js';
 
 const doNormaliseOperators = (input: string): string =>
-	normaliseOperators(fromString(input))
+	normaliseOperators(tokenize(input))
 		.map(({characters}) => characters)
 		.join(' ');
 

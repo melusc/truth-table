@@ -1,10 +1,8 @@
-import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
+import {TokenType, type Tokens} from './tokenize.js';
 
-export const groupItems = (
-	input: readonly StringWithIndices[],
-): StringWithIndices[][] => {
-	let previous: StringWithIndices[] = [];
-	const result: StringWithIndices[][] = [];
+export const groupItems = (input: readonly Tokens[]): Tokens[][] => {
+	let previous: Tokens[] = [];
+	const result: Tokens[][] = [];
 
 	let depth = 0;
 
@@ -16,7 +14,7 @@ export const groupItems = (
 	};
 
 	for (const item of input) {
-		if (item.type === CharacterTypes.bracket) {
+		if (item.type === TokenType.bracket) {
 			pushResult();
 
 			previous.push(item);

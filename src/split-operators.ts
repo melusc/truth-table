@@ -1,5 +1,5 @@
 import {singleCharacterNotAliases} from './operator-alias.js';
-import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
+import {TokenType, type Tokens} from './tokenize.js';
 import {logicalSymbols} from './logical-symbols.js';
 
 const joinedNots = `[${singleCharacterNotAliases.join('')}]`;
@@ -9,13 +9,11 @@ const splitter = new RegExp(
 	`(${joinedNots}(?=${joinedNots}|$)|${joinedSymbols})`,
 );
 
-export const splitOperators = (
-	input: readonly StringWithIndices[],
-): StringWithIndices[] => {
-	const result: StringWithIndices[] = [];
+export const splitOperators = (input: readonly Tokens[]): Tokens[] => {
+	const result: Tokens[] = [];
 
 	for (const item of input) {
-		if (item.type !== CharacterTypes.operator) {
+		if (item.type !== TokenType.operator) {
 			result.push(item);
 
 			continue;
@@ -31,7 +29,7 @@ export const splitOperators = (
 
 			result.push({
 				characters,
-				type: CharacterTypes.operator,
+				type: TokenType.operator,
 				from: index,
 				to: index + characters.length,
 				source: item.source,
