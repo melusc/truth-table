@@ -178,13 +178,13 @@ const _parseOperations = (input: Tokens[][]): AST => {
 // Wrapper around _parseOperation for sanitising and validating
 // so it doesn't waste resources validating multiple times
 export const parseOperation = (raw: string): AST => {
-	const withIndices = tokenize(raw);
+	const tokens = tokenize(raw);
 
-	if (withIndices.length === 0) {
+	if (tokens.length === 0) {
 		throw new Error('Unexpected empty string');
 	}
 
-	const split = splitOperators(withIndices);
+	const split = splitOperators(tokens);
 
 	const translatedMappings = normaliseOperators(split);
 
