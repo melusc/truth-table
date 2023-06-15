@@ -3,11 +3,11 @@ import test from 'ava';
 import {IndexedError} from '../src/indexed-error.js';
 import {LogicalSymbolFromName} from '../src/logical-symbols.js';
 import {normaliseOperators} from '../src/operator-alias.js';
-import {CharacterTypes, fromString} from '../src/string-with-indices.js';
+import {TokenType, tokenize} from '../src/tokenize.js';
 import {validateCharacters} from '../src/validate-characters.js';
 
 const doValidate = (input: string): void => {
-	validateCharacters(normaliseOperators(fromString(input)));
+	validateCharacters(normaliseOperators(tokenize(input)));
 };
 
 test('validateCharacters', t => {
@@ -67,7 +67,7 @@ test('validateCharacters', t => {
 					characters: 'ABC',
 					from: 0,
 					to: 3,
-					type: 'abc' as CharacterTypes.bracket,
+					type: 'abc' as TokenType.bracket,
 					source: 'ABC',
 				},
 			]);
@@ -83,7 +83,7 @@ test('validateCharacters', t => {
 				characters: 'ABC',
 				from: 0,
 				to: 3,
-				type: CharacterTypes.bracket,
+				type: TokenType.bracket,
 				source: 'ABC',
 			},
 		]);

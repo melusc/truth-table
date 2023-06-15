@@ -1,16 +1,14 @@
 import {LogicalSymbolsNames} from './logical-symbols.js';
-import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
+import {TokenType, type Tokens} from './tokenize.js';
 import {IndexedError} from './indexed-error.js';
 
-export const validateOperators = (
-	input: readonly StringWithIndices[],
-): void => {
-	let lastType: CharacterTypes | undefined;
+export const validateOperators = (input: readonly Tokens[]): void => {
+	let lastType: TokenType | undefined;
 
 	for (const item of input) {
 		if (
-			item.type === CharacterTypes.operator
-			&& lastType === CharacterTypes.operator
+			item.type === TokenType.operator
+			&& lastType === TokenType.operator
 			&& item.characters !== LogicalSymbolsNames.not
 		) {
 			throw new IndexedError(

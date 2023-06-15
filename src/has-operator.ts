@@ -1,6 +1,6 @@
-import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
+import {TokenType, type Tokens} from './tokenize.js';
 
-export const hasOperator = (input: readonly StringWithIndices[]): boolean => {
+export const hasOperator = (input: readonly Tokens[]): boolean => {
 	if (input.length === 1) {
 		return true;
 	}
@@ -8,11 +8,11 @@ export const hasOperator = (input: readonly StringWithIndices[]): boolean => {
 	let variableCount = 0;
 
 	for (const item of input) {
-		if (item.type === CharacterTypes.operator) {
+		if (item.type === TokenType.operator) {
 			return true;
 		}
 
-		if (item.type === CharacterTypes.variable) {
+		if (item.type === TokenType.variable) {
 			++variableCount;
 		}
 	}

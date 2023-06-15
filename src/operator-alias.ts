@@ -1,5 +1,5 @@
 import {LogicalSymbolFromName, LogicalSymbolsNames} from './logical-symbols.js';
-import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
+import {TokenType, type Tokens} from './tokenize.js';
 
 export const singleCharacterNotAliases = [
 	'~',
@@ -54,25 +54,22 @@ for (const [operator, aliases] of groupedAliases) {
 	aliasMap.set(operator.toLowerCase(), operator);
 }
 
-export const normaliseOperators = (
-	input: readonly StringWithIndices[],
-): StringWithIndices[] => {
-	const result: StringWithIndices[] = [];
+export const normaliseOperators = (input: readonly Tokens[]): Tokens[] => {
+	const result: Tokens[] = [];
 
 	for (const item of input) {
 		const operatorAlias = aliasMap.get(item.characters.toLowerCase());
 
 		if (
 			operatorAlias === undefined
-			|| (item.type !== CharacterTypes.operator
-				&& item.type !== CharacterTypes.variable)
+			|| (item.type !== TokenType.operator && item.type !== TokenType.variable)
 		) {
 			result.push(item);
 		} else {
 			result.push({
 				...item,
 				characters: operatorAlias,
-				type: CharacterTypes.operator,
+				type: TokenType.operator,
 			});
 		}
 	}

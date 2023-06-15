@@ -8,11 +8,7 @@ import {
 	isValidOperatorName,
 	LogicalSymbolsNames,
 } from './logical-symbols.js';
-import {
-	CharacterTypes,
-	fromString,
-	type StringWithIndices,
-} from './string-with-indices.js';
+import {TokenType, tokenize, type Tokens} from './tokenize.js';
 import {validate} from './validate.js';
 import {splitOperators} from './split-operators.js';
 import {hasOperator} from './has-operator.js';
@@ -37,9 +33,7 @@ export type AST = ReadonlyDeep<
 	stringified?: string;
 };
 
-const toOriginalString = (
-	input: StringWithIndices | StringWithIndices[],
-): string => {
+const toOriginalString = (input: Tokens | Tokens[]): string => {
 	if (!Array.isArray(input)) {
 		return input.source.slice(input.from, input.to);
 	}
@@ -53,7 +47,7 @@ const toOriginalString = (
 	return first.source.slice(first.from, last.to);
 };
 
-const parseNot = (input: readonly StringWithIndices[][]): AST => {
+const parseNot = (input: readonly Tokens[][]): AST => {
 	const first = input[0]?.[0];
 
 	if (first === undefined) {
@@ -61,7 +55,7 @@ const parseNot = (input: readonly StringWithIndices[][]): AST => {
 	}
 
 	if (
-		first.type !== CharacterTypes.operator
+		first.type !== TokenType.operator
 		|| first.characters !== LogicalSymbolsNames.not
 	) {
 		throw new IndexedError(
@@ -78,7 +72,7 @@ const parseNot = (input: readonly StringWithIndices[][]): AST => {
 	};
 };
 
-const _parseOperation = (input: StringWithIndices[]): AST => {
+const _parseOperation = (input: Tokens[]): AST => {
 	if (input.length === 0) {
 		throw new Error('Unexpected empty input at _parseOperation.');
 	}
@@ -94,7 +88,7 @@ const _parseOperation = (input: StringWithIndices[]): AST => {
 	if (input.length === 1) {
 		const item = input[0]!;
 
-		if (item.type === CharacterTypes.variable) {
+		if (item.type === TokenType.variable) {
 			return {
 				type: 'variable',
 				variable: item.characters,
@@ -116,10 +110,7 @@ const _parseOperation = (input: StringWithIndices[]): AST => {
 		const first = input[0]!;
 		const last = input.at(-1)!;
 
-		if (
-			first.type === CharacterTypes.bracket
-			&& last.type === CharacterTypes.bracket
-		) {
+		if (first.type === TokenType.bracket && last.type === TokenType.bracket) {
 			return _parseOperation(input.slice(1, -1));
 		}
 	}
@@ -127,7 +118,7 @@ const _parseOperation = (input: StringWithIndices[]): AST => {
 	return _parseOperations(grouped);
 };
 
-const _parseOperations = (input: StringWithIndices[][]): AST => {
+const _parseOperations = (input: Tokens[][]): AST => {
 	if (input.length === 0) {
 		throw new Error('Unexpected empty input at _parseOperation.');
 	}
@@ -136,13 +127,13 @@ const _parseOperations = (input: StringWithIndices[][]): AST => {
 		return _parseOperation(input[0]!);
 	}
 
-	const lastItems: StringWithIndices[][] = [input.pop()!];
+	const lastItems: Tokens[][] = [input.pop()!];
 
-	let secondToLast: StringWithIndices[] | undefined;
+	let secondToLast: Tokens[] | undefined;
 	while (
 		(secondToLast = input.at(-1))
 		&& secondToLast.length === 1
-		&& secondToLast[0]!.type === CharacterTypes.operator
+		&& secondToLast[0]!.type === TokenType.operator
 		&& secondToLast[0]!.characters === LogicalSymbolsNames.not
 	) {
 		lastItems.unshift(input.pop()!);
@@ -165,7 +156,7 @@ const _parseOperations = (input: StringWithIndices[][]): AST => {
 
 	// !isValidOperator is unnecessary, it's just a typeguard
 	if (
-		operator.type !== CharacterTypes.operator
+		operator.type !== TokenType.operator
 		|| !isValidOperatorName(operator.characters)
 	) {
 		throw new IndexedError(
@@ -187,7 +178,7 @@ const _parseOperations = (input: StringWithIndices[][]): AST => {
 // Wrapper around _parseOperation for sanitising and validating
 // so it doesn't waste resources validating multiple times
 export const parseOperation = (raw: string): AST => {
-	const withIndices = fromString(raw);
+	const withIndices = tokenize(raw);
 
 	if (withIndices.length === 0) {
 		throw new Error('Unexpected empty string');

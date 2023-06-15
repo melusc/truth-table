@@ -1,16 +1,11 @@
 import {IndexedError} from './indexed-error.js';
-import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
+import {TokenType, type Tokens} from './tokenize.js';
 
-export const validateEmptyBrackets = (
-	input: readonly StringWithIndices[],
-): void => {
-	let last: StringWithIndices | undefined;
+export const validateEmptyBrackets = (input: readonly Tokens[]): void => {
+	let last: Tokens | undefined;
 
 	for (const item of input) {
-		if (
-			last?.type === CharacterTypes.bracket
-			&& item.type === CharacterTypes.bracket
-		) {
+		if (last?.type === TokenType.bracket && item.type === TokenType.bracket) {
 			if (item.characters === '(' && last.characters === ')') {
 				throw new IndexedError(
 					`Unexpected opening bracket at position ${item.from}.`,

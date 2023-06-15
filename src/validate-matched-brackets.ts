@@ -1,9 +1,7 @@
 import {IndexedError} from './indexed-error.js';
-import {CharacterTypes, type StringWithIndices} from './string-with-indices.js';
+import {TokenType, type Tokens} from './tokenize.js';
 
-export const validateMatchedBrackets = (
-	input: readonly StringWithIndices[],
-): void => {
+export const validateMatchedBrackets = (input: readonly Tokens[]): void => {
 	// Push for opening bracket
 	// pop on closing bracket
 	// Expect it to always have an index at end for every closing bracket
@@ -11,7 +9,7 @@ export const validateMatchedBrackets = (
 	const openingBrackets: number[] = [];
 
 	for (const item of input) {
-		if (item.type === CharacterTypes.bracket) {
+		if (item.type === TokenType.bracket) {
 			if (item.characters === '(') {
 				openingBrackets.push(item.from);
 			} else if (openingBrackets.pop() === undefined) {
