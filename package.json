@@ -46,6 +46,6 @@
 		".": "./dist/src/index.js"
 	},
 	"dependencies": {
-		"type-fest": "^3.11.1"
+		"type-fest": "^3.12.0"
 	}
 }
