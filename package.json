@@ -33,7 +33,7 @@
 		"prepublish": "yarn build"
 	},
 	"devDependencies": {
-		"@ava/typescript": "^4.0.0",
+		"@ava/typescript": "^4.1.0",
 		"@lusc/tsconfig": "^2.3.0",
 		"ava": "^5.3.1",
 		"prettier": "^2.8.8",
