@@ -12,11 +12,14 @@ const doValidate = (input: string): void => {
 };
 
 test('validateOperators', t => {
-	t.notThrows(() => {
-		doValidate(
-			`a${LogicalSymbolFromName.and}${LogicalSymbolFromName.not.repeat(2)}b`,
-		);
-	}, `a${LogicalSymbolFromName.and}${LogicalSymbolFromName.not.repeat(2)}b`);
+	t.notThrows(
+		() => {
+			doValidate(
+				`a${LogicalSymbolFromName.and}${LogicalSymbolFromName.not.repeat(2)}b`,
+			);
+		},
+		`a${LogicalSymbolFromName.and}${LogicalSymbolFromName.not.repeat(2)}b`,
+	);
 
 	t.throws(
 		() => {
