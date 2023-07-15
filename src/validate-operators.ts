@@ -9,6 +9,7 @@ export const validateOperators = (input: readonly Tokens[]): void => {
 		if (
 			item.type === TokenType.operator
 			&& lastType === TokenType.operator
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
 			&& item.characters !== LogicalSymbolsNames.not
 		) {
 			throw new IndexedError(

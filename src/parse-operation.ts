@@ -56,6 +56,7 @@ const parseNot = (input: readonly Tokens[][]): AST => {
 
 	if (
 		first.type !== TokenType.operator
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
 		|| first.characters !== LogicalSymbolsNames.not
 	) {
 		throw new IndexedError(
@@ -134,6 +135,7 @@ const _parseOperations = (input: Tokens[][]): AST => {
 		(secondToLast = input.at(-1))
 		&& secondToLast.length === 1
 		&& secondToLast[0]!.type === TokenType.operator
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
 		&& secondToLast[0]!.characters === LogicalSymbolsNames.not
 	) {
 		lastItems.unshift(input.pop()!);
