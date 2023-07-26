@@ -1,7 +1,7 @@
 import {type AST} from './parse-operation.js';
 import {LogicalSymbolFromName} from './logical-symbols.js';
 
-const cache = new Map<AST, string>();
+const cache = new WeakMap<AST, string>();
 
 export const operationToString = (operation: AST): string => {
 	if (cache.has(operation)) {
