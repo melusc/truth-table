@@ -1,10 +1,30 @@
-export type Tokens = Readonly<{
-	characters: string;
-	type: TokenType;
-	from: number;
-	to: number;
-	source: string;
-}>;
+import {IndexedError} from './indexed-error.js';
+import {Operator} from './operators.js';
+import {operatorAliases, singleCharacterNotAliases} from './operator-alias.js';
+
+export type Token = Readonly<
+	| {
+			type: TokenType.bracket;
+			bracketType: 'open' | 'close';
+			from: number;
+			to: number;
+			source: string;
+	  }
+	| {
+			type: TokenType.operator;
+			operator: Operator;
+			from: number;
+			to: number;
+			source: string;
+	  }
+	| {
+			characters: string;
+			type: TokenType.variable;
+			from: number;
+			to: number;
+			source: string;
+	  }
+>;
 
 const VARIABLES_RE = /^[a-z_]+$/i;
 const BRACKETS_RE = /^[()]+$/;
@@ -15,10 +35,52 @@ export const enum TokenType {
 	bracket = 'bracket',
 }
 
-export const tokenize = (input: string): Tokens[] => {
+function tokenizeOperator(
+	characters: string,
+	from: number,
+	to: number,
+	source: string,
+): Token[] {
+	const result: Token[] = [];
+
+	while (
+		characters.length > 0
+		&& singleCharacterNotAliases.has(characters.at(-1)!)
+	) {
+		result.unshift({
+			type: TokenType.operator,
+			operator: Operator.not,
+			from: to - 1,
+			to,
+			source,
+		});
+
+		--to;
+		characters = characters.slice(0, -1);
+	}
+
+	if (characters.length > 0) {
+		const operator = operatorAliases.get(characters.toLowerCase());
+		if (!operator) {
+			throw new IndexedError(`Unknown operator "${characters}".`, from, to);
+		}
+
+		result.unshift({
+			type: TokenType.operator,
+			operator,
+			from,
+			to,
+			source,
+		});
+	}
+
+	return result;
+}
+
+export const tokenize = (input: string): Token[] => {
 	input = input.normalize('NFKC');
 
-	const result: Tokens[] = [];
+	const result: Token[] = [];
 	for (const match of input.matchAll(/[a-z_]+|[()]|[^a-z_()\s]+/gi)) {
 		const characters = match[0];
 		const from = match.index;
@@ -26,22 +88,38 @@ export const tokenize = (input: string): Tokens[] => {
 			throw new TypeError('Expected a number on match.index');
 		}
 
-		let type: TokenType;
-		if (VARIABLES_RE.test(characters)) {
-			type = TokenType.variable;
-		} else if (BRACKETS_RE.test(characters)) {
-			type = TokenType.bracket;
-		} else {
-			type = TokenType.operator;
-		}
+		const to = from + characters.length;
 
-		result.push({
-			characters: characters.toUpperCase(),
-			from,
-			to: from + characters.length,
-			type,
-			source: input,
-		});
+		if (VARIABLES_RE.test(characters)) {
+			// Handle things like "and"
+			if (operatorAliases.has(characters.toLowerCase())) {
+				result.push({
+					type: TokenType.operator,
+					operator: operatorAliases.get(characters.toLowerCase())!,
+					from,
+					to,
+					source: input,
+				});
+			} else {
+				result.push({
+					type: TokenType.variable,
+					characters: characters.toUpperCase(),
+					from,
+					to,
+					source: input,
+				});
+			}
+		} else if (BRACKETS_RE.test(characters)) {
+			result.push({
+				type: TokenType.bracket,
+				bracketType: characters === '(' ? 'open' : 'close',
+				from,
+				to,
+				source: input,
+			});
+		} else {
+			result.push(...tokenizeOperator(characters, from, to, input));
+		}
 	}
 
 	return result;

@@ -1,6 +1,7 @@
 import test from 'ava';
 
 import {evalOperation} from '../src/eval.js';
+import {Operator} from '../src/operators.js';
 import {parseOperation} from '../src/parse-operation.js';
 
 const t1 = `
@@ -43,7 +44,7 @@ test('Unexpected type', t => {
 		evalOperation(
 			{
 				type: 'abc' as 'operator',
-				operator: 'and',
+				operator: Operator.and,
 				values: [
 					{
 						type: 'variable',

@@ -1,13 +1,11 @@
-import type {Tokens} from '../tokenize.js';
+import type {Token} from '../tokenize.js';
 
 import {validateMatchedBrackets} from './validate-matched-brackets.js';
-import {validateCharacters} from './validate-characters.js';
 import {validateEmptyBrackets} from './validate-empty-brackets.js';
-import {validateOperators} from './validate-operators.js';
+import {validateNots} from './validate-nots.js';
 
-export const validate = (input: readonly Tokens[]): void => {
-	validateCharacters(input);
-	validateOperators(input);
+export const validate = (input: readonly Token[]): void => {
+	validateNots(input);
 	validateMatchedBrackets(input);
 	validateEmptyBrackets(input);
 };

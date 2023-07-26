@@ -2,12 +2,21 @@
 
 import test from 'ava';
 
-import {normaliseOperators} from '../src/operator-alias.js';
-import {tokenize} from '../src/tokenize.js';
+import {TokenType, tokenize} from '../../src/tokenize.js';
 
 const doNormaliseOperators = (input: string): string =>
-	normaliseOperators(tokenize(input))
-		.map(({characters}) => characters)
+	tokenize(input)
+		.map(item => {
+			if (item.type === TokenType.operator) {
+				return item.operator;
+			}
+
+			if (item.type === TokenType.variable) {
+				return item.characters;
+			}
+
+			return item.bracketType === 'open' ? '(' : ')';
+		})
 		.join(' ');
 
 const makeTest = (

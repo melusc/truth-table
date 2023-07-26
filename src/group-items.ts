@@ -1,8 +1,8 @@
-import {TokenType, type Tokens} from './tokenize.js';
+import {TokenType, type Token} from './tokenize.js';
 
-export const groupItems = (input: readonly Tokens[]): Tokens[][] => {
-	let previous: Tokens[] = [];
-	const result: Tokens[][] = [];
+export const groupItems = (input: readonly Token[]): Token[][] => {
+	let previous: Token[] = [];
+	const result: Token[][] = [];
 
 	let depth = 0;
 
@@ -19,7 +19,7 @@ export const groupItems = (input: readonly Tokens[]): Tokens[][] => {
 
 			previous.push(item);
 
-			if (item.characters === '(') {
+			if (item.bracketType === 'open') {
 				++depth;
 			} else {
 				--depth;
