@@ -1,18 +1,17 @@
 import type {ReadonlyDeep} from 'type-fest';
 
 import {groupItems} from './group-items.js';
-import {normaliseOperators} from './operator-alias.js';
-import {
-	type LogicalName,
-	LogicalSymbolFromName,
-	isValidOperatorName,
-	LogicalSymbolsNames,
-} from './logical-symbols.js';
-import {TokenType, tokenize, type Tokens} from './tokenize.js';
-import {validate} from './validate/validate.js';
-import {splitOperators} from './split-operators.js';
 import {hasOperator} from './has-operator.js';
 import {IndexedError} from './indexed-error.js';
+import {
+	LogicalSymbolFromName,
+	LogicalSymbolsNames,
+	type LogicalName,
+} from './logical-symbols.js';
+import {normaliseOperators} from './operator-alias.js';
+import {splitOperators} from './split-operators.js';
+import {TokenType, tokenize, type Tokens} from './tokenize.js';
+import {validate} from './validate/validate.js';
 
 export type AST = ReadonlyDeep<
 	| {
@@ -69,11 +68,20 @@ const parseNot = (input: readonly Tokens[][]): AST => {
 	return {
 		type: 'operator',
 		operator: 'not',
-		values: [_parseOperations(input.slice(1))],
+		values: [parseOperationInternal(input.slice(1))],
 	};
 };
 
-const _parseOperation = (input: Tokens[]): AST => {
+/**
+ * Handle statements, where grouping it leaves one group
+ * @example
+ *   `"((a and b))"` ->
+ *      This is one group because of the parens
+ *      It unwraps the parens until it `"a and b"` is left and passes that to parseOperationInternal
+ *
+ *   `"a"` -> This is just a variable, so it returns the appropriate AST
+ */
+const parseGroup = (input: Tokens[]): AST => {
 	if (input.length === 0) {
 		throw new Error('Unexpected empty input at _parseOperation.');
 	}
@@ -112,20 +120,20 @@ const _parseOperation = (input: Tokens[]): AST => {
 		const last = input.at(-1)!;
 
 		if (first.type === TokenType.bracket && last.type === TokenType.bracket) {
-			return _parseOperation(input.slice(1, -1));
+			return parseGroup(input.slice(1, -1));
 		}
 	}
 
-	return _parseOperations(grouped);
+	return parseOperationInternal(grouped);
 };
 
-const _parseOperations = (input: Tokens[][]): AST => {
+const parseOperationInternal = (input: Tokens[][]): AST => {
 	if (input.length === 0) {
 		throw new Error('Unexpected empty input at _parseOperation.');
 	}
 
 	if (input.length === 1) {
-		return _parseOperation(input[0]!);
+		return parseGroup(input[0]!);
 	}
 
 	const lastItems: Tokens[][] = [input.pop()!];
@@ -156,11 +164,7 @@ const _parseOperations = (input: Tokens[][]): AST => {
 		);
 	}
 
-	// !isValidOperator is unnecessary, it's just a typeguard
-	if (
-		operator.type !== TokenType.operator
-		|| !isValidOperatorName(operator.characters)
-	) {
+	if (operator.type !== TokenType.operator) {
 		throw new IndexedError(
 			`Expected operator, got type "${
 				operator.type
@@ -173,12 +177,16 @@ const _parseOperations = (input: Tokens[][]): AST => {
 	return {
 		type: 'operator',
 		operator: operator.characters as Exclude<LogicalName, 'not'>,
-		values: [_parseOperations(input), _parseOperations(lastItems)],
+		values: [parseOperationInternal(input), parseOperationInternal(lastItems)],
 	};
 };
 
-// Wrapper around _parseOperation for sanitising and validating
-// so it doesn't waste resources validating multiple times
+// This is a wrapper, so that it only gets validated once
+// and so the internal function is not leaked, and only strings can be passed
+/**
+ * Given a string, this function parses that string,
+ * generating the AST representation of that string.
+ */
 export const parseOperation = (raw: string): AST => {
 	const tokens = tokenize(raw);
 
@@ -192,5 +200,5 @@ export const parseOperation = (raw: string): AST => {
 
 	validate(translatedMappings);
 
-	return _parseOperation(translatedMappings);
+	return parseGroup(translatedMappings);
 };
