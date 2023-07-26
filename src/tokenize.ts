@@ -4,8 +4,8 @@ import {operatorAliases, singleCharacterNotAliases} from './operator-alias.js';
 
 export type Token = Readonly<
 	| {
-			type: TokenType.bracket;
-			bracketType: 'open' | 'close';
+			type: TokenType.parens;
+			parensType: 'open' | 'close';
 			from: number;
 			to: number;
 			source: string;
@@ -27,12 +27,12 @@ export type Token = Readonly<
 >;
 
 const VARIABLES_RE = /^[a-z_]+$/i;
-const BRACKETS_RE = /^[()]+$/;
+const PARENS_RE = /^[()]+$/;
 
 export const enum TokenType {
 	variable = 'variable',
 	operator = 'operator',
-	bracket = 'bracket',
+	parens = 'parens',
 }
 
 function tokenizeOperator(
@@ -109,10 +109,10 @@ export const tokenize = (input: string): Token[] => {
 					source: input,
 				});
 			}
-		} else if (BRACKETS_RE.test(characters)) {
+		} else if (PARENS_RE.test(characters)) {
 			result.push({
-				type: TokenType.bracket,
-				bracketType: characters === '(' ? 'open' : 'close',
+				type: TokenType.parens,
+				parensType: characters === '(' ? 'open' : 'close',
 				from,
 				to,
 				source: input,

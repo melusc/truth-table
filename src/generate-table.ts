@@ -37,7 +37,7 @@ const deduplicateColumns = (columns: Iterable<Column>): Column[] => {
 	return result;
 };
 
-const removeOuterBrackets = (string: string): string =>
+const removeOuterParens = (string: string): string =>
 	string.replace(/^\((.+)\)$/, '$1');
 
 type MutableTable = {
@@ -66,7 +66,7 @@ export const generateTable = (
 	};
 
 	for (const [, stringified] of columns) {
-		table.columns.push(removeOuterBrackets(stringified));
+		table.columns.push(removeOuterParens(stringified));
 	}
 
 	for (const variablePermutations of rows) {

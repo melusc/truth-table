@@ -15,7 +15,7 @@ const doNormaliseOperators = (input: string): string =>
 				return item.characters;
 			}
 
-			return item.bracketType === 'open' ? '(' : ')';
+			return item.parensType === 'open' ? '(' : ')';
 		})
 		.join(' ');
 

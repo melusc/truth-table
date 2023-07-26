@@ -101,13 +101,13 @@ const parseGroup = (input: Token[]): AST => {
 
 	const grouped = groupItems(input);
 
-	// if first bracket belongs to last bracket
-	// (if there are even brackets)
+	// if first parens belongs to last parens
+	// (if there are even parens)
 	if (grouped.length === 1) {
 		const first = input[0]!;
 		const last = input.at(-1)!;
 
-		if (first.type === TokenType.bracket && last.type === TokenType.bracket) {
+		if (first.type === TokenType.parens && last.type === TokenType.parens) {
 			return parseGroup(input.slice(1, -1));
 		}
 	}

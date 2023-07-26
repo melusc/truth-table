@@ -78,7 +78,7 @@ This extends `Error` and has `from` and `to` indicating were in the string there
 parseOperation('(a & b');
 /*
 IndexedError {
-	message: "Unmatched opening bracket at position 0.",
+	message: "Unmatched opening parens at position 0.",
 	from: 0,
 	to: 1
 }
@@ -91,7 +91,7 @@ IndexedError {
 function parseOperation(input: string): AST;
 ```
 
-If there are invalid characters, unmatched brackets, two operators following each other or similar it throws [`IndexedError`](#indexederror).
+If there are invalid characters, unmatched parens, two operators following each other or similar it throws [`IndexedError`](#indexederror).
 For all other errors `Error` is thrown.
 
 ## operationToString
