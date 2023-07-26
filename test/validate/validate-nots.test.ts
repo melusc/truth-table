@@ -30,12 +30,12 @@ test('validateNots', t => {
 
 	t.throws(
 		() => {
-			doValidate(`a ${OperatorSymbols.not} & b`);
+			doValidate(`a ${OperatorSymbols.not} & !b`);
 		},
 		{
 			message: 'Unexpected operator "&".',
 			instanceOf: IndexedError,
 		},
-		`a ${OperatorSymbols.not} & b`,
+		`a ${OperatorSymbols.not} & !b`,
 	);
 });
