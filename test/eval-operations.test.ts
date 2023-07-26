@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import {operations} from '../src/operations.js';
+import {operations} from '../src/eval.js';
 
 const createTest = <T extends keyof typeof operations>(
 	title: T,
