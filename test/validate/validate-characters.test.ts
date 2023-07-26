@@ -1,10 +1,10 @@
 import test from 'ava';
 
-import {IndexedError} from '../src/indexed-error.js';
-import {LogicalSymbolFromName} from '../src/logical-symbols.js';
-import {normaliseOperators} from '../src/operator-alias.js';
-import {TokenType, tokenize} from '../src/tokenize.js';
-import {validateCharacters} from '../src/validate-characters.js';
+import {IndexedError} from '../../src/indexed-error.js';
+import {LogicalSymbolFromName} from '../../src/logical-symbols.js';
+import {normaliseOperators} from '../../src/operator-alias.js';
+import {TokenType, tokenize} from '../../src/tokenize.js';
+import {validateCharacters} from '../../src/validate/validate-characters.js';
 
 const doValidate = (input: string): void => {
 	validateCharacters(normaliseOperators(tokenize(input)));

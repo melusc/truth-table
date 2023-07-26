@@ -9,7 +9,7 @@ import {
 	LogicalSymbolsNames,
 } from './logical-symbols.js';
 import {TokenType, tokenize, type Tokens} from './tokenize.js';
-import {validate} from './validate.js';
+import {validate} from './validate/validate.js';
 import {splitOperators} from './split-operators.js';
 import {hasOperator} from './has-operator.js';
 import {IndexedError} from './indexed-error.js';
