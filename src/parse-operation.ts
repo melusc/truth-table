@@ -28,9 +28,7 @@ export type AST = ReadonlyDeep<
 			type: 'variable';
 			variable: string;
 	  }
-> & {
-	stringified?: string;
-};
+>;
 
 const toOriginalString = (input: Tokens | Tokens[]): string => {
 	if (!Array.isArray(input)) {

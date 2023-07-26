@@ -1,12 +1,14 @@
 import {type AST} from './parse-operation.js';
 import {LogicalSymbolFromName} from './logical-symbols.js';
 
-export const operationToString = (operation: AST): string => {
-	let {stringified} = operation;
+const cache = new Map<AST, string>();
 
-	if (stringified) {
-		return stringified;
+export const operationToString = (operation: AST): string => {
+	if (cache.has(operation)) {
+		return cache.get(operation)!;
 	}
+
+	let stringified: string;
 
 	if (operation.type === 'variable') {
 		stringified = operation.variable;
@@ -20,6 +22,6 @@ export const operationToString = (operation: AST): string => {
 		} ${operationToString(operation.values[1])})`;
 	}
 
-	operation.stringified = stringified;
+	cache.set(operation, stringified);
 	return stringified;
 };

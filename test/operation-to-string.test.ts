@@ -63,25 +63,3 @@ test('a AND (b XOR (c <=> d))', t => {
 		`(a ${LogicalSymbolFromName.and} (b ${LogicalSymbolFromName.xor} (c ${LogicalSymbolFromName.iff} d)))`,
 	);
 });
-
-test('caching', t => {
-	const operation: AST = {
-		type: 'operator',
-		operator: 'and',
-		values: [
-			{
-				type: 'variable',
-				variable: 'a',
-			},
-			{
-				type: 'variable',
-				variable: 'b',
-			},
-		],
-	};
-
-	const expected = `(a ${LogicalSymbolFromName.and} b)`;
-
-	t.is(operationToString(operation), expected);
-	t.is(operation.stringified, expected);
-});
