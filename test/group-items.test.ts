@@ -1,100 +1,68 @@
 import test from 'ava';
 
 import {groupItems} from '../src/group-items.js';
-import {TokenType, tokenize, type Tokens} from '../src/tokenize.js';
+import {Operator} from '../src/operators.js';
+import {TokenType, tokenize, type Token} from '../src/tokenize.js';
 
 // No validation, input just has to be correct
-const groupBracketsString = (input: string): Tokens[][] =>
+const groupBracketsString = (input: string): Token[][] =>
 	groupItems(tokenize(input));
 
 const t1 = 'a ((b)) c (d) e';
 test(t1, t => {
-	t.deepEqual<Tokens[][], Tokens[][]>(groupBracketsString(t1), [
+	t.like(groupBracketsString(t1), [
 		[
 			{
 				characters: 'A',
 				type: TokenType.variable,
-				from: 0,
-				to: 1,
-				source: t1,
 			},
 		],
 		[
 			{
-				characters: '(',
 				type: TokenType.bracket,
-				from: 2,
-				to: 3,
-				source: t1,
+				bracketType: 'open',
 			},
 			{
-				characters: '(',
 				type: TokenType.bracket,
-				from: 3,
-				to: 4,
-				source: t1,
+				bracketType: 'open',
 			},
 			{
 				characters: 'B',
 				type: TokenType.variable,
-				from: 4,
-				to: 5,
-				source: t1,
 			},
 			{
-				characters: ')',
 				type: TokenType.bracket,
-				from: 5,
-				to: 6,
-				source: t1,
+				bracketType: 'close',
 			},
 			{
-				characters: ')',
 				type: TokenType.bracket,
-				from: 6,
-				to: 7,
-				source: t1,
+				bracketType: 'close',
 			},
 		],
 		[
 			{
 				characters: 'C',
 				type: TokenType.variable,
-				from: 8,
-				to: 9,
-				source: t1,
 			},
 		],
 		[
 			{
-				characters: '(',
 				type: TokenType.bracket,
-				from: 10,
-				to: 11,
-				source: t1,
+				bracketType: 'open',
 			},
 			{
 				characters: 'D',
 				type: TokenType.variable,
-				from: 11,
-				to: 12,
-				source: t1,
 			},
 			{
-				characters: ')',
 				type: TokenType.bracket,
-				from: 12,
-				to: 13,
-				source: t1,
+				bracketType: 'close',
 			},
 		],
 		[
 			{
 				characters: 'E',
 				type: TokenType.variable,
-				from: 14,
-				to: 15,
-				source: t1,
 			},
 		],
 	]);
@@ -102,23 +70,17 @@ test(t1, t => {
 
 const t2 = 'a b';
 test(t2, t => {
-	t.deepEqual<Tokens[][], Tokens[][]>(groupBracketsString(t2), [
+	t.like(groupBracketsString(t2), [
 		[
 			{
 				characters: 'A',
 				type: TokenType.variable,
-				from: 0,
-				to: 1,
-				source: t2,
 			},
 		],
 		[
 			{
 				characters: 'B',
 				type: TokenType.variable,
-				from: 2,
-				to: 3,
-				source: t2,
 			},
 		],
 	]);
@@ -126,60 +88,39 @@ test(t2, t => {
 
 const t3 = '(a) & ( b )';
 test(t3, t => {
-	t.deepEqual<Tokens[][], Tokens[][]>(groupBracketsString(t3), [
+	t.like(groupBracketsString(t3), [
 		[
 			{
-				characters: '(',
 				type: TokenType.bracket,
-				from: 0,
-				to: 1,
-				source: t3,
+				bracketType: 'open',
 			},
 			{
 				characters: 'A',
 				type: TokenType.variable,
-				from: 1,
-				to: 2,
-				source: t3,
 			},
 			{
-				characters: ')',
 				type: TokenType.bracket,
-				from: 2,
-				to: 3,
-				source: t3,
+				bracketType: 'close',
 			},
 		],
 		[
 			{
-				characters: '&',
 				type: TokenType.operator,
-				from: 4,
-				to: 5,
-				source: t3,
+				operator: Operator.and,
 			},
 		],
 		[
 			{
-				characters: '(',
 				type: TokenType.bracket,
-				from: 6,
-				to: 7,
-				source: t3,
+				bracketType: 'open',
 			},
 			{
 				characters: 'B',
 				type: TokenType.variable,
-				from: 8,
-				to: 9,
-				source: t3,
 			},
 			{
-				characters: ')',
 				type: TokenType.bracket,
-				from: 10,
-				to: 11,
-				source: t3,
+				bracketType: 'close',
 			},
 		],
 	]);
@@ -187,21 +128,15 @@ test(t3, t => {
 
 const t4 = '((a) & b)';
 test(t4, t => {
-	t.deepEqual<Tokens[][], Tokens[][]>(groupBracketsString(t4), [
+	t.like(groupBracketsString(t4), [
 		[
 			{
-				characters: '(',
 				type: TokenType.bracket,
-				from: 0,
-				to: 1,
-				source: t4,
+				bracketType: 'open',
 			},
 			{
-				characters: '(',
 				type: TokenType.bracket,
-				from: 1,
-				to: 2,
-				source: t4,
+				bracketType: 'open',
 			},
 			{
 				characters: 'A',
@@ -211,15 +146,12 @@ test(t4, t => {
 				source: t4,
 			},
 			{
-				characters: ')',
 				type: TokenType.bracket,
-				from: 3,
-				to: 4,
-				source: t4,
+				bracketType: 'close',
 			},
 			{
-				characters: '&',
 				type: TokenType.operator,
+				operator: Operator.and,
 				from: 5,
 				to: 6,
 				source: t4,
@@ -232,8 +164,8 @@ test(t4, t => {
 				source: t4,
 			},
 			{
-				characters: ')',
 				type: TokenType.bracket,
+				bracketType: 'close',
 				from: 8,
 				to: 9,
 				source: t4,

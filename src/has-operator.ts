@@ -1,6 +1,6 @@
-import {TokenType, type Tokens} from './tokenize.js';
+import {TokenType, type Token} from './tokenize.js';
 
-export const hasOperator = (input: readonly Tokens[]): boolean => {
+export const hasOperator = (input: readonly Token[]): boolean => {
 	if (input.length === 1) {
 		return true;
 	}

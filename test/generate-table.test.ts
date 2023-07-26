@@ -1,12 +1,12 @@
 import test from 'ava';
 
 import {generateTable} from '../src/generate-table.js';
-import {LogicalSymbolFromName} from '../src/logical-symbols.js';
+import {OperatorSymbols} from '../src/operators.js';
 
 const t1 = 'a OR b';
 test(t1, t => {
 	t.like(generateTable(t1), {
-		columns: ['A', 'B', `A ${LogicalSymbolFromName.or} B`],
+		columns: ['A', 'B', `A ${OperatorSymbols.or} B`],
 		rows: [
 			[true, true, true],
 			[true, false, true],
@@ -23,8 +23,8 @@ test(t2, t => {
 			'A',
 			'B',
 			'C',
-			`A ${LogicalSymbolFromName.and} B`,
-			`(A ${LogicalSymbolFromName.and} B) ${LogicalSymbolFromName.and} C`,
+			`A ${OperatorSymbols.and} B`,
+			`(A ${OperatorSymbols.and} B) ${OperatorSymbols.and} C`,
 		],
 		rows: [
 			[true, true, true, true, true],
@@ -45,8 +45,8 @@ test(t3, t => {
 		columns: [
 			'A',
 			'B',
-			`A ${LogicalSymbolFromName.and} B`,
-			`(A ${LogicalSymbolFromName.and} B) ${LogicalSymbolFromName.or} (A ${LogicalSymbolFromName.and} B)`,
+			`A ${OperatorSymbols.and} B`,
+			`(A ${OperatorSymbols.and} B) ${OperatorSymbols.or} (A ${OperatorSymbols.and} B)`,
 		],
 		rows: [
 			[true, true, true, true],
@@ -62,7 +62,7 @@ test('generateTable with includeSteps=false', t => {
 		columns: [
 			'A',
 			'B',
-			`(A ${LogicalSymbolFromName.and} B) ${LogicalSymbolFromName.or} (A ${LogicalSymbolFromName.and} B)`,
+			`(A ${OperatorSymbols.and} B) ${OperatorSymbols.or} (A ${OperatorSymbols.and} B)`,
 		],
 		rows: [
 			[true, true, true],

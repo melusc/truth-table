@@ -18,7 +18,7 @@ test('findUnmatchedBrackets', t => {
 			doValidate(')');
 		},
 		{
-			message: 'Unmatched closing bracket at position 0.',
+			message: 'Unmatched bracket at position 0.',
 			instanceOf: IndexedError,
 		},
 		')',
@@ -29,7 +29,7 @@ test('findUnmatchedBrackets', t => {
 			doValidate('((()');
 		},
 		{
-			message: 'Unmatched opening bracket at position 1.',
+			message: 'Unmatched bracket at position 1.',
 			instanceOf: IndexedError,
 		},
 		'((()',
@@ -40,7 +40,7 @@ test('findUnmatchedBrackets', t => {
 			doValidate('((())))');
 		},
 		{
-			message: 'Unmatched closing bracket at position 6.',
+			message: 'Unmatched bracket at position 6.',
 			instanceOf: IndexedError,
 		},
 		'((())))',
@@ -51,7 +51,7 @@ test('findUnmatchedBrackets', t => {
 			doValidate(')');
 		},
 		{
-			message: 'Unmatched closing bracket at position 0.',
+			message: 'Unmatched bracket at position 0.',
 			instanceOf: IndexedError,
 		},
 	);
@@ -61,7 +61,7 @@ test('findUnmatchedBrackets', t => {
 			doValidate('(a & b');
 		},
 		{
-			message: 'Unmatched opening bracket at position 0.',
+			message: 'Unmatched bracket at position 0.',
 			instanceOf: IndexedError,
 		},
 	);

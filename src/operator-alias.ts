@@ -1,30 +1,26 @@
-import {LogicalSymbolFromName, LogicalSymbolsNames} from './logical-symbols.js';
-import {TokenType, type Tokens} from './tokenize.js';
+import {Operator, OperatorSymbols} from './operators.js';
 
-export const singleCharacterNotAliases = [
+export const singleCharacterNotAliases = new Set([
 	'~',
 	'!',
-	LogicalSymbolFromName.not,
-] as const;
+	OperatorSymbols.not,
+]);
 
 // https://en.wikipedia.org/wiki/List_of_logic_symbols
 const groupedAliases = [
 	[
-		LogicalSymbolsNames.iff,
-		['⇔', '≡', '<->', '<=>', '=', '==', '===', LogicalSymbolFromName.iff],
+		Operator.iff,
+		['⇔', '≡', '<->', '<=>', '=', '==', '===', OperatorSymbols.iff],
 	],
 
-	[
-		LogicalSymbolsNames.ifthen,
-		['⇒', '⊃', '->', '=>', LogicalSymbolFromName.ifthen],
-	],
+	[Operator.ifthen, ['⇒', '⊃', '->', '=>', OperatorSymbols.ifthen]],
 
-	[LogicalSymbolsNames.not, singleCharacterNotAliases],
+	[Operator.not, singleCharacterNotAliases],
 
-	[LogicalSymbolsNames.and, ['&&', '&', LogicalSymbolFromName.and]],
+	[Operator.and, ['&&', '&', OperatorSymbols.and]],
 
 	[
-		LogicalSymbolsNames.xor,
+		Operator.xor,
 		[
 			'⊕',
 			'⊻',
@@ -36,43 +32,20 @@ const groupedAliases = [
 			'~=',
 			'<>',
 			'^',
-			LogicalSymbolFromName.xor,
+			OperatorSymbols.xor,
 		],
 	],
 
-	[LogicalSymbolsNames.or, ['||', '|', LogicalSymbolFromName.or]],
+	[Operator.or, ['||', '|', OperatorSymbols.or]],
 ] as const;
 
-const aliasMap = new Map<string, string>();
+export const operatorAliases = new Map<string, Operator>();
 
 for (const [operator, aliases] of groupedAliases) {
 	for (const alias of aliases) {
-		aliasMap.set(alias.toLowerCase(), operator);
+		operatorAliases.set(alias.toLowerCase(), operator);
 	}
 
 	// Map things like "aNd", "AND", ... to "and"
-	aliasMap.set(operator.toLowerCase(), operator);
+	operatorAliases.set(operator.toLowerCase(), operator);
 }
-
-export const normaliseOperators = (input: readonly Tokens[]): Tokens[] => {
-	const result: Tokens[] = [];
-
-	for (const item of input) {
-		const operatorAlias = aliasMap.get(item.characters.toLowerCase());
-
-		if (
-			operatorAlias === undefined
-			|| (item.type !== TokenType.operator && item.type !== TokenType.variable)
-		) {
-			result.push(item);
-		} else {
-			result.push({
-				...item,
-				characters: operatorAlias,
-				type: TokenType.operator,
-			});
-		}
-	}
-
-	return result;
-};

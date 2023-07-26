@@ -3,25 +3,19 @@ import type {ReadonlyDeep} from 'type-fest';
 import {groupItems} from './group-items.js';
 import {hasOperator} from './has-operator.js';
 import {IndexedError} from './indexed-error.js';
-import {
-	LogicalSymbolFromName,
-	LogicalSymbolsNames,
-	type LogicalName,
-} from './logical-symbols.js';
-import {normaliseOperators} from './operator-alias.js';
-import {splitOperators} from './split-operators.js';
-import {TokenType, tokenize, type Tokens} from './tokenize.js';
+import {OperatorSymbols, Operator} from './operators.js';
+import {TokenType, tokenize, type Token} from './tokenize.js';
 import {validate} from './validate/validate.js';
 
 export type AST = ReadonlyDeep<
 	| {
 			type: 'operator';
-			operator: Exclude<LogicalName, 'not'>;
+			operator: Exclude<Operator, Operator.not>;
 			values: [AST, AST];
 	  }
 	| {
 			type: 'operator';
-			operator: 'not';
+			operator: Operator.not;
 			values: [AST];
 	  }
 	| {
@@ -30,7 +24,7 @@ export type AST = ReadonlyDeep<
 	  }
 >;
 
-const toOriginalString = (input: Tokens | Tokens[]): string => {
+const toOriginalString = (input: Token | Token[]): string => {
 	if (!Array.isArray(input)) {
 		return input.source.slice(input.from, input.to);
 	}
@@ -44,20 +38,16 @@ const toOriginalString = (input: Tokens | Tokens[]): string => {
 	return first.source.slice(first.from, last.to);
 };
 
-const parseNot = (input: readonly Tokens[][]): AST => {
+const parseNot = (input: readonly Token[][]): AST => {
 	const first = input[0]?.[0];
 
 	if (first === undefined) {
 		throw new Error('Unexpected empty input in parseNot.');
 	}
 
-	if (
-		first.type !== TokenType.operator
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-		|| first.characters !== LogicalSymbolsNames.not
-	) {
+	if (first.type !== TokenType.operator || first.operator !== Operator.not) {
 		throw new IndexedError(
-			`Expected "${LogicalSymbolFromName.not}".`,
+			`Expected "${OperatorSymbols.not}".`,
 			first.from,
 			first.to,
 		);
@@ -65,7 +55,7 @@ const parseNot = (input: readonly Tokens[][]): AST => {
 
 	return {
 		type: 'operator',
-		operator: 'not',
+		operator: Operator.not,
 		values: [parseOperationInternal(input.slice(1))],
 	};
 };
@@ -79,7 +69,7 @@ const parseNot = (input: readonly Tokens[][]): AST => {
  *
  *   `"a"` -> This is just a variable, so it returns the appropriate AST
  */
-const parseGroup = (input: Tokens[]): AST => {
+const parseGroup = (input: Token[]): AST => {
 	if (input.length === 0) {
 		throw new Error('Unexpected empty input at _parseOperation.');
 	}
@@ -125,7 +115,7 @@ const parseGroup = (input: Tokens[]): AST => {
 	return parseOperationInternal(grouped);
 };
 
-const parseOperationInternal = (input: Tokens[][]): AST => {
+const parseOperationInternal = (input: Token[][]): AST => {
 	if (input.length === 0) {
 		throw new Error('Unexpected empty input at _parseOperation.');
 	}
@@ -134,15 +124,14 @@ const parseOperationInternal = (input: Tokens[][]): AST => {
 		return parseGroup(input[0]!);
 	}
 
-	const lastItems: Tokens[][] = [input.pop()!];
+	const lastItems: Token[][] = [input.pop()!];
 
-	let secondToLast: Tokens[] | undefined;
+	let secondToLast: Token[] | undefined;
 	while (
 		(secondToLast = input.at(-1))
 		&& secondToLast.length === 1
 		&& secondToLast[0]!.type === TokenType.operator
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-		&& secondToLast[0]!.characters === LogicalSymbolsNames.not
+		&& secondToLast[0]!.operator === Operator.not
 	) {
 		lastItems.unshift(input.pop()!);
 	}
@@ -172,9 +161,17 @@ const parseOperationInternal = (input: Tokens[][]): AST => {
 		);
 	}
 
+	if (operator.operator === Operator.not) {
+		throw new IndexedError(
+			`Unexpected "${toOriginalString(operator)}".`,
+			operator.from,
+			operator.to,
+		);
+	}
+
 	return {
 		type: 'operator',
-		operator: operator.characters as Exclude<LogicalName, 'not'>,
+		operator: operator.operator,
 		values: [parseOperationInternal(input), parseOperationInternal(lastItems)],
 	};
 };
@@ -192,11 +189,7 @@ export const parseOperation = (raw: string): AST => {
 		throw new Error('Unexpected empty string');
 	}
 
-	const split = splitOperators(tokens);
+	validate(tokens);
 
-	const translatedMappings = normaliseOperators(split);
-
-	validate(translatedMappings);
-
-	return parseGroup(translatedMappings);
+	return parseGroup(tokens);
 };

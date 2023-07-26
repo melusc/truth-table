@@ -1,13 +1,13 @@
 import test from 'ava';
 
-import {LogicalSymbolFromName} from '../src/logical-symbols.js';
+import {Operator, OperatorSymbols} from '../src/operators.js';
 import {operationToString} from '../src/operation-to-string.js';
 
 test('a AND b', t => {
 	t.is(
 		operationToString({
 			type: 'operator',
-			operator: 'and',
+			operator: Operator.and,
 			values: [
 				{
 					type: 'variable',
@@ -19,7 +19,7 @@ test('a AND b', t => {
 				},
 			],
 		}),
-		`(a ${LogicalSymbolFromName.and} b)`,
+		`(a ${OperatorSymbols.and} b)`,
 	);
 });
 
@@ -27,7 +27,7 @@ test('a AND (b XOR (c <=> d))', t => {
 	t.is(
 		operationToString({
 			type: 'operator',
-			operator: 'and',
+			operator: Operator.and,
 			values: [
 				{
 					type: 'variable',
@@ -35,7 +35,7 @@ test('a AND (b XOR (c <=> d))', t => {
 				},
 				{
 					type: 'operator',
-					operator: 'xor',
+					operator: Operator.xor,
 					values: [
 						{
 							type: 'variable',
@@ -43,7 +43,7 @@ test('a AND (b XOR (c <=> d))', t => {
 						},
 						{
 							type: 'operator',
-							operator: 'iff',
+							operator: Operator.iff,
 							values: [
 								{
 									type: 'variable',
@@ -59,6 +59,6 @@ test('a AND (b XOR (c <=> d))', t => {
 				},
 			],
 		}),
-		`(a ${LogicalSymbolFromName.and} (b ${LogicalSymbolFromName.xor} (c ${LogicalSymbolFromName.iff} d)))`,
+		`(a ${OperatorSymbols.and} (b ${OperatorSymbols.xor} (c ${OperatorSymbols.iff} d)))`,
 	);
 });

@@ -1,5 +1,5 @@
 import {type AST} from './parse-operation.js';
-import {LogicalSymbolFromName} from './logical-symbols.js';
+import {OperatorSymbols, Operator} from './operators.js';
 
 const cache = new WeakMap<AST, string>();
 
@@ -12,13 +12,13 @@ export const operationToString = (operation: AST): string => {
 
 	if (operation.type === 'variable') {
 		stringified = operation.variable;
-	} else if (operation.operator === 'not') {
-		stringified = `${LogicalSymbolFromName.not}${operationToString(
+	} else if (operation.operator === Operator.not) {
+		stringified = `${OperatorSymbols.not}${operationToString(
 			operation.values[0],
 		)}`;
 	} else {
 		stringified = `(${operationToString(operation.values[0])} ${
-			LogicalSymbolFromName[operation.operator]
+			OperatorSymbols[operation.operator]
 		} ${operationToString(operation.values[1])})`;
 	}
 
