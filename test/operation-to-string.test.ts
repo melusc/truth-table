@@ -2,7 +2,6 @@ import test from 'ava';
 
 import {LogicalSymbolFromName} from '../src/logical-symbols.js';
 import {operationToString} from '../src/operation-to-string.js';
-import {type AST} from '../src/parse-operation.js';
 
 test('a AND b', t => {
 	t.is(
