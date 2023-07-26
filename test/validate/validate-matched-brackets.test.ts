@@ -1,8 +1,8 @@
 import test from 'ava';
 
-import {validateMatchedBrackets} from '../src/validate-matched-brackets.js';
-import {tokenize} from '../src/tokenize.js';
-import {IndexedError} from '../src/indexed-error.js';
+import {validateMatchedBrackets} from '../../src/validate/validate-matched-brackets.js';
+import {tokenize} from '../../src/tokenize.js';
+import {IndexedError} from '../../src/indexed-error.js';
 
 const doValidate = (input: string): void => {
 	validateMatchedBrackets(tokenize(input));

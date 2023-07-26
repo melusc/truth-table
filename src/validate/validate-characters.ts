@@ -1,6 +1,6 @@
-import {IndexedError} from './indexed-error.js';
-import {isValidOperatorName} from './logical-symbols.js';
-import {TokenType, type Tokens} from './tokenize.js';
+import {IndexedError} from '../indexed-error.js';
+import {isValidOperatorName} from '../logical-symbols.js';
+import {TokenType, type Tokens} from '../tokenize.js';
 
 const throwUnexpectedChar = (char: string, from: number, to?: number): void => {
 	const message

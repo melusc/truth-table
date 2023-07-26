@@ -1,11 +1,11 @@
 import test from 'ava';
 
-import {IndexedError} from '../src/indexed-error.js';
-import {LogicalSymbolFromName} from '../src/logical-symbols.js';
-import {normaliseOperators} from '../src/operator-alias.js';
-import {splitOperators} from '../src/split-operators.js';
-import {tokenize} from '../src/tokenize.js';
-import {validateOperators} from '../src/validate-operators.js';
+import {IndexedError} from '../../src/indexed-error.js';
+import {LogicalSymbolFromName} from '../../src/logical-symbols.js';
+import {normaliseOperators} from '../../src/operator-alias.js';
+import {splitOperators} from '../../src/split-operators.js';
+import {tokenize} from '../../src/tokenize.js';
+import {validateOperators} from '../../src/validate/validate-operators.js';
 
 const doValidate = (input: string): void => {
 	validateOperators(normaliseOperators(splitOperators(tokenize(input))));

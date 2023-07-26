@@ -1,8 +1,8 @@
 import test from 'ava';
 
-import {IndexedError} from '../src/indexed-error.js';
-import {tokenize} from '../src/tokenize.js';
-import {validateEmptyBrackets} from '../src/validate-empty-brackets.js';
+import {IndexedError} from '../../src/indexed-error.js';
+import {tokenize} from '../../src/tokenize.js';
+import {validateEmptyBrackets} from '../../src/validate/validate-empty-brackets.js';
 
 const doValidate = (input: string): void => {
 	validateEmptyBrackets(tokenize(input));

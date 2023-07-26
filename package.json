@@ -10,7 +10,7 @@
 	},
 	"ava": {
 		"files": [
-			"test/*.test.ts"
+			"test/**/*.test.ts"
 		],
 		"typescript": {
 			"compile": false,

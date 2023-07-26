@@ -1,5 +1,5 @@
-import {IndexedError} from './indexed-error.js';
-import {TokenType, type Tokens} from './tokenize.js';
+import {IndexedError} from '../indexed-error.js';
+import {TokenType, type Tokens} from '../tokenize.js';
 
 export const validateMatchedBrackets = (input: readonly Tokens[]): void => {
 	// Push for opening bracket
