@@ -1,5 +1,8 @@
 # Operator Aliases
 
+In addition to the symbols found below,
+all operators can be used in their word form case insensitively ("aNd" is just as valid as using "&").
+
 ## AND
 
 - `∧`
