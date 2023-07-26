@@ -5,12 +5,12 @@ import {Operator} from '../src/operators.js';
 import {TokenType, tokenize, type Token} from '../src/tokenize.js';
 
 // No validation, input just has to be correct
-const groupBracketsString = (input: string): Token[][] =>
+const groupItemsString = (input: string): Token[][] =>
 	groupItems(tokenize(input));
 
 const t1 = 'a ((b)) c (d) e';
 test(t1, t => {
-	t.like(groupBracketsString(t1), [
+	t.like(groupItemsString(t1), [
 		[
 			{
 				characters: 'A',
@@ -19,24 +19,24 @@ test(t1, t => {
 		],
 		[
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 			},
 			{
 				characters: 'B',
 				type: TokenType.variable,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 			},
 		],
 		[
@@ -47,16 +47,16 @@ test(t1, t => {
 		],
 		[
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 			},
 			{
 				characters: 'D',
 				type: TokenType.variable,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 			},
 		],
 		[
@@ -70,7 +70,7 @@ test(t1, t => {
 
 const t2 = 'a b';
 test(t2, t => {
-	t.like(groupBracketsString(t2), [
+	t.like(groupItemsString(t2), [
 		[
 			{
 				characters: 'A',
@@ -88,19 +88,19 @@ test(t2, t => {
 
 const t3 = '(a) & ( b )';
 test(t3, t => {
-	t.like(groupBracketsString(t3), [
+	t.like(groupItemsString(t3), [
 		[
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 			},
 			{
 				characters: 'A',
 				type: TokenType.variable,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 			},
 		],
 		[
@@ -111,16 +111,16 @@ test(t3, t => {
 		],
 		[
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 			},
 			{
 				characters: 'B',
 				type: TokenType.variable,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 			},
 		],
 	]);
@@ -128,15 +128,15 @@ test(t3, t => {
 
 const t4 = '((a) & b)';
 test(t4, t => {
-	t.like(groupBracketsString(t4), [
+	t.like(groupItemsString(t4), [
 		[
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 			},
 			{
 				characters: 'A',
@@ -146,8 +146,8 @@ test(t4, t => {
 				source: t4,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 			},
 			{
 				type: TokenType.operator,
@@ -164,8 +164,8 @@ test(t4, t => {
 				source: t4,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 				from: 8,
 				to: 9,
 				source: t4,

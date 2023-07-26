@@ -14,12 +14,12 @@ export const groupItems = (input: readonly Token[]): Token[][] => {
 	};
 
 	for (const item of input) {
-		if (item.type === TokenType.bracket) {
+		if (item.type === TokenType.parens) {
 			pushResult();
 
 			previous.push(item);
 
-			if (item.bracketType === 'open') {
+			if (item.parensType === 'open') {
 				++depth;
 			} else {
 				--depth;

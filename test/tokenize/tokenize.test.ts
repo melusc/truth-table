@@ -32,18 +32,18 @@ test('tokenize', t => {
 		'abcd',
 	);
 
-	const brackets1 = ')((()())))';
-	// Doesn't validate brackets
+	const parens1 = ')((()())))';
+	// Doesn't validate parens
 	t.deepEqual<Token[], Token[]>(
-		tokenize(brackets1),
-		[...brackets1].map((c, i) => ({
-			type: TokenType.bracket,
-			bracketType: c === ')' ? 'close' : 'open',
+		tokenize(parens1),
+		[...parens1].map((c, i) => ({
+			type: TokenType.parens,
+			parensType: c === ')' ? 'close' : 'open',
 			from: i,
 			to: i + 1,
-			source: brackets1,
+			source: parens1,
 		})),
-		brackets1,
+		parens1,
 	);
 
 	const input1 = '(A)&(B)';
@@ -51,8 +51,8 @@ test('tokenize', t => {
 		tokenize(input1),
 		[
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 				from: 0,
 				to: 1,
 				source: input1,
@@ -65,8 +65,8 @@ test('tokenize', t => {
 				source: input1,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 				from: 2,
 				to: 3,
 				source: input1,
@@ -79,8 +79,8 @@ test('tokenize', t => {
 				source: input1,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 				from: 4,
 				to: 5,
 				source: input1,
@@ -93,8 +93,8 @@ test('tokenize', t => {
 				source: input1,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 				from: 6,
 				to: 7,
 				source: input1,
@@ -223,29 +223,29 @@ test('tokenize', t => {
 		tokenize(input5),
 		[
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 				from: 0,
 				to: 1,
 				source: input5,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 				from: 1,
 				to: 2,
 				source: input5,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 				from: 2,
 				to: 3,
 				source: input5,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 				from: 3,
 				to: 4,
 				source: input5,
@@ -258,8 +258,8 @@ test('tokenize', t => {
 				source: input5,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 				from: 5,
 				to: 6,
 				source: input5,
@@ -272,8 +272,8 @@ test('tokenize', t => {
 				source: input5,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'open',
+				type: TokenType.parens,
+				parensType: 'open',
 				from: 9,
 				to: 10,
 				source: input5,
@@ -286,29 +286,29 @@ test('tokenize', t => {
 				source: input5,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 				from: 11,
 				to: 12,
 				source: input5,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 				from: 12,
 				to: 13,
 				source: input5,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 				from: 13,
 				to: 14,
 				source: input5,
 			},
 			{
-				type: TokenType.bracket,
-				bracketType: 'close',
+				type: TokenType.parens,
+				parensType: 'close',
 				from: 14,
 				to: 15,
 				source: input5,

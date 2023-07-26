@@ -2,13 +2,13 @@ import test from 'ava';
 
 import {IndexedError} from '../../src/indexed-error.js';
 import {tokenize} from '../../src/tokenize.js';
-import {validateEmptyBrackets} from '../../src/validate/validate-empty-brackets.js';
+import {validateEmptyParens} from '../../src/validate/validate-empty-parens.js';
 
 const doValidate = (input: string): void => {
-	validateEmptyBrackets(tokenize(input));
+	validateEmptyParens(tokenize(input));
 };
 
-test('validateEmptyBrackets', t => {
+test('validateEmptyParens', t => {
 	t.notThrows(() => {
 		doValidate('(a)');
 	}, '(a)');
@@ -22,7 +22,7 @@ test('validateEmptyBrackets', t => {
 			doValidate('()');
 		},
 		{
-			message: 'Unexpected empty brackets at (0 - 2).',
+			message: 'Unexpected empty parentheses at (0 - 2).',
 			instanceOf: IndexedError,
 		},
 		'()',
@@ -33,7 +33,7 @@ test('validateEmptyBrackets', t => {
 			doValidate('( )');
 		},
 		{
-			message: 'Unexpected empty brackets at (0 - 3).',
+			message: 'Unexpected empty parentheses at (0 - 3).',
 			instanceOf: IndexedError,
 		},
 		'( )',
@@ -44,7 +44,7 @@ test('validateEmptyBrackets', t => {
 			doValidate('((((((()))))))');
 		},
 		{
-			message: 'Unexpected empty brackets at (6 - 8).',
+			message: 'Unexpected empty parentheses at (6 - 8).',
 			instanceOf: IndexedError,
 		},
 		'((((((()))))))',
@@ -55,7 +55,7 @@ test('validateEmptyBrackets', t => {
 			doValidate('(((((((    )))))))');
 		},
 		{
-			message: 'Unexpected empty brackets at (6 - 12).',
+			message: 'Unexpected empty parentheses at (6 - 12).',
 			instanceOf: IndexedError,
 		},
 		'(((((((    )))))))',
@@ -66,7 +66,7 @@ test('validateEmptyBrackets', t => {
 			doValidate('()()()()()');
 		},
 		{
-			message: 'Unexpected empty brackets at (0 - 2).',
+			message: 'Unexpected empty parentheses at (0 - 2).',
 			instanceOf: IndexedError,
 		},
 		'()()()()()',
@@ -77,7 +77,7 @@ test('validateEmptyBrackets', t => {
 			doValidate(')(');
 		},
 		{
-			message: 'Unexpected opening bracket at position 1.',
+			message: 'Unexpected opening parentheses at position 1.',
 			instanceOf: IndexedError,
 		},
 		')(',
