@@ -37,15 +37,15 @@
 		"@lusc/tsconfig": "^4.0.0",
 		"ava": "^5.3.1",
 		"prettier": "^3.0.3",
-		"rimraf": "^5.0.1",
+		"rimraf": "^5.0.5",
 		"typescript": "^5.2.2",
 		"xo": "^0.56.0"
 	},
-	"packageManager": "yarn@3.6.3",
+	"packageManager": "yarn@3.6.4",
 	"exports": {
 		".": "./dist/src/index.js"
 	},
 	"dependencies": {
-		"type-fest": "^4.3.1"
+		"type-fest": "^4.4.0"
 	}
 }
