@@ -41,7 +41,7 @@
 		"typescript": "^5.2.2",
 		"xo": "^0.56.0"
 	},
-	"packageManager": "yarn@3.6.4",
+	"packageManager": "yarn@4.0.0",
 	"exports": {
 		".": "./dist/src/index.js"
 	},
