@@ -42,6 +42,7 @@ export const evalOperation = (
 			break;
 		}
 
+		// eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
 		default: {
 			throw new Error(
 				`Unexpected operation.type "${(operation as {type: string})?.type}".`,

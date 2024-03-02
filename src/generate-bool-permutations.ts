@@ -4,23 +4,23 @@ type BoolPermutations = Readonly<Record<string, boolean>>;
 function * generateBoolPermutationsIterator(
 	variables: readonly string[],
 	offset = 0,
-	acc: BoolPermutations = {},
+	accumulator: BoolPermutations = {},
 ): Iterable<BoolPermutations> {
 	const variable0 = variables[offset];
 	++offset;
 
 	if (variable0) {
 		yield * generateBoolPermutationsIterator(variables, offset, {
-			...acc,
+			...accumulator,
 			[variable0]: true,
 		});
 
 		yield * generateBoolPermutationsIterator(variables, offset, {
-			...acc,
+			...accumulator,
 			[variable0]: false,
 		});
 	} else {
-		yield acc;
+		yield accumulator;
 	}
 }
 
