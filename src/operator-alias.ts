@@ -17,7 +17,7 @@ const groupedAliases = [
 
 	[Operator.not, singleCharacterNotAliases],
 
-	[Operator.and, ['&&', '&', OperatorSymbols.and]],
+	[Operator.and, ['&&', '&', '*', OperatorSymbols.and]],
 
 	[Operator.nand, [OperatorSymbols.nand]],
 
@@ -38,7 +38,7 @@ const groupedAliases = [
 		],
 	],
 
-	[Operator.or, ['||', '|', OperatorSymbols.or]],
+	[Operator.or, ['||', '|', '+', OperatorSymbols.or]],
 
 	[Operator.nor, [OperatorSymbols.nor]],
 ] as const;

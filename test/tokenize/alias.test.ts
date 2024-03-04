@@ -54,7 +54,7 @@ makeTest('ifthen', 'A ifthen B', [
 
 makeTest('not', 'not A', ['NOT A', '! A', '~ A', '¬ A']);
 
-makeTest('and', 'A and B', ['A && B', 'A & B', 'A AND B', 'A ∧ B']);
+makeTest('and', 'A and B', ['A && B', 'A & B', 'A AND B', 'A ∧ B', 'A * B']);
 
 makeTest('nand', 'A nand B', ['A ⊼ B']);
 
@@ -73,7 +73,7 @@ makeTest('xor', 'A xor B', [
 	'A ^ B',
 ]);
 
-makeTest('or', 'A or B', ['A || B', 'A | B', 'A OR B', 'A ∨ B']);
+makeTest('or', 'A or B', ['A || B', 'A | B', 'A OR B', 'A ∨ B', 'A + B']);
 
 makeTest('nor', 'A nor B', ['A ⊽ B']);
 

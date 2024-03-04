@@ -8,12 +8,14 @@ all operators can be used in their word form case insensitively ("aNd" is just a
 - `∧`
 - `&`
 - `&&`
+- `*`
 
 ## OR
 
 - `∨` (`U+2228`, not be confused with the latin v)
 - `|`
 - `||`
+- `+`
 
 ## XOR
 
