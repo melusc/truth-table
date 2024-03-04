@@ -10,7 +10,7 @@ export const singleCharacterNotAliases = new Set([
 const groupedAliases = [
 	[
 		Operator.iff,
-		['⇔', '≡', '<->', '<=>', '=', '==', '===', OperatorSymbols.iff],
+		['⇔', '≡', '<->', '<=>', '=', '==', '===', 'xnor', OperatorSymbols.iff],
 	],
 
 	[Operator.ifthen, ['⇒', '⊃', '->', '=>', OperatorSymbols.ifthen]],
@@ -18,6 +18,8 @@ const groupedAliases = [
 	[Operator.not, singleCharacterNotAliases],
 
 	[Operator.and, ['&&', '&', OperatorSymbols.and]],
+
+	[Operator.nand, [OperatorSymbols.nand]],
 
 	[
 		Operator.xor,
@@ -37,6 +39,8 @@ const groupedAliases = [
 	],
 
 	[Operator.or, ['||', '|', OperatorSymbols.or]],
+
+	[Operator.nor, [OperatorSymbols.nor]],
 ] as const;
 
 export const operatorAliases = new Map<string, Operator>();

@@ -39,6 +39,36 @@ test(t1, t => {
 	);
 });
 
+const t2 = 'a xnor b';
+test(t2, t => {
+	const parsed = parseOperation(t2);
+
+	t.is(evalOperation(parsed, {A: true, B: true}), true);
+	t.is(evalOperation(parsed, {A: true, B: false}), false);
+	t.is(evalOperation(parsed, {A: false, B: true}), false);
+	t.is(evalOperation(parsed, {A: false, B: false}), true);
+});
+
+const t3 = 'a NAND b';
+test(t3, t => {
+	const parsed = parseOperation(t3);
+
+	t.is(evalOperation(parsed, {A: true, B: true}), false);
+	t.is(evalOperation(parsed, {A: true, B: false}), true);
+	t.is(evalOperation(parsed, {A: false, B: true}), true);
+	t.is(evalOperation(parsed, {A: false, B: false}), true);
+});
+
+const t4 = 'a NOR b';
+test(t4, t => {
+	const parsed = parseOperation(t4);
+
+	t.is(evalOperation(parsed, {A: true, B: true}), false);
+	t.is(evalOperation(parsed, {A: true, B: false}), false);
+	t.is(evalOperation(parsed, {A: false, B: true}), false);
+	t.is(evalOperation(parsed, {A: false, B: false}), true);
+});
+
 test('Unexpected type', t => {
 	t.throws(() => {
 		evalOperation(
