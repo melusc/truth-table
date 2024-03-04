@@ -4,8 +4,10 @@ export enum OperatorSymbols {
 	'ifthen' = '→',
 	'not' = '¬',
 	'and' = '∧',
+	'nand' = '⊼',
 	'xor' = '↮',
 	'or' = '∨',
+	'nor' = '⊽',
 }
 
 export enum Operator {
@@ -13,6 +15,8 @@ export enum Operator {
 	ifthen = 'ifthen',
 	not = 'not',
 	and = 'and',
+	nand = 'nand',
 	xor = 'xor',
 	or = 'or',
+	nor = 'nor',
 }

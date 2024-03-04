@@ -7,8 +7,10 @@ export const operations = {
 	ifthen: (a: boolean, b: boolean) => !a || b,
 	not: (a: boolean) => !a,
 	and: (a: boolean, b: boolean) => a && b,
+	nand: (a: boolean, b: boolean) => !(a && b),
 	xor: (a: boolean, b: boolean) => (a ? !b : b),
 	or: (a: boolean, b: boolean) => a || b,
+	nor: (a: boolean, b: boolean) => !(a || b),
 } as const;
 
 export const evalOperation = (
