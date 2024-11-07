@@ -32,22 +32,20 @@ export const evalOperation = (
 		}
 
 		case 'operator': {
-			if (operation.operator === Operator.not) {
-				cached = operations.not(evalOperation(operation.values[0], variables));
-			} else {
-				cached = operations[operation.operator](
-					evalOperation(operation.values[0], variables),
-					evalOperation(operation.values[1], variables),
-				);
-			}
+			cached =
+				operation.operator === Operator.not
+					? operations.not(evalOperation(operation.values[0], variables))
+					: operations[operation.operator](
+							evalOperation(operation.values[0], variables),
+							evalOperation(operation.values[1], variables),
+						);
 
 			break;
 		}
 
-		// eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
 		default: {
 			throw new Error(
-				`Unexpected operation.type "${(operation as {type: string})?.type}".`,
+				`Unexpected operation.type "${(operation as {type: string}).type}".`,
 			);
 		}
 	}

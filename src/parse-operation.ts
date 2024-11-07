@@ -128,10 +128,10 @@ const parseOperationInternal = (input: Token[][]): AST => {
 
 	let secondToLast: Token[] | undefined;
 	while (
-		(secondToLast = input.at(-1))
-		&& secondToLast.length === 1
-		&& secondToLast[0]!.type === TokenType.operator
-		&& secondToLast[0]!.operator === Operator.not
+		(secondToLast = input.at(-1)) &&
+		secondToLast.length === 1 &&
+		secondToLast[0]!.type === TokenType.operator &&
+		secondToLast[0]!.operator === Operator.not
 	) {
 		lastItems.unshift(input.pop()!);
 	}

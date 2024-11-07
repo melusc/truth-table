@@ -36,11 +36,11 @@ test('tokenize', t => {
 	// Doesn't validate parens
 	t.deepEqual<Token[], Token[]>(
 		tokenize(parens1),
-		[...parens1].map((c, i) => ({
+		[...parens1].map((c, index) => ({
 			type: TokenType.parens,
 			parensType: c === ')' ? 'close' : 'open',
-			from: i,
-			to: i + 1,
+			from: index,
+			to: index + 1,
 			source: parens1,
 		})),
 		parens1,

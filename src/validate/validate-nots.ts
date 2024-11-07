@@ -7,9 +7,9 @@ export const validateNots = (input: readonly Token[]): void => {
 
 	for (const item of input) {
 		if (
-			item.type === TokenType.operator
-			&& lastType === TokenType.operator
-			&& item.operator !== Operator.not
+			item.type === TokenType.operator &&
+			lastType === TokenType.operator &&
+			item.operator !== Operator.not
 		) {
 			throw new IndexedError(
 				`Unexpected operator "${item.source.slice(item.from, item.to)}".`,
