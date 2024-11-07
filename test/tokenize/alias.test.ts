@@ -1,5 +1,3 @@
-/* eslint-disable ava/assertion-arguments */
-
 import test from 'ava';
 
 import {TokenType, tokenize} from '../../src/tokenize.js';

@@ -8,13 +8,13 @@ import {evalOperation} from './eval.js';
 
 type Column = [AST, string];
 
-function * getColumns(operations: AST, includeSteps: boolean): Iterable<Column> {
+function* getColumns(operations: AST, includeSteps: boolean): Iterable<Column> {
 	// Not variables, they are handled differently below
 	if (operations.type !== 'variable') {
 		// If includeSteps === false, only yield the outermost operation
 		if (includeSteps) {
 			for (const value of operations.values) {
-				yield * getColumns(value, includeSteps);
+				yield* getColumns(value, includeSteps);
 			}
 		}
 

@@ -44,8 +44,8 @@ function tokenizeOperator(
 	const result: Token[] = [];
 
 	while (
-		characters.length > 0
-		&& singleCharacterNotAliases.has(characters.at(-1)!)
+		characters.length > 0 &&
+		singleCharacterNotAliases.has(characters.at(-1)!)
 	) {
 		result.unshift({
 			type: TokenType.operator,
