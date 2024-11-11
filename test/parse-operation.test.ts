@@ -1,8 +1,8 @@
 import test from 'ava';
 
-import {parseOperation} from '../src/parse-operation.js';
-import {operationToString} from '../src/operation-to-string.js';
 import {IndexedError} from '../src/indexed-error.js';
+import {operationToString} from '../src/operation-to-string.js';
+import {parseOperation} from '../src/parse-operation.js';
 
 const t1 = '(a) && (b)';
 test(t1, t => {

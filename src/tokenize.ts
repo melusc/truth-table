@@ -1,6 +1,6 @@
 import {IndexedError} from './indexed-error.js';
-import {Operator} from './operators.js';
 import {operatorAliases, singleCharacterNotAliases} from './operator-alias.js';
+import {Operator} from './operators.js';
 
 export type Token = Readonly<
 	| {

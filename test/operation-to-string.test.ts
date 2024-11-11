@@ -1,7 +1,7 @@
 import test from 'ava';
 
-import {Operator, OperatorSymbols} from '../src/operators.js';
 import {operationToString} from '../src/operation-to-string.js';
+import {Operator, OperatorSymbols} from '../src/operators.js';
 
 test('a AND b', t => {
 	t.is(

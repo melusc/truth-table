@@ -1,8 +1,8 @@
 import test from 'ava';
 
-import {validateMatchedParens} from '../../src/validate/validate-matched-parens.js';
-import {tokenize} from '../../src/tokenize.js';
 import {IndexedError} from '../../src/indexed-error.js';
+import {tokenize} from '../../src/tokenize.js';
+import {validateMatchedParens} from '../../src/validate/validate-matched-parens.js';
 
 const doValidate = (input: string): void => {
 	validateMatchedParens(tokenize(input));
