@@ -1,5 +1,5 @@
-import {type AST} from './parse-operation.js';
 import {OperatorSymbols, Operator} from './operators.js';
+import {type AST} from './parse-operation.js';
 
 const cache = new WeakMap<AST, string>();
 

@@ -1,10 +1,10 @@
 import type {Except, ReadonlyDeep} from 'type-fest';
 
+import {evalOperation} from './eval.js';
+import {findVariables} from './find-variables.js';
 import {generateBoolPermutations} from './generate-bool-permutations.js';
 import {operationToString} from './operation-to-string.js';
-import {findVariables} from './find-variables.js';
 import {type AST, parseOperation} from './parse-operation.js';
-import {evalOperation} from './eval.js';
 
 type Column = [AST, string];
 

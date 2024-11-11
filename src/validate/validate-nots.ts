@@ -1,6 +1,6 @@
+import {IndexedError} from '../indexed-error.js';
 import {Operator} from '../operators.js';
 import {TokenType, type Token} from '../tokenize.js';
-import {IndexedError} from '../indexed-error.js';
 
 export const validateNots = (input: readonly Token[]): void => {
 	let lastType: TokenType | undefined;
