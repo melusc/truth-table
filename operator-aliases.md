@@ -60,7 +60,15 @@ all operators can be used in their word form case insensitively ("aNd" is just a
 ## NAND
 
 - `⊼`
+- `!&`
+- `!&&`
+- `~&`
+- `~&&`
 
 ## NOR
 
 - `⊽`
+- `!|`
+- `!||`
+- `~|`
+- `~||`

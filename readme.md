@@ -23,6 +23,8 @@ it can easily be used to only parse a truth statement and generate an AST repres
 - NOT
 - IFF
 - IFTHEN
+- NAND
+- NOR
 
 See [operator-aliases.md](./operator-aliases.md) for all the aliases.
 
