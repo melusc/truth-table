@@ -223,7 +223,6 @@ __metadata:
     eslint: "npm:^9.16.0"
     prettier: "npm:^3.4.2"
     rimraf: "npm:^6.0.1"
-    type-fest: "npm:^4.30.0"
     typescript: "npm:^5.7.2"
   languageName: unknown
   linkType: soft
@@ -3237,13 +3236,6 @@ __metadata:
   version: 0.8.1
   resolution: "type-fest@npm:0.8.1"
   checksum: 10c0/dffbb99329da2aa840f506d376c863bd55f5636f4741ad6e65e82f5ce47e6914108f44f340a0b74009b0cb5d09d6752ae83203e53e98b1192cf80ecee5651636
-  languageName: node
-  linkType: hard
-
-"type-fest@npm:^4.30.0":
-  version: 4.30.0
-  resolution: "type-fest@npm:4.30.0"
-  checksum: 10c0/9441fbbc971f92a53d7dfdb0db3f9c71a5a33ac3e021ca605cba8ad0b5c0a1e191cc778b4980c534b098ccb4e3322809100baf763be125510c993c9b8361f60e
   languageName: node
   linkType: hard
 

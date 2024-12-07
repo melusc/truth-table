@@ -1,5 +1,3 @@
-import type {ReadonlyDeep} from 'type-fest';
-
 import {groupItems} from './group-items.js';
 import {hasOperator} from './has-operator.js';
 import {IndexedError} from './indexed-error.js';
@@ -7,22 +5,21 @@ import {OperatorSymbols, Operator} from './operators.js';
 import {TokenType, tokenize, type Token} from './tokenize.js';
 import {validate} from './validate/validate.js';
 
-export type AST = ReadonlyDeep<
+export type AST =
 	| {
-			type: 'operator';
-			operator: Exclude<Operator, Operator.not>;
-			values: [AST, AST];
+			readonly type: 'operator';
+			readonly operator: Exclude<Operator, Operator.not>;
+			readonly values: readonly [AST, AST];
 	  }
 	| {
-			type: 'operator';
-			operator: Operator.not;
-			values: [AST];
+			readonly type: 'operator';
+			readonly operator: Operator.not;
+			readonly values: readonly [AST];
 	  }
 	| {
-			type: 'variable';
-			variable: string;
-	  }
->;
+			readonly type: 'variable';
+			readonly variable: string;
+	  };
 
 const toOriginalString = (input: Token | Token[]): string => {
 	if (!Array.isArray(input)) {

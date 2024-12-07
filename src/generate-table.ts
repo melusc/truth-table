@@ -1,12 +1,10 @@
-import type {Except, ReadonlyDeep} from 'type-fest';
-
 import {evalOperation} from './eval.js';
 import {findVariables} from './find-variables.js';
 import {generateBoolPermutations} from './generate-bool-permutations.js';
 import {operationToString} from './operation-to-string.js';
 import {type AST, parseOperation} from './parse-operation.js';
 
-type Column = [AST, string];
+type Column = readonly [AST, string];
 
 function* getColumns(operations: AST, includeSteps: boolean): Iterable<Column> {
 	// Not variables, they are handled differently below
@@ -23,7 +21,7 @@ function* getColumns(operations: AST, includeSteps: boolean): Iterable<Column> {
 	}
 }
 
-const deduplicateColumns = (columns: Iterable<Column>): Column[] => {
+const deduplicateColumns = (columns: Iterable<Column>): readonly Column[] => {
 	const seenColumns = new Set<string>();
 	const result: Column[] = [];
 
@@ -40,15 +38,11 @@ const deduplicateColumns = (columns: Iterable<Column>): Column[] => {
 const removeOuterParens = (string: string): string =>
 	string.replace(/^\((.+)\)$/, '$1');
 
-type MutableTable = {
-	columns: string[];
-	rows: boolean[][];
-	ast: AST;
+export type ParsedTable = {
+	readonly columns: readonly string[];
+	readonly rows: readonly (readonly boolean[])[];
+	readonly ast: AST;
 };
-
-type TableReadonlyKeys = 'columns' | 'rows';
-export type ParsedTable = ReadonlyDeep<Pick<MutableTable, TableReadonlyKeys>> &
-	Readonly<Except<MutableTable, TableReadonlyKeys>>;
 
 export const generateTable = (
 	input: string,
@@ -59,14 +53,11 @@ export const generateTable = (
 	const rows = generateBoolPermutations(variables);
 	const columns = deduplicateColumns(getColumns(parsed, includeSteps));
 
-	const table: MutableTable = {
-		columns: [...variables],
-		rows: [],
-		ast: parsed,
-	};
+	const tableColumns = [...variables];
+	const tableRows: boolean[][] = [];
 
 	for (const [, stringified] of columns) {
-		table.columns.push(removeOuterParens(stringified));
+		tableColumns.push(removeOuterParens(stringified));
 	}
 
 	for (const variablePermutations of rows) {
@@ -80,8 +71,12 @@ export const generateTable = (
 			row.push(evalOperation(operation, variablePermutations));
 		}
 
-		table.rows.push(row);
+		tableRows.push(row);
 	}
 
-	return table;
+	return {
+		columns: tableColumns,
+		rows: tableRows,
+		ast: parsed,
+	};
 };

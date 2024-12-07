@@ -45,8 +45,5 @@
 	"packageManager": "yarn@4.5.3",
 	"exports": {
 		".": "./dist/src/index.js"
-	},
-	"dependencies": {
-		"type-fest": "^4.30.0"
 	}
 }
