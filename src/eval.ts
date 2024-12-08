@@ -1,6 +1,6 @@
 import {operationToString} from './operation-to-string.js';
 import {Operator} from './operators.js';
-import {type AST} from './parse-operation.js';
+import type {AST} from './parse-operation.js';
 
 export const operations = {
 	iff: (a: boolean, b: boolean) => a === b,
