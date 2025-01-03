@@ -214,7 +214,7 @@ __metadata:
     "@lusc/eslint-config": "npm:^4.0.0"
     "@lusc/tsconfig": "npm:^5.1.0"
     ava: "npm:^6.2.0"
-    eslint: "npm:^9.16.0"
+    eslint: "npm:^9.17.0"
     prettier: "npm:^3.4.2"
     rimraf: "npm:^6.0.1"
     typescript: "npm:^5.7.2"
@@ -1272,7 +1272,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^9.16.0":
+"eslint@npm:^9.17.0":
   version: 9.17.0
   resolution: "eslint@npm:9.17.0"
   dependencies:
