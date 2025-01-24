@@ -36,6 +36,7 @@ test('tokenize', t => {
 	// Doesn't validate parens
 	t.deepEqual<Token[], Token[]>(
 		tokenize(parens1),
+		// eslint-disable-next-line @typescript-eslint/no-misused-spread
 		[...parens1].map((c, index) => ({
 			type: TokenType.parens,
 			parensType: c === ')' ? 'close' : 'open',
