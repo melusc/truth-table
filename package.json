@@ -1,13 +1,13 @@
 {
 	"name": "@lusc/truth-table",
 	"version": "5.4.1",
-	"repository": "https://github.com/melusc/truth-table",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/melusc/truth-table"
+	},
 	"author": "lusc",
 	"license": "MIT",
 	"type": "module",
-	"publishConfig": {
-		"access": "public"
-	},
 	"ava": {
 		"files": [
 			"test/**/*.test.ts"
@@ -34,6 +34,7 @@
 	},
 	"devDependencies": {
 		"@ava/typescript": "^5.0.0",
+		"@lusc/clean-package": "^1.0.0",
 		"@lusc/eslint-config": "^4.1.0",
 		"@lusc/tsconfig": "^6.0.2",
 		"ava": "^6.2.0",
