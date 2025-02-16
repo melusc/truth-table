@@ -185,14 +185,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lusc/clean-package@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@lusc/clean-package@npm:1.0.0"
+"@lusc/clean-package@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@lusc/clean-package@npm:2.0.0"
   dependencies:
     json-stable-stringify: "npm:^1.2.1"
   bin:
-    clean-package: dist/index.js
-  checksum: 10c0/d44861d48f978ca5335e21f283349892d1f52abe6593a5e4f74a181447e9adfcc0ff7b0bd17789beeb7adb16e86bffc665a85c81693b16210f6f73334638e3ce
+    clean-package: dist/cli.js
+  checksum: 10c0/6564cd83c6d4b2711c65b2c38fe33ae784f9393dc951b0d7f24da311ccdf343e1ca2d37aeb149c59526ce59297a29c54c289e911ceca3a22782ef84ee43c75b0
   languageName: node
   linkType: hard
 
@@ -223,7 +223,7 @@ __metadata:
   resolution: "@lusc/truth-table@workspace:."
   dependencies:
     "@ava/typescript": "npm:^5.0.0"
-    "@lusc/clean-package": "npm:^1.0.0"
+    "@lusc/clean-package": "npm:^2.0.0"
     "@lusc/eslint-config": "npm:^4.1.0"
     "@lusc/tsconfig": "npm:^6.0.2"
     ava: "npm:^6.2.0"
