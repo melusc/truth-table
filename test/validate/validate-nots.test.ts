@@ -31,6 +31,11 @@ await test('validateNots', () => {
 		() => {
 			doValidate(`a ${OperatorSymbols.not} & !b`);
 		},
-		{message: 'Unexpected operator "&".', from: 4, to: 5, name: 'IndexedError'},
+		{
+			message: 'Unexpected operator "&".',
+			from: 4,
+			to: 5,
+			name: 'IndexedError',
+		},
 	);
 });
