@@ -1,14 +1,16 @@
-import test from 'ava';
+import assert from 'node:assert/strict';
+// eslint-disable-next-line n/no-unsupported-features/node-builtins
+import test from 'node:test';
 
 import {operations} from '../src/eval.js';
 
-const createTest = <T extends keyof typeof operations>(
+const createTest = async <T extends keyof typeof operations>(
 	title: T,
 	valueResults: Array<[Parameters<(typeof operations)[T]>, boolean]>,
-): void => {
-	test(title, t => {
+): Promise<void> =>
+	test(title, () => {
 		for (const row of valueResults) {
-			t.is(
+			assert.equal(
 				// @ts-expect-error: row[0] is a tuple
 				operations[title](...row[0]),
 				row[1],
@@ -16,42 +18,40 @@ const createTest = <T extends keyof typeof operations>(
 			);
 		}
 	});
-};
-
-createTest('iff', [
+await createTest('iff', [
 	[[true, true], true],
 	[[true, false], false],
 	[[false, true], false],
 	[[false, false], true],
 ]);
 
-createTest('ifthen', [
+await createTest('ifthen', [
 	[[true, true], true],
 	[[true, false], false],
 	[[false, true], true],
 	[[false, false], true],
 ]);
 
-createTest('not', [
+await createTest('not', [
 	[[true], false],
 	[[false], true],
 ]);
 
-createTest('and', [
+await createTest('and', [
 	[[true, true], true],
 	[[true, false], false],
 	[[false, true], false],
 	[[false, false], false],
 ]);
 
-createTest('xor', [
+await createTest('xor', [
 	[[true, true], false],
 	[[true, false], true],
 	[[false, true], true],
 	[[false, false], false],
 ]);
 
-createTest('or', [
+await createTest('or', [
 	[[true, true], true],
 	[[true, false], true],
 	[[false, true], true],

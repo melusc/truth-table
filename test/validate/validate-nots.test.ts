@@ -1,6 +1,7 @@
-import test from 'ava';
+import assert from 'node:assert/strict';
+// eslint-disable-next-line n/no-unsupported-features/node-builtins
+import test from 'node:test';
 
-import {IndexedError} from '../../src/indexed-error.js';
 import {OperatorSymbols} from '../../src/operators.js';
 import {tokenize} from '../../src/tokenize.js';
 import {validateNots} from '../../src/validate/validate-nots.js';
@@ -9,33 +10,27 @@ const doValidate = (input: string): void => {
 	validateNots(tokenize(input));
 };
 
-test('validateNots', t => {
-	t.notThrows(
-		() => {
-			doValidate(`a${OperatorSymbols.and}${OperatorSymbols.not.repeat(2)}b`);
-		},
-		`a${OperatorSymbols.and}${OperatorSymbols.not.repeat(2)}b`,
-	);
+await test('validateNots', () => {
+	assert.doesNotThrow(() => {
+		doValidate(`a${OperatorSymbols.and}${OperatorSymbols.not.repeat(2)}b`);
+	});
 
-	t.throws(
+	assert.throws(
 		() => {
 			doValidate(`a ${OperatorSymbols.not} && b`);
 		},
 		{
 			message: 'Unexpected operator "&&".',
-			instanceOf: IndexedError,
+			from: 4,
+			to: 6,
+			name: 'IndexedError',
 		},
-		`a ${OperatorSymbols.not} && b`,
 	);
 
-	t.throws(
+	assert.throws(
 		() => {
 			doValidate(`a ${OperatorSymbols.not} & !b`);
 		},
-		{
-			message: 'Unexpected operator "&".',
-			instanceOf: IndexedError,
-		},
-		`a ${OperatorSymbols.not} & !b`,
+		{message: 'Unexpected operator "&".', from: 4, to: 5, name: 'IndexedError'},
 	);
 });

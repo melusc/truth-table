@@ -8,17 +8,6 @@
 	"author": "lusc",
 	"license": "MIT",
 	"type": "module",
-	"ava": {
-		"files": [
-			"test/**/*.test.ts"
-		],
-		"typescript": {
-			"compile": false,
-			"rewritePaths": {
-				"test/": "dist/test/"
-			}
-		}
-	},
 	"engines": {
 		"node": "^18.17.1 || ^20.6.1 || ^22.0.0"
 	},
@@ -29,15 +18,14 @@
 	"scripts": {
 		"fmt": "prettier -w . && eslint --fix",
 		"build": "rimraf dist && tsc",
-		"test": "yarn run build && ava",
+		"test": "yarn run build && node --test dist/test/**/*.test.js",
 		"prepublish": "yarn build"
 	},
 	"devDependencies": {
-		"@ava/typescript": "^5.0.0",
 		"@lusc/clean-package": "^2.1.0",
 		"@lusc/eslint-config": "^6.1.0",
 		"@lusc/tsconfig": "^6.0.2",
-		"ava": "^6.2.0",
+		"@types/node": "^22.13.8",
 		"eslint": "^9.20.1",
 		"prettier": "^3.5.1",
 		"rimraf": "^6.0.1",

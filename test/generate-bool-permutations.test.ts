@@ -1,16 +1,18 @@
-import test from 'ava';
+import assert from 'node:assert/strict';
+// eslint-disable-next-line n/no-unsupported-features/node-builtins
+import test from 'node:test';
 
 import {generateBoolPermutations} from '../src/generate-bool-permutations.js';
 
-test('[a]', t => {
-	t.deepEqual(
+await test('[a]', () => {
+	assert.deepEqual(
 		[...generateBoolPermutations(new Set(['a']))],
 		[{a: true}, {a: false}],
 	);
 });
 
-test('[a, b]', t => {
-	t.deepEqual(
+await test('[a, b]', () => {
+	assert.deepEqual(
 		[...generateBoolPermutations(new Set(['a', 'b']))],
 		[
 			{a: true, b: true},
@@ -21,8 +23,8 @@ test('[a, b]', t => {
 	);
 });
 
-test('[a, b, c]', t => {
-	t.deepEqual(
+await test('[a, b, c]', () => {
+	assert.deepEqual(
 		[...generateBoolPermutations(new Set(['a', 'b', 'c']))],
 		[
 			{a: true, b: true, c: true},
