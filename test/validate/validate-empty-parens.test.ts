@@ -1,6 +1,7 @@
-import test from 'ava';
+import assert from 'node:assert/strict';
+// eslint-disable-next-line n/no-unsupported-features/node-builtins
+import test from 'node:test';
 
-import {IndexedError} from '../../src/indexed-error.js';
 import {tokenize} from '../../src/tokenize.js';
 import {validateEmptyParens} from '../../src/validate/validate-empty-parens.js';
 
@@ -8,78 +9,85 @@ const doValidate = (input: string): void => {
 	validateEmptyParens(tokenize(input));
 };
 
-test('validateEmptyParens', t => {
-	t.notThrows(() => {
+await test('validateEmptyParens', () => {
+	assert.doesNotThrow(() => {
 		doValidate('(a)');
 	}, '(a)');
 
-	t.notThrows(() => {
+	assert.doesNotThrow(() => {
 		doValidate('a && b');
 	}, 'a && b');
 
-	t.throws(
+	assert.throws(
 		() => {
 			doValidate('()');
 		},
 		{
 			message: 'Unexpected empty parentheses at (0 - 2).',
-			instanceOf: IndexedError,
+			from: 0,
+			to: 2,
+			name: 'IndexedError',
 		},
 		'()',
 	);
 
-	t.throws(
+	assert.throws(
 		() => {
 			doValidate('( )');
 		},
 		{
 			message: 'Unexpected empty parentheses at (0 - 3).',
-			instanceOf: IndexedError,
+			from: 0,
+			to: 3,
+			name: 'IndexedError',
 		},
-		'( )',
 	);
 
-	t.throws(
+	assert.throws(
 		() => {
 			doValidate('((((((()))))))');
 		},
 		{
 			message: 'Unexpected empty parentheses at (6 - 8).',
-			instanceOf: IndexedError,
+			from: 6,
+			to: 8,
+			name: 'IndexedError',
 		},
-		'((((((()))))))',
 	);
 
-	t.throws(
+	assert.throws(
 		() => {
 			doValidate('(((((((    )))))))');
 		},
 		{
 			message: 'Unexpected empty parentheses at (6 - 12).',
-			instanceOf: IndexedError,
+			from: 6,
+			to: 12,
+			name: 'IndexedError',
 		},
-		'(((((((    )))))))',
 	);
 
-	t.throws(
+	assert.throws(
 		() => {
 			doValidate('()()()()()');
 		},
 		{
 			message: 'Unexpected empty parentheses at (0 - 2).',
-			instanceOf: IndexedError,
+			from: 0,
+			to: 2,
+			name: 'IndexedError',
 		},
-		'()()()()()',
 	);
 
-	t.throws(
+	assert.throws(
 		() => {
 			doValidate(')(');
 		},
 		{
 			message: 'Unexpected opening parentheses at position 1.',
-			instanceOf: IndexedError,
+			from: 1,
+			to: 2,
+			name: 'IndexedError',
 		},
-		')(',
 	);
 });

@@ -1,10 +1,12 @@
-import test from 'ava';
+import assert from 'node:assert/strict';
+// eslint-disable-next-line n/no-unsupported-features/node-builtins
+import test from 'node:test';
 
 import {OperatorSymbols, Operator} from '../../src/operators.js';
 import {TokenType, tokenize, type Token} from '../../src/tokenize.js';
 
-test('tokenize', t => {
-	t.deepEqual<Token[], Token[]>(
+await test('tokenize', () => {
+	assert.deepEqual<Token[]>(
 		tokenize('!=='),
 		[
 			{
@@ -18,7 +20,7 @@ test('tokenize', t => {
 		'!==',
 	);
 
-	t.deepEqual<Token[], Token[]>(
+	assert.deepEqual<Token[]>(
 		tokenize('abcd'),
 		[
 			{
@@ -34,7 +36,7 @@ test('tokenize', t => {
 
 	const parens1 = ')((()())))';
 	// Doesn't validate parens
-	t.deepEqual<Token[], Token[]>(
+	assert.deepEqual<Token[]>(
 		tokenize(parens1),
 		// eslint-disable-next-line @typescript-eslint/no-misused-spread
 		[...parens1].map((c, index) => ({
@@ -48,7 +50,7 @@ test('tokenize', t => {
 	);
 
 	const input1 = '(A)&(B)';
-	t.deepEqual<Token[], Token[]>(
+	assert.deepEqual<Token[]>(
 		tokenize(input1),
 		[
 			{
@@ -105,7 +107,7 @@ test('tokenize', t => {
 	);
 
 	const input2 = 'a AND b';
-	t.deepEqual<Token[], Token[]>(
+	assert.deepEqual<Token[]>(
 		tokenize(input2),
 		[
 			{
@@ -134,7 +136,7 @@ test('tokenize', t => {
 	);
 
 	const input3 = `a ${OperatorSymbols.xor} b`;
-	t.deepEqual<Token[], Token[]>(
+	assert.deepEqual<Token[]>(
 		tokenize(input3),
 		[
 			{
@@ -163,7 +165,7 @@ test('tokenize', t => {
 	);
 
 	const input4 = `a ${OperatorSymbols.and} ${OperatorSymbols.not.repeat(4)} b`;
-	t.deepEqual<Token[], Token[]>(
+	assert.deepEqual<Token[]>(
 		tokenize(input4),
 		[
 			{
@@ -220,7 +222,7 @@ test('tokenize', t => {
 	);
 
 	const input5 = '((((a) & (b))))';
-	t.deepEqual<Token[], Token[]>(
+	assert.deepEqual<Token[]>(
 		tokenize(input5),
 		[
 			{

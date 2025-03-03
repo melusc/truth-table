@@ -1,10 +1,12 @@
-import test from 'ava';
+import assert from 'node:assert/strict';
+// eslint-disable-next-line n/no-unsupported-features/node-builtins
+import test from 'node:test';
 
 import {operationToString} from '../src/operation-to-string.js';
 import {Operator, OperatorSymbols} from '../src/operators.js';
 
-test('a AND b', t => {
-	t.is(
+await test('a AND b', () => {
+	assert.equal(
 		operationToString({
 			type: 'operator',
 			operator: Operator.and,
@@ -23,8 +25,8 @@ test('a AND b', t => {
 	);
 });
 
-test('a AND (b XOR (c <=> d))', t => {
-	t.is(
+await test('a AND (b XOR (c <=> d))', () => {
+	assert.equal(
 		operationToString({
 			type: 'operator',
 			operator: Operator.and,

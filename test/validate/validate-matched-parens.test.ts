@@ -1,6 +1,7 @@
-import test from 'ava';
+import assert from 'node:assert/strict';
+// eslint-disable-next-line n/no-unsupported-features/node-builtins
+import test from 'node:test';
 
-import {IndexedError} from '../../src/indexed-error.js';
 import {tokenize} from '../../src/tokenize.js';
 import {validateMatchedParens} from '../../src/validate/validate-matched-parens.js';
 
@@ -8,61 +9,68 @@ const doValidate = (input: string): void => {
 	validateMatchedParens(tokenize(input));
 };
 
-test('validateMatchedParens', t => {
-	t.notThrows(() => {
+await test('validateMatchedParens', () => {
+	assert.doesNotThrow(() => {
 		doValidate('((((a) & (b))))');
-	}, '((((a) & (b))))');
+	});
 
-	t.throws(
+	assert.throws(
 		() => {
 			doValidate(')');
 		},
 		{
 			message: 'Unmatched parenthesis at position 0.',
-			instanceOf: IndexedError,
+			from: 0,
+			to: 1,
+			name: 'IndexedError',
 		},
-		')',
 	);
 
-	t.throws(
+	assert.throws(
 		() => {
 			doValidate('((()');
 		},
 		{
 			message: 'Unmatched parenthesis at position 1.',
-			instanceOf: IndexedError,
+			from: 1,
+			to: 2,
+			name: 'IndexedError',
 		},
-		'((()',
 	);
 
-	t.throws(
+	assert.throws(
 		() => {
 			doValidate('((())))');
 		},
 		{
 			message: 'Unmatched parenthesis at position 6.',
-			instanceOf: IndexedError,
+			from: 6,
+			to: 7,
+			name: 'IndexedError',
 		},
-		'((())))',
 	);
 
-	t.throws(
+	assert.throws(
 		() => {
 			doValidate(')');
 		},
 		{
 			message: 'Unmatched parenthesis at position 0.',
-			instanceOf: IndexedError,
+			from: 0,
+			to: 1,
+			name: 'IndexedError',
 		},
 	);
 
-	t.throws(
+	assert.throws(
 		() => {
 			doValidate('(a & b');
 		},
 		{
 			message: 'Unmatched parenthesis at position 0.',
-			instanceOf: IndexedError,
+			from: 0,
+			to: 1,
+			name: 'IndexedError',
 		},
 	);
 });

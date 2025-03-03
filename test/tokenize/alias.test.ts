@@ -1,4 +1,6 @@
-import test from 'ava';
+import assert from 'node:assert/strict';
+// eslint-disable-next-line n/no-unsupported-features/node-builtins
+import test from 'node:test';
 
 import {TokenType, tokenize} from '../../src/tokenize.js';
 
@@ -17,19 +19,18 @@ const doNormaliseOperators = (input: string): string =>
 		})
 		.join(' ');
 
-const makeTest = (
+const makeTest = async (
 	operatorName: string,
 	expected: string,
 	items: string[],
-): void => {
-	test(`replace to ${operatorName}`, t => {
+): Promise<void> =>
+	test(`replace to ${operatorName}`, () => {
 		for (const item of items) {
-			t.is(doNormaliseOperators(item), expected, item);
+			assert.equal(doNormaliseOperators(item), expected, item);
 		}
 	});
-};
 
-makeTest('iff', 'A iff B', [
+await makeTest('iff', 'A iff B', [
 	'A iff B',
 	'A ⇔ B',
 	'A ≡ B',
@@ -42,7 +43,7 @@ makeTest('iff', 'A iff B', [
 	'A XNOR B',
 ]);
 
-makeTest('ifthen', 'A ifthen B', [
+await makeTest('ifthen', 'A ifthen B', [
 	'A ⇒ B',
 	'A ⊃ B',
 	'A -> B',
@@ -50,13 +51,19 @@ makeTest('ifthen', 'A ifthen B', [
 	'A → B',
 ]);
 
-makeTest('not', 'not A', ['NOT A', '! A', '~ A', '¬ A']);
+await makeTest('not', 'not A', ['NOT A', '! A', '~ A', '¬ A']);
 
-makeTest('and', 'A and B', ['A && B', 'A & B', 'A AND B', 'A ∧ B', 'A * B']);
+await makeTest('and', 'A and B', [
+	'A && B',
+	'A & B',
+	'A AND B',
+	'A ∧ B',
+	'A * B',
+]);
 
-makeTest('nand', 'A nand B', ['A ⊼ B']);
+await makeTest('nand', 'A nand B', ['A ⊼ B']);
 
-makeTest('xor', 'A xor B', [
+await makeTest('xor', 'A xor B', [
 	'A ⊕ B',
 	'A ⊻ B',
 	'A ≢ B',
@@ -71,11 +78,11 @@ makeTest('xor', 'A xor B', [
 	'A ^ B',
 ]);
 
-makeTest('or', 'A or B', ['A || B', 'A | B', 'A OR B', 'A ∨ B', 'A + B']);
+await makeTest('or', 'A or B', ['A || B', 'A | B', 'A OR B', 'A ∨ B', 'A + B']);
 
-makeTest('nor', 'A nor B', ['A ⊽ B']);
+await makeTest('nor', 'A nor B', ['A ⊽ B']);
 
 const t1 = '(a && b) || (c !== ! d)';
-test(t1, t => {
-	t.is(doNormaliseOperators(t1), '( A and B ) or ( C xor not D )', t1);
+await test(t1, () => {
+	assert.equal(doNormaliseOperators(t1), '( A and B ) or ( C xor not D )', t1);
 });

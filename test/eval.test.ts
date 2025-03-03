@@ -1,4 +1,6 @@
-import test from 'ava';
+import assert from 'node:assert/strict';
+// eslint-disable-next-line n/no-unsupported-features/node-builtins
+import test from 'node:test';
 
 import {evalOperation} from '../src/eval.js';
 import {Operator} from '../src/operators.js';
@@ -12,9 +14,9 @@ const t1 = `
 		(d -> c) <-> e
 	)
 ) && (!e || c) -> f`;
-test(t1, t => {
+await test(t1, () => {
 	const parsed = parseOperation(t1);
-	t.is(
+	assert.equal(
 		evalOperation(parsed, {
 			A: true,
 			B: false,
@@ -26,7 +28,7 @@ test(t1, t => {
 		false,
 	);
 
-	t.is(
+	assert.equal(
 		evalOperation(parsed, {
 			A: false,
 			B: false,
@@ -40,37 +42,37 @@ test(t1, t => {
 });
 
 const t2 = 'a xnor b';
-test(t2, t => {
+await test(t2, () => {
 	const parsed = parseOperation(t2);
 
-	t.is(evalOperation(parsed, {A: true, B: true}), true);
-	t.is(evalOperation(parsed, {A: true, B: false}), false);
-	t.is(evalOperation(parsed, {A: false, B: true}), false);
-	t.is(evalOperation(parsed, {A: false, B: false}), true);
+	assert.equal(evalOperation(parsed, {A: true, B: true}), true);
+	assert.equal(evalOperation(parsed, {A: true, B: false}), false);
+	assert.equal(evalOperation(parsed, {A: false, B: true}), false);
+	assert.equal(evalOperation(parsed, {A: false, B: false}), true);
 });
 
 const t3 = 'a NAND b';
-test(t3, t => {
+await test(t3, () => {
 	const parsed = parseOperation(t3);
 
-	t.is(evalOperation(parsed, {A: true, B: true}), false);
-	t.is(evalOperation(parsed, {A: true, B: false}), true);
-	t.is(evalOperation(parsed, {A: false, B: true}), true);
-	t.is(evalOperation(parsed, {A: false, B: false}), true);
+	assert.equal(evalOperation(parsed, {A: true, B: true}), false);
+	assert.equal(evalOperation(parsed, {A: true, B: false}), true);
+	assert.equal(evalOperation(parsed, {A: false, B: true}), true);
+	assert.equal(evalOperation(parsed, {A: false, B: false}), true);
 });
 
 const t4 = 'a NOR b';
-test(t4, t => {
+await test(t4, () => {
 	const parsed = parseOperation(t4);
 
-	t.is(evalOperation(parsed, {A: true, B: true}), false);
-	t.is(evalOperation(parsed, {A: true, B: false}), false);
-	t.is(evalOperation(parsed, {A: false, B: true}), false);
-	t.is(evalOperation(parsed, {A: false, B: false}), true);
+	assert.equal(evalOperation(parsed, {A: true, B: true}), false);
+	assert.equal(evalOperation(parsed, {A: true, B: false}), false);
+	assert.equal(evalOperation(parsed, {A: false, B: true}), false);
+	assert.equal(evalOperation(parsed, {A: false, B: false}), true);
 });
 
-test('Unexpected type', t => {
-	t.throws(() => {
+await test('Unexpected type', () => {
+	assert.throws(() => {
 		evalOperation(
 			{
 				type: 'abc' as 'operator',
