@@ -9,19 +9,19 @@ importers:
   .:
     devDependencies:
       '@lusc/clean-package':
-        specifier: ^2.1.1
+        specifier: ^2.2.0
         version: 2.2.0
       '@lusc/eslint-config':
-        specifier: ^7.4.1
+        specifier: ^7.4.2
         version: 7.4.2(@typescript-eslint/utils@8.42.0(eslint@9.34.0)(typescript@5.9.2))(eslint@9.34.0)
       '@lusc/tsconfig':
-        specifier: ^7.0.0
+        specifier: ^7.1.0
         version: 7.1.0
       '@types/node':
-        specifier: ^22.17.1
+        specifier: ^22.18.1
         version: 22.18.1
       eslint:
-        specifier: ^9.33.0
+        specifier: ^9.34.0
         version: 9.34.0
       prettier:
         specifier: ^3.6.2
