@@ -26,7 +26,7 @@ export type Token = Readonly<
 	  }
 >;
 
-const VARIABLES_RE = /^[a-z_]+$/i;
+const VARIABLES_RE = /^\w+$/;
 const PARENS_RE = /^[()]+$/;
 
 export const enum TokenType {
@@ -81,7 +81,7 @@ export const tokenize = (input: string): Token[] => {
 	input = input.normalize('NFKC');
 
 	const result: Token[] = [];
-	for (const match of input.matchAll(/[a-z_]+|[()]|[^a-z_()\s]+/gi)) {
+	for (const match of input.matchAll(/\w+|[()]|[^\w()\s]+/g)) {
 		const characters = match[0];
 		const from = match.index;
 		if (typeof from !== 'number') {
@@ -100,6 +100,12 @@ export const tokenize = (input: string): Token[] => {
 					to,
 					source: input,
 				});
+			} else if (/^\d/.test(characters)) {
+				throw new IndexedError(
+					'Variables may not start with a digit.',
+					from,
+					to,
+				);
 			} else {
 				result.push({
 					type: TokenType.variable,

@@ -150,9 +150,11 @@ The shape of the AST is as follows.
 
 ### For variables
 
-A variable is made of any latin letters. Variables are case insensitive. Additionally, `_` is permitted.
+A variable consists of any latin letter, `_`, and digits.
+Variables are case insensitive.
+Variables may not start with a digit.
 
-A variable matches the regex `/^[a-z_]+$/i`.
+A variable matches the regex `/^[a-z_]\w+$/i`.
 
 ```ts
 type AST = {

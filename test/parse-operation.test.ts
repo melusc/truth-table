@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
+import {IndexedError} from '../src/indexed-error.js';
 import {operationToString} from '../src/operation-to-string.js';
 import {parseOperation} from '../src/parse-operation.js';
 
@@ -334,4 +335,42 @@ await test('Plain operator', () => {
 	assert.throws(() => {
 		parseOperation('&');
 	});
+});
+
+await test('Valid variables with numbers', () => {
+	const t = '(a1 -> a22) | (a234a33)';
+	const parsed = parseOperation(t);
+	assert.deepEqual(parsed, {
+		type: 'operator',
+		operator: 'or',
+		values: [
+			{
+				type: 'operator',
+				operator: 'ifthen',
+				values: [
+					{
+						type: 'variable',
+						variable: 'A1',
+					},
+					{
+						type: 'variable',
+						variable: 'A22',
+					},
+				],
+			},
+			{
+				type: 'variable',
+				variable: 'A234A33',
+			},
+		],
+	});
+});
+
+await test('Invalid variables with numbers', () => {
+	assert.throws(
+		() => {
+			parseOperation('4a');
+		},
+		new IndexedError('Variables may not start with a digit.', 0, 2),
+	);
 });
