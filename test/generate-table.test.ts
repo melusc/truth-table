@@ -9,10 +9,10 @@ await test(t1, () => {
 	const {columns, rows} = generateTable(t1);
 	assert.deepEqual(columns, ['A', 'B', `A ${OperatorSymbols.or} B`]);
 	assert.deepEqual(rows, [
-		[true, true, true],
-		[true, false, true],
-		[false, true, true],
 		[false, false, false],
+		[false, true, true],
+		[true, false, true],
+		[true, true, true],
 	]);
 });
 
@@ -27,14 +27,14 @@ await test(t2, () => {
 		`(A ${OperatorSymbols.and} B) ${OperatorSymbols.and} C`,
 	]);
 	assert.deepEqual(rows, [
-		[true, true, true, true, true],
-		[true, true, false, true, false],
-		[true, false, true, false, false],
-		[true, false, false, false, false],
-		[false, true, true, false, false],
-		[false, true, false, false, false],
-		[false, false, true, false, false],
 		[false, false, false, false, false],
+		[false, false, true, false, false],
+		[false, true, false, false, false],
+		[false, true, true, false, false],
+		[true, false, false, false, false],
+		[true, false, true, false, false],
+		[true, true, false, true, false],
+		[true, true, true, true, true],
 	]);
 });
 
@@ -48,10 +48,10 @@ await test(t3, () => {
 		`(A ${OperatorSymbols.and} B) ${OperatorSymbols.or} (A ${OperatorSymbols.and} B)`,
 	]);
 	assert.deepEqual(rows, [
-		[true, true, true, true],
-		[true, false, false, false],
-		[false, true, false, false],
 		[false, false, false, false],
+		[false, true, false, false],
+		[true, false, false, false],
+		[true, true, true, true],
 	]);
 });
 
@@ -63,15 +63,15 @@ await test('generateTable with includeSteps=false', () => {
 		`(A ${OperatorSymbols.and} B) ${OperatorSymbols.or} (A ${OperatorSymbols.and} B)`,
 	]);
 	assert.deepEqual(rows, [
-		[true, true, true],
-		[true, false, false],
-		[false, true, false],
 		[false, false, false],
+		[false, true, false],
+		[true, false, false],
+		[true, true, true],
 	]);
 });
 
 await test('generateTable with includeSteps=false and no operations', () => {
 	const {columns, rows} = generateTable('A', false);
 	assert.deepEqual(columns, ['A']);
-	assert.deepEqual(rows, [[true], [false]]);
+	assert.deepEqual(rows, [[false], [true]]);
 });

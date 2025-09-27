@@ -12,12 +12,12 @@ function* generateBoolPermutationsIterator(
 	if (variable0) {
 		yield* generateBoolPermutationsIterator(variables, offset, {
 			...accumulator,
-			[variable0]: true,
+			[variable0]: false,
 		});
 
 		yield* generateBoolPermutationsIterator(variables, offset, {
 			...accumulator,
-			[variable0]: false,
+			[variable0]: true,
 		});
 	} else {
 		yield accumulator;
