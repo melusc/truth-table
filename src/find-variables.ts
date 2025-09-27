@@ -10,5 +10,19 @@ function* findVariablesRecursive(operation: AST): Iterable<string> {
 	}
 }
 
-export const findVariables = (operation: AST): ReadonlySet<string> =>
-	new Set<string>(findVariablesRecursive(operation));
+const variableSorter = Intl.Collator('en', {
+	sensitivity: 'base',
+});
+
+export const findVariables = (
+	operation: AST,
+	sortVariables: boolean,
+): ReadonlySet<string> => {
+	const result = new Set<string>(findVariablesRecursive(operation));
+
+	if (!sortVariables) {
+		return result;
+	}
+
+	return new Set([...result].toSorted((a, b) => variableSorter.compare(a, b)));
+};

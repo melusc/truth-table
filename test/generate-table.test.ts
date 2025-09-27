@@ -56,7 +56,9 @@ await test(t3, () => {
 });
 
 await test('generateTable with includeSteps=false', () => {
-	const {columns, rows} = generateTable('(a & b) | (a & b)', false);
+	const {columns, rows} = generateTable('(a & b) | (a & b)', {
+		includeSteps: false,
+	});
 	assert.deepEqual(columns, [
 		'A',
 		'B',
@@ -70,8 +72,34 @@ await test('generateTable with includeSteps=false', () => {
 	]);
 });
 
+await test('generateTable with sortVariables=false', () => {
+	const {columns, rows} = generateTable('b & a', {sortVariables: false});
+
+	assert.deepEqual(columns, ['B', 'A', `B ${OperatorSymbols.and} A`]);
+
+	assert.deepEqual(rows, [
+		[false, false, false],
+		[false, true, false],
+		[true, false, false],
+		[true, true, true],
+	]);
+});
+
+await test('generateTable with sortVariables=true', () => {
+	const {columns, rows} = generateTable('b & a', {sortVariables: true});
+
+	assert.deepEqual(columns, ['A', 'B', `B ${OperatorSymbols.and} A`]);
+
+	assert.deepEqual(rows, [
+		[false, false, false],
+		[false, true, false],
+		[true, false, false],
+		[true, true, true],
+	]);
+});
+
 await test('generateTable with includeSteps=false and no operations', () => {
-	const {columns, rows} = generateTable('A', false);
+	const {columns, rows} = generateTable('A', {includeSteps: false});
 	assert.deepEqual(columns, ['A']);
 	assert.deepEqual(rows, [[false], [true]]);
 });

@@ -77,7 +77,15 @@ operationToString(ast); // === "(A ∧ B)"
 ## generateTable
 
 ```ts
-function generateTable(input: string, includeSteps = true): ParsedTable;
+type GenerateTableOptions = {
+	includeSteps?: boolean;
+	sortVariables?: boolean;
+};
+
+function generateTable(
+	input: string,
+	options?: GenerateTableOptions,
+): ParsedTable;
 
 type ParsedTable = {
 	columns: readonly string[];
@@ -95,6 +103,9 @@ then the column for `A ∧ B`, then the column for `(A ∧ B) ∨ C`.
 
 If `includeSteps` is set to `false`, it will omit all steps
 and only return columns of the variables and the full statement.
+
+By default, it will sort the variables alphabetically.
+Set `sortVariables` to `false` to keep variables in order of appearance.
 
 The input is passed to [`parseOperation`](#parseoperation) so it will throw the same errors.
 

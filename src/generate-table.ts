@@ -44,12 +44,22 @@ export type ParsedTable = {
 	readonly ast: AST;
 };
 
+export type GenerateTableOptions = {
+	includeSteps?: boolean;
+	sortVariables?: boolean;
+};
+
 export const generateTable = (
 	input: string,
-	includeSteps = true,
+	options?: GenerateTableOptions,
 ): ParsedTable => {
+	// Default true
+	const includeSteps = options?.includeSteps !== false;
+	// Default true
+	const sortVariables = options?.sortVariables !== false;
+
 	const parsed = parseOperation(input);
-	const variables = findVariables(parsed);
+	const variables = findVariables(parsed, sortVariables);
 	const rows = generateBoolPermutations(variables);
 	const columns = deduplicateColumns(getColumns(parsed, includeSteps));
 
