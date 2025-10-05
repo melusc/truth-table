@@ -48,6 +48,11 @@ await makeTest('ifthen', 'A ifthen B', [
 	'A -> B',
 	'A => B',
 	'A → B',
+	'A |= B',
+	'A ⊧ B',
+	'A |- B',
+	'A ⊦ B',
+	'A ⟝ B',
 ]);
 
 await makeTest('not', 'not A', ['NOT A', '! A', '~ A', '¬ A']);

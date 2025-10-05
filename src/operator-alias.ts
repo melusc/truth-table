@@ -13,7 +13,10 @@ const groupedAliases = [
 		['⇔', '≡', '<->', '<=>', '=', '==', '===', 'xnor', OperatorSymbols.iff],
 	],
 
-	[Operator.ifthen, ['⇒', '⊃', '->', '=>', OperatorSymbols.ifthen]],
+	[
+		Operator.ifthen,
+		['⇒', '⊃', '->', '=>', '|=', '⊧', '|-', '⊦', '⟝', OperatorSymbols.ifthen],
+	],
 
 	[Operator.not, singleCharacterNotAliases],
 
