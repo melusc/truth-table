@@ -7,10 +7,12 @@ export const groupItems = (input: readonly Token[]): Token[][] => {
 	let depth = 0;
 
 	const pushResult = () => {
-		if (previous.length > 0 && depth === 0) {
-			result.push(previous);
-			previous = [];
+		if (previous.length === 0 || depth !== 0) {
+			return;
 		}
+
+		result.push(previous);
+		previous = [];
 	};
 
 	for (const item of input) {

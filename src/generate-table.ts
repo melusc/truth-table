@@ -8,17 +8,19 @@ type Column = readonly [AST, string];
 
 function* getColumns(operations: AST, includeSteps: boolean): Iterable<Column> {
 	// Not variables, they are handled differently below
-	if (operations.type !== 'variable') {
-		// If includeSteps === false, only yield the outermost operation
-		if (includeSteps) {
-			for (const value of operations.values) {
-				yield* getColumns(value, includeSteps);
-			}
-		}
-
-		// Yield after above, so it goes from inside out
-		yield [operations, operationToString(operations)];
+	if (operations.type === 'variable') {
+		return;
 	}
+
+	// If includeSteps === false, only yield the outermost operation
+	if (includeSteps) {
+		for (const value of operations.values) {
+			yield* getColumns(value, includeSteps);
+		}
+	}
+
+	// Yield after above, so it goes from inside out
+	yield [operations, operationToString(operations)];
 }
 
 const deduplicateColumns = (columns: Iterable<Column>): readonly Column[] => {
@@ -71,11 +73,10 @@ export const generateTable = (
 	}
 
 	for (const variablePermutations of rows) {
-		const row: boolean[] = [];
-
-		for (const variable of variables) {
-			row.push(variablePermutations[variable]!);
-		}
+		const row = Array.from(
+			variables,
+			variable => variablePermutations[variable]!,
+		);
 
 		for (const [operation] of columns) {
 			row.push(evalOperation(operation, variablePermutations));
