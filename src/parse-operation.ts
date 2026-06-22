@@ -138,7 +138,6 @@ const parseOperationInternal = (input: Token[][]): AST => {
 	}
 
 	const operatorArray = input.pop()!;
-	const operator = operatorArray[0]!;
 
 	if (operatorArray.length !== 1) {
 		throw new IndexedError(
@@ -147,6 +146,8 @@ const parseOperationInternal = (input: Token[][]): AST => {
 			operatorArray.at(-1)!.to,
 		);
 	}
+
+	const operator = operatorArray[0]!;
 
 	if (operator.type !== TokenType.operator) {
 		throw new IndexedError(

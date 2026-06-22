@@ -12,7 +12,9 @@ export const validateEmptyParens = (input: readonly Token[]): void => {
 					item.from,
 					item.to,
 				);
-			} else if (item.parensType === 'close' && last.parensType === 'open') {
+			}
+
+			if (item.parensType === 'close' && last.parensType === 'open') {
 				throw new IndexedError(
 					`Unexpected empty parentheses at (${last.from} - ${item.to}).`,
 					last.from,
