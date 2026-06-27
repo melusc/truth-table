@@ -10,7 +10,7 @@ function* findVariablesRecursive(operation: AST): Iterable<string> {
 	}
 }
 
-const variableSorter = Intl.Collator('en', {
+const variableSorter = new Intl.Collator('en', {
 	sensitivity: 'base',
 });
 
