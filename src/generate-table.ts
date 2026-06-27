@@ -28,10 +28,12 @@ const deduplicateColumns = (columns: Iterable<Column>): readonly Column[] => {
 	const result: Column[] = [];
 
 	for (const column of columns) {
-		if (!seenColumns.has(column[1])) {
-			result.push(column);
-			seenColumns.add(column[1]);
+		if (seenColumns.has(column[1])) {
+			continue;
 		}
+
+		result.push(column);
+		seenColumns.add(column[1]);
 	}
 
 	return result;
