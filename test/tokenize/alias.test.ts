@@ -25,6 +25,7 @@ const makeTest = async (
 ): Promise<void> =>
 	test(`replace to ${operatorName}`, () => {
 		for (const item of items) {
+			// eslint-disable-next-line node-test/no-conditional-assertion
 			assert.equal(doNormaliseOperators(item), expected, item);
 		}
 	});

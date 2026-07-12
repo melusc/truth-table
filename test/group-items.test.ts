@@ -18,7 +18,9 @@ async function groupItemsTest(
 
 		for (const [index, group] of result.entries()) {
 			const expectedGroup = expected[index];
+			// eslint-disable-next-line node-test/no-conditional-assertion
 			assert.ok(expectedGroup);
+			// eslint-disable-next-line node-test/no-conditional-assertion
 			assert.deepEqual(
 				group.map(({from: _from, to: _to, source: _source, ...rest}) => rest),
 				expectedGroup,

@@ -328,13 +328,13 @@ await test(t11, () => {
 await test('Empty input', () => {
 	assert.throws(() => {
 		parseOperation('');
-	});
+	}, Error);
 });
 
 await test('Plain operator', () => {
 	assert.throws(() => {
 		parseOperation('&');
-	});
+	}, IndexedError);
 });
 
 await test('Valid variables with numbers', () => {
