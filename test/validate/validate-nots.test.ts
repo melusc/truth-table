@@ -10,9 +10,8 @@ const doValidate = (input: string): void => {
 };
 
 await test('validateNots', () => {
-	assert.doesNotThrow(() => {
-		doValidate(`a${OperatorSymbols.and}${OperatorSymbols.not.repeat(2)}b`);
-	});
+	// This shouldn't throw
+	doValidate(`a${OperatorSymbols.and}${OperatorSymbols.not.repeat(2)}b`);
 
 	assert.throws(
 		() => {

@@ -9,6 +9,7 @@ const createTest = async <T extends keyof typeof operations>(
 ): Promise<void> =>
 	test(title, () => {
 		for (const row of valueResults) {
+			// eslint-disable-next-line node-test/no-conditional-assertion
 			assert.equal(
 				// @ts-expect-error: row[0] is a tuple
 				operations[title](...row[0]),

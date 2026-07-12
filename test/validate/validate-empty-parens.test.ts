@@ -9,13 +9,9 @@ const doValidate = (input: string): void => {
 };
 
 await test('validateEmptyParens', () => {
-	assert.doesNotThrow(() => {
-		doValidate('(a)');
-	}, '(a)');
-
-	assert.doesNotThrow(() => {
-		doValidate('a && b');
-	}, 'a && b');
+	// These shouldn't throw
+	doValidate('(a)');
+	doValidate('a && b');
 
 	assert.throws(
 		() => {

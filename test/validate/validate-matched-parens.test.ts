@@ -9,9 +9,8 @@ const doValidate = (input: string): void => {
 };
 
 await test('validateMatchedParens', () => {
-	assert.doesNotThrow(() => {
-		doValidate('((((a) & (b))))');
-	});
+	// This shouldn't throw
+	doValidate('((((a) & (b))))');
 
 	assert.throws(
 		() => {

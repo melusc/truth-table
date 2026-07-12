@@ -92,5 +92,5 @@ await test('Unexpected type', () => {
 				B: true,
 			},
 		);
-	});
+	}, Error);
 });
