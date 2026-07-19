@@ -7,7 +7,7 @@ export const groupItems = (input: readonly Token[]): Token[][] => {
 	let depth = 0;
 
 	const pushResult = () => {
-		if (previous.length === 0 || depth !== 0) {
+		if (depth !== 0 || previous.length === 0) {
 			return;
 		}
 
