@@ -6,7 +6,7 @@
 		"url": "https://github.com/melusc/truth-table"
 	},
 	"author": "lusc",
-	"license": "MIT",
+	"license": "GPL-3.0-or-later",
 	"type": "module",
 	"engines": {
 		"node": "^22.22.2 || ^24.15.0 || ^25.9.0 || ^26.1.0"

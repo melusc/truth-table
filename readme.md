@@ -182,3 +182,9 @@ type AST = {
 	values: [AST, AST];
 };
 ```
+
+## License
+
+Licensed under the GNU General Public License,
+version 3 or (at your option) any later version:
+([COPYING](COPYING) or <https://www.gnu.org/licenses/gpl-3.0.html>)
