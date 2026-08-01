@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@lusc/clean-package':
-        specifier: ^3.0.2
-        version: 3.0.2
+        specifier: ^4.0.0
+        version: 4.0.0
       '@lusc/eslint-config':
         specifier: ^18.0.0
         version: 18.0.0(@typescript-eslint/utils@8.64.0(eslint@10.6.0)(typescript@6.0.3))(eslint@10.6.0)
@@ -109,9 +109,9 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-  '@lusc/clean-package@3.0.2':
-    resolution: {integrity: sha512-9DoHuAeqyDavkk4ugF2xDdIzmR6l+8gKk7cFLbcU2DYbOUo/XfTLT1LBtpiKFeMam9XXiGsPa9yYL2lTpBQcag==}
-    engines: {node: ^22.14.0 || ^24.6.0 || ^25.0.0}
+  '@lusc/clean-package@4.0.0':
+    resolution: {integrity: sha512-UltuqykVI6S1SARRUElhJEICYmVjRLVdu55766eJEkl1Dug1SXEaRXY8bZGevlJqweq1WqRRLYGh+8Ww++5OHQ==}
+    engines: {node: ^24.18.0 || ^25.9.0 || ^26.5.0}
     hasBin: true
 
   '@lusc/eslint-config@18.0.0':
@@ -967,7 +967,7 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@lusc/clean-package@3.0.2': {}
+  '@lusc/clean-package@4.0.0': {}
 
   '@lusc/eslint-config@18.0.0(@typescript-eslint/utils@8.64.0(eslint@10.6.0)(typescript@6.0.3))(eslint@10.6.0)':
     dependencies:
