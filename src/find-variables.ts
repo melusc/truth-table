@@ -38,9 +38,7 @@ export const findVariables = (
 ): ReadonlySet<string> => {
 	const result = new Set<string>(findVariablesRecursive(operation));
 
-	if (!sortVariables) {
-		return result;
-	}
-
-	return new Set([...result].toSorted((a, b) => variableSorter.compare(a, b)));
+	return sortVariables
+		? new Set([...result].toSorted((a, b) => variableSorter.compare(a, b)))
+		: result;
 };
