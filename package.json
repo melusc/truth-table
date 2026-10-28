@@ -23,7 +23,7 @@
 	"devDependencies": {
 		"@lusc/clean-package": "^4.0.0",
 		"@lusc/eslint-config": "^21.0.0",
-		"@lusc/tsconfig": "^7.2.1",
+		"@lusc/tsconfig": "^8.0.0",
 		"@types/node": "^26.6.5",
 		"eslint": "^10.9.1",
 		"prettier": "^3.9.6",
