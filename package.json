@@ -25,12 +25,12 @@
 		"@lusc/eslint-config": "^21.1.0",
 		"@lusc/tsconfig": "^8.0.0",
 		"@types/node": "^26.6.6",
-		"eslint": "^10.14.0",
-		"prettier": "^3.10.0",
+		"eslint": "^10.15.0",
+		"prettier": "^3.10.1",
 		"rimraf": "^6.1.4",
 		"typescript": "^7.0.2"
 	},
-	"packageManager": "pnpm@12.18.0",
+	"packageManager": "pnpm@12.21.0",
 	"exports": {
 		".": "./dist/src/index.js"
 	}
